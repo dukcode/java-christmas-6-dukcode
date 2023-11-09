@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -48,6 +49,24 @@ class MenuOrderTest {
         assertThatThrownBy(() -> {
             new MenuOrder(menuName, orderCount);
         }).isInstanceOf(IllegalArgumentException.class);
+
+    }
+
+    @Test
+    public void 주문_금액을_계산할_수_있다() throws Exception {
+        // given
+
+        MenuOrder menuOrder = new MenuOrder(Menu.BBQ_RIB.getName(), 3);
+
+        // 바베큐립(54,000원) - 3개
+        // 총 금액 = 54000 * 3 = 162000
+        Money totalCost = Money.of(162000L);
+
+        // when
+        Money calculatedCost = menuOrder.calculateCost();
+
+        // then
+        assertThat(calculatedCost).isEqualTo(totalCost);
 
     }
 
