@@ -1,7 +1,6 @@
 package christmas.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -23,15 +22,15 @@ class MenuTest {
     }
 
     @Test
-    public void 존재하지_않는_메뉴_이름으로_Menu_클래스를_찾을_시_예외가_발생한다() throws Exception {
+    public void 존재하지_않는_메뉴_이름으로_Menu_클래스를_찾을_시_NONE_을_반환한다() throws Exception {
         // given
         String name = "존재하지 않는 메뉴 이름";
 
         // when
+        Menu menu = Menu.withName(name);
+
         // then
-        assertThatThrownBy(() -> {
-            Menu.withName(name);
-        }).isInstanceOf(MenuNotFoundException.class);
+        assertThat(menu).isEqualTo(Menu.NONE);
 
     }
 
