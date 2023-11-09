@@ -1,6 +1,7 @@
 package christmas.controller.dto;
 
 import christmas.controller.dto.validator.NumberFormatValidator;
+import christmas.domain.exception.ExceptionMessage;
 
 public class MenuOrderRequest {
 
@@ -9,6 +10,8 @@ public class MenuOrderRequest {
     private final int orderCount;
 
     public MenuOrderRequest(String menuOrder) {
+        validateDelimiter(menuOrder);
+
         String menuName = parseMenuName(menuOrder);
         String orderCount = parseOrderCount(menuOrder);
 
@@ -20,6 +23,13 @@ public class MenuOrderRequest {
 
     private static String parseMenuName(String order) {
         return order.split(MENU_QUANTITY_DELIMITER)[0].trim();
+    }
+
+    private void validateDelimiter(String menuOrder) {
+
+        if (menuOrder.split(MENU_QUANTITY_DELIMITER).length != 2) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_ORDER);
+        }
     }
 
     private String parseOrderCount(String order) {
