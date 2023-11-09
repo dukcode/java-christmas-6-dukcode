@@ -9,6 +9,7 @@ import christmas.domain.MenuOrders;
 import christmas.domain.MenuQuantity;
 import christmas.domain.Money;
 import christmas.domain.ReservationDate;
+import christmas.service.GiftEventService;
 import christmas.service.PromotionService;
 import java.util.List;
 
@@ -19,15 +20,17 @@ public class PromotionController {
     private final ExceptionHandler exceptionHandler;
 
     private final PromotionService promotionService;
+    private final GiftEventService giftEventService;
 
 
     public PromotionController(InputView inputView, OutputView outputView, ExceptionHandler exceptionHandler,
-                               PromotionService promotionService) {
+                               PromotionService promotionService, GiftEventService giftEventService) {
 
         this.inputView = inputView;
         this.outputView = outputView;
         this.exceptionHandler = exceptionHandler;
         this.promotionService = promotionService;
+        this.giftEventService = giftEventService;
     }
 
     public void run() {
@@ -44,7 +47,7 @@ public class PromotionController {
     }
 
     private void printGiftEventResult(MenuOrders menuOrders) {
-        MenuQuantity giftMenu = promotionService.applyGiftEvent(menuOrders);
+        MenuQuantity giftMenu = giftEventService.applyEvent(menuOrders);
         outputView.printGiftMenu(MenuQuantityResponse.from(giftMenu));
     }
 
