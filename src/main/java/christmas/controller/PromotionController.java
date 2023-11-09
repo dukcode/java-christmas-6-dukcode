@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import christmas.controller.dto.MenuOrdersRequest;
+import christmas.controller.dto.MenuOrdersResponse;
 import christmas.controller.dto.ReservationDateCreateRequest;
 import christmas.controller.dto.ReservationDateResponse;
 import christmas.domain.MenuOrder;
@@ -29,6 +30,7 @@ public class PromotionController {
         MenuOrders menuOrders = inputMenuOrders();
 
         outputView.printResultTitle(ReservationDateResponse.from(reservationDate));
+        outputView.printMenuOrders(MenuOrdersResponse.from(menuOrders));
     }
 
     private ReservationDate inputReservationDate() {

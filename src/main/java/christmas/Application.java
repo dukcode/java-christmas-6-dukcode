@@ -2,7 +2,6 @@ package christmas;
 
 import christmas.controller.PromotionController;
 import christmas.handler.InfiniteRetryExceptionHandler;
-import christmas.service.PromotionService;
 import christmas.view.InputConsoleView;
 import christmas.view.OutputConsoleView;
 
