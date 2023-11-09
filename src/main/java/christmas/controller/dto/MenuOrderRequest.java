@@ -33,4 +33,8 @@ public class MenuOrderRequest {
                     NumberFormatValidator.validate(orderQuantity);
                 });
     }
+
+    public Map<String, Integer> getOrders() {
+        return orders;
+    }
 }
