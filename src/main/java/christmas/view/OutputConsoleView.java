@@ -5,6 +5,7 @@ import christmas.controller.OutputView;
 public class OutputConsoleView implements OutputView {
 
     private static final String ERROR_PREFIX = "[ERROR] ";
+    private static final String ERROR_SUFFIX = "  다시 입력해 주세요.";
 
     @Override
     public void printWelcomeMessage() {
@@ -13,6 +14,6 @@ public class OutputConsoleView implements OutputView {
 
     @Override
     public void printError(Exception e) {
-        System.out.println(e.getMessage());
+        System.out.println(ERROR_PREFIX + e.getMessage() + ERROR_SUFFIX);
     }
 }
