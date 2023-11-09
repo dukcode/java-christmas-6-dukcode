@@ -5,29 +5,25 @@ import java.util.List;
 
 public class MenuOrdersResponse {
 
-    private final List<MenuOrderResponse> menuOrderResponses;
+    private final List<MenuQuantityResponse> menuQuantityRespons;
 
-    private MenuOrdersResponse(List<MenuOrderResponse> menuOrderResponses) {
-        this.menuOrderResponses = menuOrderResponses;
+    private MenuOrdersResponse(List<MenuQuantityResponse> menuQuantityRespons) {
+        this.menuQuantityRespons = menuQuantityRespons;
     }
 
     public static MenuOrdersResponse from(MenuOrders menuOrders) {
         return new MenuOrdersResponse(
                 menuOrders.getMenuOrders()
                         .stream()
-                        .map(MenuOrderResponse::from)
+                        .map(MenuQuantityResponse::from)
                         .toList());
-    }
-
-    public List<MenuOrderResponse> getMenuOrderResponses() {
-        return menuOrderResponses;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (MenuOrderResponse menuOrderResponse : menuOrderResponses) {
-            sb.append(menuOrderResponse.toString());
+        for (MenuQuantityResponse menuQuantityResponse : menuQuantityRespons) {
+            sb.append(menuQuantityResponse.toString());
             sb.append("\n");
         }
 

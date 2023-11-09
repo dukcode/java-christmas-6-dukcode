@@ -15,28 +15,28 @@ class MenuOrdersTest {
     @Test
     public void MenuOrders_를_생성할_수_있다() throws Exception {
         // given
-        List<MenuOrder> menuOrders = List.of(new MenuOrder(Menu.BBQ_RIB.getName(), 1),
-                new MenuOrder(Menu.CAESAR_SALAD.getName(), 2),
-                new MenuOrder(Menu.ZERO_COKE.getName(), 3));
+        List<MenuQuantity> menuQuantities = List.of(new MenuQuantity(Menu.BBQ_RIB.getName(), 1),
+                new MenuQuantity(Menu.CAESAR_SALAD.getName(), 2),
+                new MenuQuantity(Menu.ZERO_COKE.getName(), 3));
 
         // when
         // then
         assertThatCode(() -> {
-            new MenuOrders(menuOrders);
+            new MenuOrders(menuQuantities);
         }).doesNotThrowAnyException();
     }
 
     @Test
     public void 중복된_메뉴로_MenuOrders_를_생성하면_예외가_발생한다() throws Exception {
         // given
-        List<MenuOrder> menuOrders = List.of(new MenuOrder(Menu.BBQ_RIB.getName(), 1),
-                new MenuOrder(Menu.CAESAR_SALAD.getName(), 2),
-                new MenuOrder(Menu.CAESAR_SALAD.getName(), 2));
+        List<MenuQuantity> menuQuantities = List.of(new MenuQuantity(Menu.BBQ_RIB.getName(), 1),
+                new MenuQuantity(Menu.CAESAR_SALAD.getName(), 2),
+                new MenuQuantity(Menu.CAESAR_SALAD.getName(), 2));
 
         // when
         // then
         assertThatThrownBy(() -> {
-            new MenuOrders(menuOrders);
+            new MenuOrders(menuQuantities);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -44,9 +44,9 @@ class MenuOrdersTest {
     public void 주문_총_금액을_계산할_수_있다() throws Exception {
         // given
 
-        MenuOrders menuOrders = new MenuOrders(List.of(new MenuOrder(Menu.BBQ_RIB.getName(), 1),
-                new MenuOrder(Menu.CAESAR_SALAD.getName(), 2),
-                new MenuOrder(Menu.ZERO_COKE.getName(), 3)));
+        MenuOrders menuOrders = new MenuOrders(List.of(new MenuQuantity(Menu.BBQ_RIB.getName(), 1),
+                new MenuQuantity(Menu.CAESAR_SALAD.getName(), 2),
+                new MenuQuantity(Menu.ZERO_COKE.getName(), 3)));
 
         // 바베큐립(54,000원) - 1개
         // 시저샐러드(8,000원) - 2개

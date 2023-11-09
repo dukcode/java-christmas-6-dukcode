@@ -3,9 +3,10 @@ package christmas.controller;
 import christmas.controller.dto.request.MenuOrdersRequest;
 import christmas.controller.dto.request.ReservationDateCreateRequest;
 import christmas.controller.dto.response.MenuOrdersResponse;
+import christmas.controller.dto.response.MenuQuantityResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
-import christmas.domain.MenuOrder;
 import christmas.domain.MenuOrders;
+import christmas.domain.MenuQuantity;
 import christmas.domain.Money;
 import christmas.domain.ReservationDate;
 import christmas.service.PromotionService;
@@ -39,6 +40,12 @@ public class PromotionController {
         outputView.printMenuOrders(MenuOrdersResponse.from(menuOrders));
 
         printPreDiscountCharge(menuOrders);
+        printGiftEventResult(menuOrders);
+    }
+
+    private void printGiftEventResult(MenuOrders menuOrders) {
+        MenuQuantity giftMenu = promotionService.applyGiftEvent(menuOrders);
+        outputView.printGiftMenu(MenuQuantityResponse.from(giftMenu));
     }
 
     private void printPreDiscountCharge(MenuOrders menuOrders) {
@@ -57,12 +64,12 @@ public class PromotionController {
         return (MenuOrders) exceptionHandler.handle(inputView, outputView, (inputView) -> {
             MenuOrdersRequest menuOrdersRequest = inputView.inputMenuOrderRequest();
 
-            List<MenuOrder> menuOrders = menuOrdersRequest.getMenuOrderRequests()
+            List<MenuQuantity> menuQuantities = menuOrdersRequest.getMenuOrderRequests()
                     .stream()
-                    .map(request -> new MenuOrder(request.getMenuName(), request.getOrderCount()))
+                    .map(request -> new MenuQuantity(request.getMenuName(), request.getOrderCount()))
                     .toList();
 
-            return new MenuOrders(menuOrders);
+            return new MenuOrders(menuQuantities);
         });
     }
 }

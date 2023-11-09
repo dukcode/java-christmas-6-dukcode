@@ -2,6 +2,7 @@ package christmas.view;
 
 import christmas.controller.OutputView;
 import christmas.controller.dto.response.MenuOrdersResponse;
+import christmas.controller.dto.response.MenuQuantityResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
 import christmas.domain.Money;
 
@@ -36,6 +37,14 @@ public class OutputConsoleView implements OutputView {
     public void printPreDiscountCharge(Money preDiscountCharge) {
         System.out.println("<할인 전 총주문 금액>");
         System.out.println(preDiscountCharge);
+        System.out.println();
+    }
+
+    @Override
+    public void printGiftMenu(MenuQuantityResponse giftMenu) {
+        System.out.println("<증정 메뉴>");
+        System.out.println(giftMenu);
+        System.out.println();
     }
 
 }

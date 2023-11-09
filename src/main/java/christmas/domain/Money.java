@@ -50,4 +50,8 @@ public class Money {
     public int hashCode() {
         return Objects.hash(amount);
     }
+
+    public boolean isGreaterThanOrEqual(Money money) {
+        return this.amount >= money.amount;
+    }
 }

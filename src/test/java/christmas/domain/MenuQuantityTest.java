@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class MenuOrderTest {
+class MenuQuantityTest {
 
     @Test
     public void MenuOrder_를_생성할_수_있다() throws Exception {
@@ -20,7 +20,7 @@ class MenuOrderTest {
         // when
         // then
         assertThatCode(() -> {
-            new MenuOrder(menuName, orderCount);
+            new MenuQuantity(menuName, orderCount);
         }).doesNotThrowAnyException();
 
     }
@@ -33,7 +33,7 @@ class MenuOrderTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            new MenuOrder(menuName, 1);
+            new MenuQuantity(menuName, 1);
         }).isInstanceOf(IllegalArgumentException.class);
 
     }
@@ -47,7 +47,7 @@ class MenuOrderTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            new MenuOrder(menuName, orderCount);
+            new MenuQuantity(menuName, orderCount);
         }).isInstanceOf(IllegalArgumentException.class);
 
     }
@@ -56,14 +56,14 @@ class MenuOrderTest {
     public void 주문_금액을_계산할_수_있다() throws Exception {
         // given
 
-        MenuOrder menuOrder = new MenuOrder(Menu.BBQ_RIB.getName(), 3);
+        MenuQuantity menuQuantity = new MenuQuantity(Menu.BBQ_RIB.getName(), 3);
 
         // 바베큐립(54,000원) - 3개
         // 총 금액 = 54000 * 3 = 162000
         Money totalCost = Money.of(162000L);
 
         // when
-        Money calculatedCost = menuOrder.calculateCost();
+        Money calculatedCost = menuQuantity.calculateCost();
 
         // then
         assertThat(calculatedCost).isEqualTo(totalCost);

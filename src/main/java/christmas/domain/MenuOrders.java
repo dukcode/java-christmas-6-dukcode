@@ -6,33 +6,33 @@ import java.util.List;
 
 public class MenuOrders {
 
-    private final List<MenuOrder> menuOrders = new ArrayList<>();
+    private final List<MenuQuantity> menuQuantities = new ArrayList<>();
 
-    public MenuOrders(List<MenuOrder> menuOrders) {
-        validateMenuDuplicated(menuOrders);
-        this.menuOrders.addAll(menuOrders);
+    public MenuOrders(List<MenuQuantity> menuQuantities) {
+        validateMenuDuplicated(menuQuantities);
+        this.menuQuantities.addAll(menuQuantities);
     }
 
 
-    private void validateMenuDuplicated(List<MenuOrder> menuOrders) {
-        List<Menu> distinctMenu = menuOrders.stream()
-                .map(MenuOrder::getMenu)
+    private void validateMenuDuplicated(List<MenuQuantity> menuQuantities) {
+        List<Menu> distinctMenu = menuQuantities.stream()
+                .map(MenuQuantity::getMenu)
                 .distinct()
                 .toList();
 
-        if (menuOrders.size() != distinctMenu.size()) {
+        if (menuQuantities.size() != distinctMenu.size()) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_ORDER);
         }
     }
 
-    public List<MenuOrder> getMenuOrders() {
-        return menuOrders;
+    public List<MenuQuantity> getMenuOrders() {
+        return menuQuantities;
     }
 
     public Money calculateTotalCost() {
         Money cost = Money.ZERO;
-        for (MenuOrder menuOrder : menuOrders) {
-            cost = cost.add(menuOrder.calculateCost());
+        for (MenuQuantity menuQuantity : menuQuantities) {
+            cost = cost.add(menuQuantity.calculateCost());
         }
 
         return cost;
