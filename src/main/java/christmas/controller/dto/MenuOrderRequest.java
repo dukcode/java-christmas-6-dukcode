@@ -1,57 +1,40 @@
 package christmas.controller.dto;
 
 import christmas.controller.dto.validator.NumberFormatValidator;
-import java.util.Arrays;
-import java.util.List;
 
 public class MenuOrderRequest {
 
-    private static final String MENU_SEPARATOR = ",";
     private static final String MENU_QUANTITY_DELIMITER = "-";
+    private final String menuName;
+    private final int orderCount;
 
-    private final List<String> menuNames;
-    private final List<Integer> orderCounts;
+    public MenuOrderRequest(String menuOrder) {
+        String menuName = parseMenuName(menuOrder);
+        String orderCount = parseOrderCount(menuOrder);
 
-    public MenuOrderRequest(String orders) {
-        this.menuNames = parseMenuNames(orders);
+        validateOrderCount(orderCount);
 
-        List<String> orderCounts = parseOrderCounts(orders);
-        validateOrderCounts(orderCounts);
-
-        this.orderCounts = orderCounts.stream()
-                .map(Integer::valueOf)
-                .toList();
+        this.menuName = menuName;
+        this.orderCount = Integer.parseInt(orderCount);
     }
 
-    private List<String> parseMenuNames(String orders) {
-        return Arrays.stream(orders.split(MENU_SEPARATOR))
-                .map(order -> {
-                    String[] tokens = order.trim()
-                            .split(MENU_QUANTITY_DELIMITER);
-                    return tokens[0].trim();
-                }).toList();
+    private static String parseMenuName(String order) {
+        return order.split(MENU_QUANTITY_DELIMITER)[0].trim();
     }
 
-    private List<String> parseOrderCounts(String orders) {
-        return Arrays.stream(orders.split(MENU_SEPARATOR))
-                .map(order -> {
-                    String[] tokens = order.trim()
-                            .split(MENU_QUANTITY_DELIMITER);
-                    return tokens[1].trim();
-                }).toList();
+    private String parseOrderCount(String order) {
+        return order.split(MENU_QUANTITY_DELIMITER)[1].trim();
     }
 
-    private void validateOrderCounts(List<String> orderCounts) {
-        for (String orderCount : orderCounts) {
-            NumberFormatValidator.validate(orderCount);
-        }
+    private void validateOrderCount(String orderCount) {
+        NumberFormatValidator.validate(orderCount);
     }
 
-    public List<String> getMenuNames() {
-        return menuNames;
+    public String getMenuName() {
+        return menuName;
     }
 
-    public List<Integer> getOrderCounts() {
-        return orderCounts;
+    public int getOrderCount() {
+        return orderCount;
     }
 }
