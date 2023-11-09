@@ -18,7 +18,7 @@ class MenuOrderRequestTest {
         // when
         // then
         assertThatCode(() -> {
-            new MenuOrderRequests(order);
+            new MenuOrdersRequest(order);
         }).doesNotThrowAnyException();
 
     }
@@ -31,7 +31,7 @@ class MenuOrderRequestTest {
         // when
         // then
         assertThatCode(() -> {
-            new MenuOrderRequests(order);
+            new MenuOrdersRequest(order);
         }).doesNotThrowAnyException();
 
     }
@@ -57,7 +57,7 @@ class MenuOrderRequestTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            new MenuOrderRequests(order);
+            new MenuOrdersRequest(order);
         }).isInstanceOf(IllegalArgumentException.class);
 
     }

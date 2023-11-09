@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class MenuOrderRequestsTest {
+class MenuOrdersRequestTest {
 
     @Test
     public void 메뉴_목록으로_MenuOrderRequests_클래스를_생성을_할_수_있다() throws Exception {
@@ -18,7 +18,7 @@ class MenuOrderRequestsTest {
         // when
         // then
         assertThatCode(() -> {
-            new MenuOrderRequests(orders);
+            new MenuOrdersRequest(orders);
         }).doesNotThrowAnyException();
 
     }
@@ -31,7 +31,7 @@ class MenuOrderRequestsTest {
         // when
         // then
         assertThatCode(() -> {
-            new MenuOrderRequests(orders);
+            new MenuOrdersRequest(orders);
         }).doesNotThrowAnyException();
 
     }
@@ -44,7 +44,7 @@ class MenuOrderRequestsTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            new MenuOrderRequests(orders);
+            new MenuOrdersRequest(orders);
         }).isInstanceOf(IllegalArgumentException.class);
 
     }
@@ -57,7 +57,7 @@ class MenuOrderRequestsTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            new MenuOrderRequests(orders);
+            new MenuOrdersRequest(orders);
         }).isInstanceOf(IllegalArgumentException.class);
 
     }
