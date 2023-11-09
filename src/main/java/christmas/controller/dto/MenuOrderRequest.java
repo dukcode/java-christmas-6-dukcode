@@ -1,6 +1,6 @@
 package christmas.controller.dto;
 
-import christmas.view.validator.NumberFormatValidator;
+import christmas.controller.dto.validator.NumberFormatValidator;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

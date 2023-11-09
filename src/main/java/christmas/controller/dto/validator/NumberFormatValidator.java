@@ -1,4 +1,4 @@
-package christmas.view.validator;
+package christmas.controller.dto.validator;
 
 import christmas.view.exception.ExceptionMessage;
 

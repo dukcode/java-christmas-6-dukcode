@@ -1,16 +1,14 @@
 package christmas.controller.dto;
 
-import christmas.view.exception.ExceptionMessage;
+import christmas.controller.dto.validator.NumberFormatValidator;
 
 public class ReservationDateCreateRequest {
 
     private final int dayOfMonth;
+
     public ReservationDateCreateRequest(String dayOfMonth) {
-        try {
-            this.dayOfMonth = Integer.parseInt(dayOfMonth);
-        } catch (NumberFormatException numberFormatException) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_NUMBER_FORMAT);
-        }
+        NumberFormatValidator.validate(dayOfMonth);
+        this.dayOfMonth = Integer.parseInt(dayOfMonth);
     }
 
     public int getDayOfMonth() {
