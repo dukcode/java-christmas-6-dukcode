@@ -24,4 +24,17 @@ public class MenuOrders {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_ORDER);
         }
     }
+
+    public List<MenuOrder> getMenuOrders() {
+        return menuOrders;
+    }
+
+    public Money calculateTotalCost() {
+        Money cost = Money.ZERO;
+        for (MenuOrder menuOrder : menuOrders) {
+            cost = cost.add(menuOrder.calculateCost());
+        }
+
+        return cost;
+    }
 }

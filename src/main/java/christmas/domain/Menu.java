@@ -59,4 +59,8 @@ public enum Menu {
     public String getName() {
         return name;
     }
+
+    public Money getCost() {
+        return cost;
+    }
 }

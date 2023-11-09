@@ -31,4 +31,11 @@ public class MenuOrder {
         return menu;
     }
 
+    public int getOrderCount() {
+        return orderCount;
+    }
+
+    public Money calculateCost() {
+        return menu.getCost().multiply(orderCount);
+    }
 }
