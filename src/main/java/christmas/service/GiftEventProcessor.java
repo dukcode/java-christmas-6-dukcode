@@ -5,13 +5,13 @@ import christmas.domain.MenuOrders;
 import christmas.domain.MenuQuantity;
 import christmas.domain.Money;
 
-public class GiftEventService {
+public class GiftEventProcessor {
 
     public final Money eventMinOrderAmount;
     private final Menu giftMenu;
     private final int quantity;
 
-    public GiftEventService(Money eventMinOrderAmount, Menu giftMenu, int quantity) {
+    public GiftEventProcessor(Money eventMinOrderAmount, Menu giftMenu, int quantity) {
         this.eventMinOrderAmount = eventMinOrderAmount;
         this.giftMenu = giftMenu;
         this.quantity = quantity;
