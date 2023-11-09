@@ -20,7 +20,10 @@ public enum Menu {
     // BEVERAGE
     ZERO_COKE("제로콜라", Money.of(3000L), MenuType.BEVERAGE),
     RED_WINE("레드와인", Money.of(60000L), MenuType.BEVERAGE),
-    CHAMPAGNE("샴페인", Money.of(25000L), MenuType.BEVERAGE);
+    CHAMPAGNE("샴페인", Money.of(25000L), MenuType.BEVERAGE),
+
+    // NONE
+    NONE("NONE", Money.ZERO, MenuType.NONE);
 
 
     private final String name;
@@ -31,5 +34,29 @@ public enum Menu {
         this.name = name;
         this.cost = cost;
         this.type = type;
+    }
+
+    public static boolean contains(String menuName) {
+        for (Menu menu : Menu.values()) {
+            if (menu.name.equals(menuName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static Menu withName(String menuName) {
+        for (Menu menu : Menu.values()) {
+            if (menu.name.equals(menuName)) {
+                return menu;
+            }
+        }
+
+        return NONE;
+    }
+
+    public String getName() {
+        return name;
     }
 }
