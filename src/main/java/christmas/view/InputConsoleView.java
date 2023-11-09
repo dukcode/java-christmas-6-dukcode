@@ -2,8 +2,8 @@ package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
 import christmas.controller.InputView;
-import christmas.controller.dto.MenuOrdersRequest;
-import christmas.controller.dto.ReservationDateCreateRequest;
+import christmas.controller.dto.request.MenuOrdersRequest;
+import christmas.controller.dto.request.ReservationDateCreateRequest;
 
 public class InputConsoleView implements InputView {
     @Override

@@ -1,9 +1,9 @@
 package christmas.controller;
 
-import christmas.controller.dto.MenuOrdersRequest;
-import christmas.controller.dto.MenuOrdersResponse;
-import christmas.controller.dto.ReservationDateCreateRequest;
-import christmas.controller.dto.ReservationDateResponse;
+import christmas.controller.dto.request.MenuOrdersRequest;
+import christmas.controller.dto.request.ReservationDateCreateRequest;
+import christmas.controller.dto.response.MenuOrdersResponse;
+import christmas.controller.dto.response.ReservationDateResponse;
 import christmas.domain.MenuOrder;
 import christmas.domain.MenuOrders;
 import christmas.domain.Money;

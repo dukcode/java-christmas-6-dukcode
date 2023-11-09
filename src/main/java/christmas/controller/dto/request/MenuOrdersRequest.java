@@ -1,4 +1,4 @@
-package christmas.controller.dto;
+package christmas.controller.dto.request;
 
 import java.util.ArrayList;
 import java.util.Arrays;

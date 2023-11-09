@@ -1,4 +1,4 @@
-package christmas.controller.dto;
+package christmas.controller.dto.response;
 
 import christmas.domain.MenuOrders;
 import java.util.List;

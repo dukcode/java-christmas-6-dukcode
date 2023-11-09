@@ -1,8 +1,8 @@
 package christmas.view;
 
 import christmas.controller.OutputView;
-import christmas.controller.dto.MenuOrdersResponse;
-import christmas.controller.dto.ReservationDateResponse;
+import christmas.controller.dto.response.MenuOrdersResponse;
+import christmas.controller.dto.response.ReservationDateResponse;
 import christmas.domain.Money;
 
 public class OutputConsoleView implements OutputView {

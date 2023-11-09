@@ -1,4 +1,4 @@
-package christmas.controller.dto;
+package christmas.controller.dto.request;
 
 import christmas.controller.dto.validator.NumberFormatValidator;
 import christmas.domain.exception.ExceptionMessage;
