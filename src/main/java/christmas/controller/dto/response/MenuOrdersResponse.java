@@ -5,10 +5,10 @@ import java.util.List;
 
 public class MenuOrdersResponse {
 
-    private final List<MenuQuantityResponse> menuQuantityRespons;
+    private final List<MenuQuantityResponse> menuQuantityResponses;
 
-    private MenuOrdersResponse(List<MenuQuantityResponse> menuQuantityRespons) {
-        this.menuQuantityRespons = menuQuantityRespons;
+    private MenuOrdersResponse(List<MenuQuantityResponse> menuQuantityResponses) {
+        this.menuQuantityResponses = menuQuantityResponses;
     }
 
     public static MenuOrdersResponse from(MenuOrders menuOrders) {
@@ -22,7 +22,7 @@ public class MenuOrdersResponse {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (MenuQuantityResponse menuQuantityResponse : menuQuantityRespons) {
+        for (MenuQuantityResponse menuQuantityResponse : menuQuantityResponses) {
             sb.append(menuQuantityResponse.toString());
             sb.append("\n");
         }
