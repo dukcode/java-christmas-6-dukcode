@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.controller.dto.response.DiscountAmountsResponse;
 import christmas.controller.dto.response.MenuOrdersResponse;
 import christmas.controller.dto.response.MenuQuantityResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
@@ -17,4 +18,6 @@ public interface OutputView {
     void printPreDiscountCharge(Money preDiscountCharge);
 
     void printGiftMenu(MenuQuantityResponse giftMenu);
+
+    void printDiscountAmounts(DiscountAmountsResponse discountAmountsResponse);
 }

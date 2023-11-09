@@ -2,6 +2,7 @@ package christmas.controller;
 
 import christmas.controller.dto.request.MenuOrdersRequest;
 import christmas.controller.dto.request.ReservationDateCreateRequest;
+import christmas.controller.dto.response.DiscountAmountsResponse;
 import christmas.controller.dto.response.MenuOrdersResponse;
 import christmas.controller.dto.response.MenuQuantityResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
@@ -39,21 +40,34 @@ public class PromotionController {
         ReservationDate reservationDate = inputReservationDate();
         MenuOrders menuOrders = inputMenuOrders();
 
+        printResult(reservationDate, menuOrders);
+    }
+
+    private void printResult(ReservationDate reservationDate, MenuOrders menuOrders) {
         outputView.printResultTitle(ReservationDateResponse.from(reservationDate));
         outputView.printMenuOrders(MenuOrdersResponse.from(menuOrders));
 
-        printPreDiscountCharge(menuOrders);
-        printGiftEventResult(menuOrders);
+        Money preDiscountCharge = printPreDiscountCharge(menuOrders);
+        MenuQuantity giftMenu = printGiftEventResult(menuOrders);
+
+        outputView.printDiscountAmounts(new DiscountAmountsResponse(
+                Money.ZERO,
+                Money.ZERO,
+                Money.ZERO,
+                giftMenu.calculateCost()
+        ));
     }
 
-    private void printGiftEventResult(MenuOrders menuOrders) {
+    private MenuQuantity printGiftEventResult(MenuOrders menuOrders) {
         MenuQuantity giftMenu = giftEventService.applyEvent(menuOrders);
         outputView.printGiftMenu(MenuQuantityResponse.from(giftMenu));
+        return giftMenu;
     }
 
-    private void printPreDiscountCharge(MenuOrders menuOrders) {
+    private Money printPreDiscountCharge(MenuOrders menuOrders) {
         Money preDiscountCharge = promotionService.calculatePreDiscountCharge(menuOrders);
         outputView.printPreDiscountCharge(preDiscountCharge);
+        return preDiscountCharge;
     }
 
     private ReservationDate inputReservationDate() {
