@@ -1,5 +1,5 @@
 package christmas.controller;
 
-public interface ChristmasPromotionOutputView {
+public interface OutputView {
     void printWelcomeMessage();
 }

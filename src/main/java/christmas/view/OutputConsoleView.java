@@ -1,8 +1,8 @@
 package christmas.view;
 
-import christmas.controller.ChristmasPromotionOutputView;
+import christmas.controller.OutputView;
 
-public class ChristmasPromotionOutputConsoleView implements ChristmasPromotionOutputView {
+public class OutputConsoleView implements OutputView {
 
     @Override
     public void printWelcomeMessage() {
