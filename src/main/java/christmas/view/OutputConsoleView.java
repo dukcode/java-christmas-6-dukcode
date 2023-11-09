@@ -1,6 +1,7 @@
 package christmas.view;
 
 import christmas.controller.OutputView;
+import christmas.controller.dto.ReservationDateResponse;
 
 public class OutputConsoleView implements OutputView {
 
@@ -16,4 +17,11 @@ public class OutputConsoleView implements OutputView {
     public void printError(Exception e) {
         System.out.println(ERROR_PREFIX + e.getMessage() + ERROR_SUFFIX);
     }
+
+    @Override
+    public void printResultTitle(ReservationDateResponse reservationDateResponse) {
+        System.out.printf("12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n\n",
+                reservationDateResponse.getDayOfMonth());
+    }
+
 }

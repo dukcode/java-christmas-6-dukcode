@@ -2,10 +2,10 @@ package christmas.controller;
 
 import christmas.controller.dto.MenuOrdersRequest;
 import christmas.controller.dto.ReservationDateCreateRequest;
+import christmas.controller.dto.ReservationDateResponse;
 import christmas.domain.MenuOrder;
 import christmas.domain.MenuOrders;
 import christmas.domain.ReservationDate;
-import christmas.service.PromotionService;
 import java.util.List;
 
 public class PromotionController {
@@ -14,14 +14,12 @@ public class PromotionController {
 
     private final ExceptionHandler exceptionHandler;
 
-    private final PromotionService promotionService;
 
-    public PromotionController(InputView inputView, OutputView outputView, ExceptionHandler exceptionHandler,
-                               PromotionService promotionService) {
+    public PromotionController(InputView inputView, OutputView outputView, ExceptionHandler exceptionHandler) {
+
         this.inputView = inputView;
         this.outputView = outputView;
         this.exceptionHandler = exceptionHandler;
-        this.promotionService = promotionService;
     }
 
     public void run() {
@@ -29,6 +27,8 @@ public class PromotionController {
 
         ReservationDate reservationDate = inputReservationDate();
         MenuOrders menuOrders = inputMenuOrders();
+
+        outputView.printResultTitle(ReservationDateResponse.from(reservationDate));
     }
 
     private ReservationDate inputReservationDate() {

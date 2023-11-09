@@ -16,4 +16,8 @@ public class ReservationDate {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_DATE_RANGE);
         }
     }
+
+    public int getDayOfMonth() {
+        return dayOfMonth;
+    }
 }

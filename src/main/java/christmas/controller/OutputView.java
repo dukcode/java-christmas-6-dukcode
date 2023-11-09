@@ -1,7 +1,11 @@
 package christmas.controller;
 
+import christmas.controller.dto.ReservationDateResponse;
+
 public interface OutputView {
     void printWelcomeMessage();
 
-    public void printError(Exception e);
+    void printError(Exception e);
+
+    void printResultTitle(ReservationDateResponse reservationDateResponse);
 }
