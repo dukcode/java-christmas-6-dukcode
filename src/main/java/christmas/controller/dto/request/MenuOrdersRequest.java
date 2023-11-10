@@ -8,7 +8,7 @@ public class MenuOrdersRequest {
 
     private static final String ORDER_DELIMITER = ",";
 
-    private List<MenuOrderRequest> menuOrderRequests = new ArrayList<>();
+    private final List<MenuOrderRequest> menuOrderRequests = new ArrayList<>();
 
     public MenuOrdersRequest(String orders) {
         List<String> menuOrders = parseOrders(orders);
