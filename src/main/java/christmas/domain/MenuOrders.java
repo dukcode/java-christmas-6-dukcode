@@ -24,7 +24,7 @@ public class MenuOrders {
             }
         }
 
-        throw new IllegalArgumentException(ExceptionMessage.INVALID_MENU_COMPOSITION);
+        throw new IllegalArgumentException(ExceptionMessage.INVALID_ORDER);
     }
 
     private void validateQuantitySize(List<MenuQuantity> menuQuantities) {
@@ -34,7 +34,7 @@ public class MenuOrders {
         }
 
         if (numQuantity > MAX_ORDER_QUANTITY) {
-            throw new IllegalArgumentException(ExceptionMessage.MAX_ORDER_QUANTITY_EXCEEDED);
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_ORDER);
         }
     }
 

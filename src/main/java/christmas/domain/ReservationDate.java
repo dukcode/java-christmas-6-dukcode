@@ -13,7 +13,7 @@ public class ReservationDate {
 
     private void validateDayOfMonth(int dayOfMonth) {
         if (dayOfMonth < December.START_DAY_OF_MONTH || dayOfMonth > December.LAST_DAY_OF_MONTH) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_DATE_RANGE);
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_DAY_OF_MONTH);
         }
     }
 
