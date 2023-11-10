@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MenuOrdersRequest {
 
-    private static final String MENU_SEPARATOR = ",";
+    private static final String ORDER_DELIMITER = ",";
 
     private List<MenuOrderRequest> menuOrderRequests = new ArrayList<>();
 
@@ -18,7 +18,7 @@ public class MenuOrdersRequest {
     }
 
     private List<String> parseOrders(String orders) {
-        return Arrays.stream(orders.split(MENU_SEPARATOR))
+        return Arrays.stream(orders.split(ORDER_DELIMITER))
                 .map(String::trim)
                 .toList();
     }
