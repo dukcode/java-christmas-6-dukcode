@@ -58,12 +58,14 @@ public class PromotionController {
                 menuOrders);
         Money weekendEventDiscountAmount = promotionService.calculateWeekendEventDiscountAmount(reservationDate,
                 menuOrders);
+        Money specialEventDiscountAmount = promotionService.calculateSpecialEventDiscountAmount(reservationDate,
+                menuOrders);
 
         outputView.printDiscountAmounts(new DiscountAmountsResponse(
                 dDayEventDiscountAmount,
                 weekdayEventDiscountAmount,
                 weekendEventDiscountAmount,
-                Money.ZERO,
+                specialEventDiscountAmount,
                 giftEventDiscountAmount
         ));
     }

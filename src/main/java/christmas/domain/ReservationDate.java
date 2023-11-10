@@ -4,6 +4,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Set;
 
 public class ReservationDate {
 
@@ -31,5 +32,9 @@ public class ReservationDate {
     public boolean isWeekend() {
         DayOfWeek dayOfWeek = reservationDate.getDayOfWeek();
         return dayOfWeek.equals(DayOfWeek.FRIDAY) || dayOfWeek.equals(DayOfWeek.SATURDAY);
+    }
+
+    public boolean isInDates(Set<LocalDate> dates) {
+        return dates.contains(reservationDate);
     }
 }
