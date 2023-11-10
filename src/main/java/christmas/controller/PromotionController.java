@@ -52,26 +52,25 @@ public class PromotionController {
     }
 
     private void printBenefits(ReservationDate reservationDate, MenuOrders menuOrders) {
+        Money dDayDiscountAmount = promotionService.calculateDDayEventDiscountAmount(reservationDate, menuOrders);
         Money giftEventDiscountAmount = promotionService.calculateGiftEventDiscountAmount(menuOrders);
 
         outputView.printDiscountAmounts(new DiscountAmountsResponse(
-                Money.ZERO,
+                dDayDiscountAmount,
                 Money.ZERO,
                 Money.ZERO,
                 giftEventDiscountAmount
         ));
     }
 
-    private MenuQuantity printGiftEventResult(MenuOrders menuOrders) {
+    private void printGiftEventResult(MenuOrders menuOrders) {
         MenuQuantity giftMenu = promotionService.applyGiftEvent(menuOrders);
         outputView.printGiftMenu(MenuQuantityResponse.from(giftMenu));
-        return giftMenu;
     }
 
-    private Money printPreDiscountCharge(MenuOrders menuOrders) {
+    private void printPreDiscountCharge(MenuOrders menuOrders) {
         Money preDiscountCharge = promotionService.calculatePreDiscountCharge(menuOrders);
         outputView.printPreDiscountCharge(preDiscountCharge);
-        return preDiscountCharge;
     }
 
     private ReservationDate inputReservationDate() {
