@@ -41,6 +41,18 @@ class MenuOrdersTest {
     }
 
     @Test
+    public void 최대_주문_가능_숫자_20개_이상의_메뉴로_MenuOrders_를_생성하면_예외가_발생한다() throws Exception {
+        // given
+        List<MenuQuantity> menuQuantities = List.of(new MenuQuantity(Menu.CAESAR_SALAD.getName(), 21));
+
+        // when
+        // then
+        assertThatThrownBy(() -> {
+            new MenuOrders(menuQuantities);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     public void 주문_총_금액을_계산할_수_있다() throws Exception {
         // given
 
