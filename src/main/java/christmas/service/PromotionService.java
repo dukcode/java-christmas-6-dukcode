@@ -10,13 +10,16 @@ public class PromotionService {
     private final GiftEventProcessor giftEventProcessor;
     private final DDayDiscountEventProcessor dDayDiscountEventProcessor;
     private final WeekdayDiscountEventProcessor weekdayDiscountEventProcessor;
+    private final WeekendDiscountEventProcessor weekendDiscountEventProcessor;
 
     public PromotionService(GiftEventProcessor giftEventProcessor,
                             DDayDiscountEventProcessor dDayDiscountEventProcessor,
-                            WeekdayDiscountEventProcessor weekdayDiscountEventProcessor) {
+                            WeekdayDiscountEventProcessor weekdayDiscountEventProcessor,
+                            WeekendDiscountEventProcessor weekendDiscountEventProcessor) {
         this.giftEventProcessor = giftEventProcessor;
         this.dDayDiscountEventProcessor = dDayDiscountEventProcessor;
         this.weekdayDiscountEventProcessor = weekdayDiscountEventProcessor;
+        this.weekendDiscountEventProcessor = weekendDiscountEventProcessor;
     }
 
     public Money calculatePreDiscountCharge(MenuOrders menuOrders) {
@@ -38,5 +41,9 @@ public class PromotionService {
 
     public Money calculateWeekdayEventDiscountAmount(ReservationDate reservationDate, MenuOrders menuOrders) {
         return weekdayDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders);
+    }
+
+    public Money calculateWeekendEventDiscountAmount(ReservationDate reservationDate, MenuOrders menuOrders) {
+        return weekendDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders);
     }
 }

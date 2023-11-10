@@ -9,6 +9,7 @@ import christmas.service.DDayDiscountEventProcessor;
 import christmas.service.GiftEventProcessor;
 import christmas.service.PromotionService;
 import christmas.service.WeekdayDiscountEventProcessor;
+import christmas.service.WeekendDiscountEventProcessor;
 import christmas.view.InputConsoleView;
 import christmas.view.OutputConsoleView;
 import java.time.LocalDate;
@@ -33,8 +34,12 @@ public class Application {
                                 Money.of(10_000L),
                                 Money.of(2_023L),
                                 MenuType.DESSERT
-                        )
-                )
+                        ),
+                        new WeekendDiscountEventProcessor(
+                                Money.of(10_000L),
+                                Money.of(2_023L),
+                                MenuType.MAIN_DISH
+                        ))
         );
         promotionController.run();
     }
