@@ -7,7 +7,7 @@ import christmas.domain.Money;
 
 public class GiftEventProcessor {
 
-    public final Money eventMinOrderAmount;
+    private final Money eventMinOrderAmount;
     private final Menu giftMenu;
     private final int quantity;
 
