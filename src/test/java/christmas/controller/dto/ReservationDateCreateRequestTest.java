@@ -4,6 +4,7 @@ package christmas.controller.dto;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import camp.nextstep.edu.missionutils.Console;
 import christmas.controller.dto.request.ReservationDateCreateRequest;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -20,7 +21,7 @@ class ReservationDateCreateRequestTest {
         // when
         // then
         assertThatCode(() -> {
-            new ReservationDateCreateRequest(dayOfMonth);
+            new ReservationDateCreateRequest("2023", "12", Console.readLine());
         }).doesNotThrowAnyException();
     }
 
@@ -32,7 +33,7 @@ class ReservationDateCreateRequestTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            new ReservationDateCreateRequest(dayOfMonth);
+            new ReservationDateCreateRequest("2023", "12", Console.readLine());
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
