@@ -1,9 +1,9 @@
 package christmas.view;
 
 import christmas.controller.OutputView;
+import christmas.controller.dto.response.BenefitsResponse;
 import christmas.controller.dto.response.ChargeResponse;
 import christmas.controller.dto.response.DiscountAmountResponse;
-import christmas.controller.dto.response.DiscountAmountsResponse;
 import christmas.controller.dto.response.MenuOrdersResponse;
 import christmas.controller.dto.response.MenuQuantityResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
@@ -59,9 +59,9 @@ public class OutputConsoleView implements OutputView {
     }
 
     @Override
-    public void printDiscountAmounts(DiscountAmountsResponse discountAmountsResponse) {
+    public void printDiscountAmounts(BenefitsResponse benefitsResponse) {
         System.out.println("<혜택 내역>");
-        System.out.println(discountAmountsResponse);
+        System.out.println(benefitsResponse);
     }
 
     @Override

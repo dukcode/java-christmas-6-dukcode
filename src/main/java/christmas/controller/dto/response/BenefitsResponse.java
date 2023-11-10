@@ -4,7 +4,7 @@ import christmas.domain.Money;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DiscountAmountsResponse {
+public class BenefitsResponse {
 
     private static final String CHRISTMAS_D_DAY_EVENT_TITLE = "크리스마스 디데이 할인";
     private static final String WEEKDAY_EVENT_TITLE = "평일 할인";
@@ -15,9 +15,9 @@ public class DiscountAmountsResponse {
     private static final String EVENT_NAME_DISCOUNT_AMOUNT_STRING_FORMAT = "%s: -%s";
     private final Map<String, Money> discountAmounts = new HashMap<>();
 
-    public DiscountAmountsResponse(Money christmasDDayEventDiscountAmount, Money weekdayEventDiscountAmount,
-                                   Money weekendEventDiscountAmount, Money specialEventDiscountAmount,
-                                   Money giftEventDiscountAmount) {
+    public BenefitsResponse(Money christmasDDayEventDiscountAmount, Money weekdayEventDiscountAmount,
+                            Money weekendEventDiscountAmount, Money specialEventDiscountAmount,
+                            Money giftEventDiscountAmount) {
         discountAmounts.put(CHRISTMAS_D_DAY_EVENT_TITLE, christmasDDayEventDiscountAmount);
         discountAmounts.put(WEEKDAY_EVENT_TITLE, weekdayEventDiscountAmount);
         discountAmounts.put(WEEKEND_EVENT_TITLE, weekendEventDiscountAmount);

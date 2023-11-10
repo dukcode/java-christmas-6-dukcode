@@ -2,9 +2,9 @@ package christmas.controller;
 
 import christmas.controller.dto.request.MenuOrdersRequest;
 import christmas.controller.dto.request.ReservationDateCreateRequest;
+import christmas.controller.dto.response.BenefitsResponse;
 import christmas.controller.dto.response.ChargeResponse;
 import christmas.controller.dto.response.DiscountAmountResponse;
-import christmas.controller.dto.response.DiscountAmountsResponse;
 import christmas.controller.dto.response.MenuOrdersResponse;
 import christmas.controller.dto.response.MenuQuantityResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
@@ -75,7 +75,7 @@ public class PromotionController {
         Money specialEventDiscountAmount = promotionService.calculateSpecialEventDiscountAmount(reservationDate,
                 menuOrders);
 
-        outputView.printDiscountAmounts(new DiscountAmountsResponse(
+        outputView.printDiscountAmounts(new BenefitsResponse(
                 dDayEventDiscountAmount,
                 weekdayEventDiscountAmount,
                 weekendEventDiscountAmount,

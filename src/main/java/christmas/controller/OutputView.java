@@ -1,8 +1,8 @@
 package christmas.controller;
 
+import christmas.controller.dto.response.BenefitsResponse;
 import christmas.controller.dto.response.ChargeResponse;
 import christmas.controller.dto.response.DiscountAmountResponse;
-import christmas.controller.dto.response.DiscountAmountsResponse;
 import christmas.controller.dto.response.MenuOrdersResponse;
 import christmas.controller.dto.response.MenuQuantityResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
@@ -20,7 +20,7 @@ public interface OutputView {
 
     void printGiftMenu(MenuQuantityResponse giftMenu);
 
-    void printDiscountAmounts(DiscountAmountsResponse discountAmountsResponse);
+    void printDiscountAmounts(BenefitsResponse benefitsResponse);
 
     void printTotalBenefitAmount(DiscountAmountResponse discountAmountResponse);
 
