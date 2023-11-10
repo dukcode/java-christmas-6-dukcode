@@ -27,11 +27,21 @@ public class BenefitsResponse {
 
     @Override
     public String toString() {
-        if (discountAmounts.isEmpty()) {
-            return "없음";
+        if (isAllZero()) {
+            return "없음\n";
         }
 
         return createEventDiscountAmountString();
+    }
+
+    private boolean isAllZero() {
+        for (String title : discountAmounts.keySet()) {
+            Money discountAmount = discountAmounts.get(title);
+            if (!discountAmount.equals(Money.ZERO)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private String createEventDiscountAmountString() {
