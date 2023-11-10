@@ -10,6 +10,8 @@ public class DiscountAmountsResponse {
     private static final String WEEKDAY_EVENT_TITLE = "평일 할인";
     private static final String SPECIAL_EVENT_TITLE = "특별 할인";
     private static final String GIFT_EVENT_TITLE = "증정 이벤트";
+
+    private static final String EVENT_NAME_DISCOUNT_AMOUNT_STRING_FORMAT = "%s: -%s";
     private final Map<String, Money> discountAmounts = new HashMap<>();
 
     public DiscountAmountsResponse(Money christmasDDayEventDiscountAmount, Money weekdayEventDiscountAmount,
@@ -26,13 +28,17 @@ public class DiscountAmountsResponse {
             return "없음";
         }
 
+        return createEventDiscountAmountString();
+    }
+
+    private String createEventDiscountAmountString() {
         StringBuilder stringBuilder = new StringBuilder();
         for (String title : discountAmounts.keySet()) {
             Money discountAmount = discountAmounts.get(title);
             if (discountAmount.equals(Money.ZERO)) {
                 continue;
             }
-            stringBuilder.append(String.format("%s: -%s",
+            stringBuilder.append(String.format(EVENT_NAME_DISCOUNT_AMOUNT_STRING_FORMAT,
                     title, discountAmounts.get(title).toString()));
             stringBuilder.append("\n");
         }
