@@ -6,11 +6,25 @@ import java.util.List;
 
 public class MenuOrders {
 
+    private static final int MAX_ORDER_QUANTITY = 20;
+
     private final List<MenuQuantity> menuQuantities = new ArrayList<>();
 
     public MenuOrders(List<MenuQuantity> menuQuantities) {
         validateMenuDuplicated(menuQuantities);
+        validateQuantitySize(menuQuantities);
         this.menuQuantities.addAll(menuQuantities);
+    }
+
+    private void validateQuantitySize(List<MenuQuantity> menuQuantities) {
+        int numQuantity = 0;
+        for (MenuQuantity menuQuantity : menuQuantities) {
+            numQuantity += menuQuantity.getQuantity();
+        }
+
+        if (numQuantity > MAX_ORDER_QUANTITY) {
+            throw new IllegalArgumentException(ExceptionMessage.MAX_ORDER_QUANTITY_EXCEEDED);
+        }
     }
 
 
