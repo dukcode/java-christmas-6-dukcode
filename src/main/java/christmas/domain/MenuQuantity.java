@@ -51,4 +51,8 @@ public class MenuQuantity {
     public boolean isEmpty() {
         return menu.equals(Menu.NONE);
     }
+
+    public boolean isBeverage() {
+        return menu.isBeverage();
+    }
 }

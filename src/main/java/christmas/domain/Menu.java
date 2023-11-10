@@ -63,4 +63,8 @@ public enum Menu {
     public Money getCost() {
         return cost;
     }
+
+    public boolean isBeverage() {
+        return this.type.equals(MenuType.BEVERAGE);
+    }
 }

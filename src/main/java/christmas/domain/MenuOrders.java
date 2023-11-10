@@ -13,7 +13,18 @@ public class MenuOrders {
     public MenuOrders(List<MenuQuantity> menuQuantities) {
         validateMenuDuplicated(menuQuantities);
         validateQuantitySize(menuQuantities);
+        validateNotOnlyBeverageMenu(menuQuantities);
         this.menuQuantities.addAll(menuQuantities);
+    }
+
+    private void validateNotOnlyBeverageMenu(List<MenuQuantity> menuQuantities) {
+        for (MenuQuantity menuQuantity : menuQuantities) {
+            if (!menuQuantity.isBeverage()) {
+                return;
+            }
+        }
+
+        throw new IllegalArgumentException(ExceptionMessage.INVALID_MENU_COMPOSITION);
     }
 
     private void validateQuantitySize(List<MenuQuantity> menuQuantities) {
