@@ -20,4 +20,8 @@ public class PromotionService {
         return giftEventProcessor.applyEvent(menuOrders);
     }
 
+    public Money calculateGiftEventDiscountAmount(MenuOrders menuOrders) {
+        MenuQuantity giftMenuQuantity = giftEventProcessor.applyEvent(menuOrders);
+        return giftMenuQuantity.calculateCost();
+    }
 }
