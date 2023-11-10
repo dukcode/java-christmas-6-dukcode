@@ -59,7 +59,7 @@ class DDayDiscountEventProcessorTest {
     public void 기본_할인에_예약일과_시작일의_날짜_차이만큼_하루_당_할인을_곱한_것을_더하면_총_할인_금액이다() throws Exception {
         // given
         long dateDiff = 3L;
-        ReservationDate reservationDate = new ReservationDate(dDay.minusDays(dateDiff));
+        ReservationDate reservationDate = new ReservationDate(eventStartDate.plusDays(dateDiff));
         MenuOrders menuOrders = new MenuOrders(List.of(new MenuQuantity(Menu.BBQ_RIB.getName(), 1),
                 new MenuQuantity(Menu.CAESAR_SALAD.getName(), 2),
                 new MenuQuantity(Menu.ZERO_COKE.getName(), 3)));

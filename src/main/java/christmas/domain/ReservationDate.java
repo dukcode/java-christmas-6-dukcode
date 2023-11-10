@@ -25,8 +25,8 @@ public class ReservationDate {
         return reservationDate;
     }
 
-    public long daysUntil(LocalDate targetDate) {
-        return DAYS.between(reservationDate, targetDate);
+    public long daysAfter(LocalDate startDate) {
+        return DAYS.between(startDate, reservationDate);
     }
 
     public boolean isWeekend() {

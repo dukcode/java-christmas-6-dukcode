@@ -53,4 +53,20 @@ public class PromotionService {
     public Money calculateSpecialEventDiscountAmount(ReservationDate reservationDate, MenuOrders menuOrders) {
         return specialDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders);
     }
+
+    public Money calculateTotalDiscountAmount(ReservationDate reservationDate, MenuOrders menuOrders) {
+        Money totalDiscountAmount = Money.ZERO;
+        totalDiscountAmount = totalDiscountAmount.add(
+                dDayDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders));
+        totalDiscountAmount = totalDiscountAmount.add(
+                weekdayDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders));
+        totalDiscountAmount = totalDiscountAmount.add(
+                weekendDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders));
+        totalDiscountAmount = totalDiscountAmount.add(
+                specialDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders));
+        totalDiscountAmount = totalDiscountAmount.add(
+                calculateGiftEventDiscountAmount(menuOrders));
+
+        return totalDiscountAmount;
+    }
 }

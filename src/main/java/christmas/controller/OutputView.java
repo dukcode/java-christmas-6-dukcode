@@ -4,6 +4,7 @@ import christmas.controller.dto.response.DiscountAmountsResponse;
 import christmas.controller.dto.response.MenuOrdersResponse;
 import christmas.controller.dto.response.MenuQuantityResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
+import christmas.controller.dto.response.TotalDiscountAmountResponse;
 import christmas.domain.Money;
 
 public interface OutputView {
@@ -20,4 +21,6 @@ public interface OutputView {
     void printGiftMenu(MenuQuantityResponse giftMenu);
 
     void printDiscountAmounts(DiscountAmountsResponse discountAmountsResponse);
+
+    void printTotalBenefitAmount(TotalDiscountAmountResponse totalDiscountAmountResponse);
 }

@@ -36,7 +36,7 @@ public class DDayDiscountEventProcessor {
         }
 
         Money discountAmount = baseDiscountAmount;
-        long dateDifference = reservationDate.daysUntil(dDay);
+        long dateDifference = reservationDate.daysAfter(eventStartDate);
         discountAmount = discountAmount.add(perDayDiscountAmount.multiply(dateDifference));
 
         return discountAmount;
