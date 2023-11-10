@@ -10,7 +10,7 @@ import christmas.domain.Money;
 public class OutputConsoleView implements OutputView {
 
     private static final String ERROR_PREFIX = "[ERROR] ";
-    private static final String ERROR_SUFFIX = "  다시 입력해 주세요.";
+    private static final String ERROR_SUFFIX = " 다시 입력해 주세요.";
 
     @Override
     public void printWelcomeMessage() {
