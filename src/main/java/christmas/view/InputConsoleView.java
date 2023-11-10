@@ -6,10 +6,14 @@ import christmas.controller.dto.request.MenuOrdersRequest;
 import christmas.controller.dto.request.ReservationDateCreateRequest;
 
 public class InputConsoleView implements InputView {
+
+    private static final String EVENT_YEAR = "2023";
+    private static final String EVENT_MONTH = "12";
+
     @Override
     public ReservationDateCreateRequest inputReservationDate() {
-        System.out.println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
-        return new ReservationDateCreateRequest(Console.readLine());
+        System.out.printf("%s월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)\n", EVENT_MONTH);
+        return new ReservationDateCreateRequest(EVENT_YEAR, EVENT_MONTH, Console.readLine());
     }
 
     @Override

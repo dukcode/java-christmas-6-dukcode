@@ -52,11 +52,11 @@ public class PromotionController {
     }
 
     private void printBenefits(ReservationDate reservationDate, MenuOrders menuOrders) {
-        Money dDayDiscountAmount = promotionService.calculateDDayEventDiscountAmount(reservationDate, menuOrders);
+        Money dDayEventDiscountAmount = promotionService.calculateDDayEventDiscountAmount(reservationDate, menuOrders);
         Money giftEventDiscountAmount = promotionService.calculateGiftEventDiscountAmount(menuOrders);
 
         outputView.printDiscountAmounts(new DiscountAmountsResponse(
-                dDayDiscountAmount,
+                dDayEventDiscountAmount,
                 Money.ZERO,
                 Money.ZERO,
                 giftEventDiscountAmount
@@ -76,7 +76,7 @@ public class PromotionController {
     private ReservationDate inputReservationDate() {
         return (ReservationDate) exceptionHandler.handle(inputView, outputView, (inputView) -> {
             ReservationDateCreateRequest reservationDateCreateRequest = inputView.inputReservationDate();
-            return new ReservationDate(reservationDateCreateRequest.getDayOfMonth());
+            return new ReservationDate(reservationDateCreateRequest.getReservationDate());
         });
     }
 

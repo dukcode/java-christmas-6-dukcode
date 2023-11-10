@@ -1,21 +1,22 @@
 package christmas.controller.dto.response;
 
 import christmas.domain.ReservationDate;
+import java.time.LocalDate;
 
 public class ReservationDateResponse {
 
 
-    private final int dayOfMonth;
+    private final LocalDate reservationDate;
 
-    private ReservationDateResponse(int dayOfMonth) {
-        this.dayOfMonth = dayOfMonth;
+    private ReservationDateResponse(LocalDate reservationDate) {
+        this.reservationDate = reservationDate;
     }
 
     public static ReservationDateResponse from(ReservationDate reservationDate) {
-        return new ReservationDateResponse(reservationDate.getDayOfMonth());
+        return new ReservationDateResponse(reservationDate.getReservationDate());
     }
 
     public int getDayOfMonth() {
-        return dayOfMonth;
+        return reservationDate.getDayOfMonth();
     }
 }

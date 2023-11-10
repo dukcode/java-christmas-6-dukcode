@@ -2,17 +2,37 @@ package christmas.controller.dto.request;
 
 import christmas.controller.dto.exception.ExceptionMessage;
 import christmas.controller.dto.validator.NumberFormatValidator;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 
 public class ReservationDateCreateRequest {
 
-    private final int dayOfMonth;
+    private final LocalDate reservationDate;
 
-    public ReservationDateCreateRequest(String dayOfMonth) {
-        NumberFormatValidator.validate(dayOfMonth, ExceptionMessage.INVALID_DAY_OF_MONTH_FORMAT);
-        this.dayOfMonth = Integer.parseInt(dayOfMonth);
+    public ReservationDateCreateRequest(String year, String month, String dayOfMonth) {
+        NumberFormatValidator.validate(dayOfMonth, ExceptionMessage.INVALID_DATE_FORMAT);
+        NumberFormatValidator.validate(dayOfMonth, ExceptionMessage.INVALID_DATE_FORMAT);
+        NumberFormatValidator.validate(dayOfMonth, ExceptionMessage.INVALID_DATE_FORMAT);
+
+        validateDateFormat(year, month, dayOfMonth);
+
+        this.reservationDate = LocalDate.of(
+                Integer.parseInt(year),
+                Integer.parseInt(month),
+                Integer.parseInt(dayOfMonth));
     }
 
-    public int getDayOfMonth() {
-        return dayOfMonth;
+    private static void validateDateFormat(String year, String month, String dayOfMonth) {
+        try {
+            LocalDate.of(Integer.parseInt(year),
+                    Integer.parseInt(month),
+                    Integer.parseInt(dayOfMonth));
+        } catch (DateTimeException dateTimeException) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_DATE_FORMAT);
+        }
+    }
+
+    public LocalDate getReservationDate() {
+        return reservationDate;
     }
 }

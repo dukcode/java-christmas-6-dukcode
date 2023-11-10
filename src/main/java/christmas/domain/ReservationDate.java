@@ -1,23 +1,29 @@
 package christmas.domain;
 
-import christmas.domain.exception.ExceptionMessage;
+import static java.time.temporal.ChronoUnit.DAYS;
+
+import java.time.LocalDate;
 
 public class ReservationDate {
 
-    private final int dayOfMonth;
+    private final LocalDate reservationDate;
 
-    public ReservationDate(int dayOfMonth) {
-        validateDayOfMonth(dayOfMonth);
-        this.dayOfMonth = dayOfMonth;
+    public ReservationDate(LocalDate reservationDate) {
+        this.reservationDate = reservationDate;
     }
 
-    private void validateDayOfMonth(int dayOfMonth) {
-        if (dayOfMonth < December.START_DAY_OF_MONTH || dayOfMonth > December.LAST_DAY_OF_MONTH) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_DAY_OF_MONTH);
+    public boolean isInRange(LocalDate startDate, LocalDate endDate) {
+        if (reservationDate.equals(startDate) || reservationDate.equals(endDate)) {
+            return true;
         }
+        return reservationDate.isAfter(startDate) && reservationDate.isBefore(endDate);
     }
 
-    public int getDayOfMonth() {
-        return dayOfMonth;
+    public LocalDate getReservationDate() {
+        return reservationDate;
+    }
+
+    public long daysUntil(LocalDate targetDate) {
+        return DAYS.between(reservationDate, targetDate);
     }
 }

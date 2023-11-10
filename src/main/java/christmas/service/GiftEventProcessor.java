@@ -4,6 +4,7 @@ import christmas.domain.Menu;
 import christmas.domain.MenuOrders;
 import christmas.domain.MenuQuantity;
 import christmas.domain.Money;
+import christmas.domain.ReservationDate;
 
 public class GiftEventProcessor {
 
@@ -24,5 +25,9 @@ public class GiftEventProcessor {
             return new MenuQuantity(giftMenu, quantity);
         }
         return MenuQuantity.EMPTY;
+    }
+
+    public Money calculateDiscountAmount(ReservationDate reservationDate, MenuOrders menuOrders) {
+        return null;
     }
 }
