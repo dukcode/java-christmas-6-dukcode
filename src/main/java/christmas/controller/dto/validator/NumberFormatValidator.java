@@ -1,17 +1,17 @@
 package christmas.controller.dto.validator;
 
-import christmas.view.exception.ExceptionMessage;
+import christmas.controller.dto.exception.ExceptionMessage;
 
 public class NumberFormatValidator {
 
     private NumberFormatValidator() {
     }
 
-    public static void validate(String number) {
+    public static void validate(String number, String exceptionMessage) {
         try {
             Integer.parseInt(number);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_NUMBER_FORMAT);
+            throw new IllegalArgumentException(exceptionMessage);
         }
     }
 }
