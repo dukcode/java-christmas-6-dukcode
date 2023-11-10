@@ -1,12 +1,12 @@
 package christmas.view;
 
 import christmas.controller.OutputView;
+import christmas.controller.dto.response.ChargeResponse;
+import christmas.controller.dto.response.DiscountAmountResponse;
 import christmas.controller.dto.response.DiscountAmountsResponse;
 import christmas.controller.dto.response.MenuOrdersResponse;
 import christmas.controller.dto.response.MenuQuantityResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
-import christmas.controller.dto.response.TotalDiscountAmountResponse;
-import christmas.domain.Money;
 
 public class OutputConsoleView implements OutputView {
 
@@ -45,7 +45,7 @@ public class OutputConsoleView implements OutputView {
     }
 
     @Override
-    public void printPreDiscountCharge(Money preDiscountCharge) {
+    public void printPreDiscountCharge(ChargeResponse preDiscountCharge) {
         System.out.println("<할인 전 총주문 금액>");
         System.out.println(preDiscountCharge);
         System.out.println();
@@ -62,14 +62,19 @@ public class OutputConsoleView implements OutputView {
     public void printDiscountAmounts(DiscountAmountsResponse discountAmountsResponse) {
         System.out.println("<혜택 내역>");
         System.out.println(discountAmountsResponse);
+    }
+
+    @Override
+    public void printTotalBenefitAmount(DiscountAmountResponse discountAmountResponse) {
+        System.out.println("<총혜택 금액>");
+        System.out.println(discountAmountResponse);
         System.out.println();
     }
 
     @Override
-    public void printTotalBenefitAmount(TotalDiscountAmountResponse totalDiscountAmountResponse) {
-        System.out.println("<혜택 내역>");
-        System.out.println(totalDiscountAmountResponse);
+    public void printChargeAfterDiscount(ChargeResponse chargeAfterDiscount) {
+        System.out.println("<할인 후 예상 결제 금액>");
+        System.out.println(chargeAfterDiscount);
         System.out.println();
     }
-
 }

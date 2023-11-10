@@ -54,4 +54,9 @@ public class Money {
     public boolean isGreaterThanOrEqual(Money money) {
         return this.amount >= money.amount;
     }
+
+    public Money minus(Money money) {
+        // TODO: 결과 음수일 시 예외 처리
+        return new Money(amount - money.amount);
+    }
 }

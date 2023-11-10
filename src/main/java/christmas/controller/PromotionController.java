@@ -2,11 +2,12 @@ package christmas.controller;
 
 import christmas.controller.dto.request.MenuOrdersRequest;
 import christmas.controller.dto.request.ReservationDateCreateRequest;
+import christmas.controller.dto.response.ChargeResponse;
+import christmas.controller.dto.response.DiscountAmountResponse;
 import christmas.controller.dto.response.DiscountAmountsResponse;
 import christmas.controller.dto.response.MenuOrdersResponse;
 import christmas.controller.dto.response.MenuQuantityResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
-import christmas.controller.dto.response.TotalDiscountAmountResponse;
 import christmas.domain.MenuOrders;
 import christmas.domain.MenuQuantity;
 import christmas.domain.Money;
@@ -51,11 +52,17 @@ public class PromotionController {
 
         printBenefits(reservationDate, menuOrders);
         printTotalDiscountAmount(reservationDate, menuOrders);
+        printChargeAfterDiscount(reservationDate, menuOrders);
+    }
+
+    private void printChargeAfterDiscount(ReservationDate reservationDate, MenuOrders menuOrders) {
+        Money chargeAfterDiscount = promotionService.calculateChargeAfterDiscount(reservationDate, menuOrders);
+        outputView.printChargeAfterDiscount(new ChargeResponse(chargeAfterDiscount));
     }
 
     private void printTotalDiscountAmount(ReservationDate reservationDate, MenuOrders menuOrders) {
-        Money totalDiscountAmount = promotionService.calculateTotalDiscountAmount(reservationDate, menuOrders);
-        outputView.printTotalBenefitAmount(new TotalDiscountAmountResponse(totalDiscountAmount));
+        Money totalDiscountAmount = promotionService.calculateTotalBenefitAmount(reservationDate, menuOrders);
+        outputView.printTotalBenefitAmount(new DiscountAmountResponse(totalDiscountAmount));
     }
 
     private void printBenefits(ReservationDate reservationDate, MenuOrders menuOrders) {
@@ -84,7 +91,7 @@ public class PromotionController {
 
     private void printPreDiscountCharge(MenuOrders menuOrders) {
         Money preDiscountCharge = promotionService.calculatePreDiscountCharge(menuOrders);
-        outputView.printPreDiscountCharge(preDiscountCharge);
+        outputView.printPreDiscountCharge(new ChargeResponse(preDiscountCharge));
     }
 
     private ReservationDate inputReservationDate() {
