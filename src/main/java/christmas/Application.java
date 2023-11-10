@@ -13,15 +13,19 @@ import java.time.LocalDate;
 
 public class Application {
     public static void main(String[] args) {
+        int eventYear = 2023;
+        int eventMonth = 12;
+
         PromotionController promotionController = new PromotionController(
-                new InputConsoleView(), new OutputConsoleView(),
+                new InputConsoleView(eventYear, eventMonth),
+                new OutputConsoleView(eventYear, eventMonth),
                 new InfiniteRetryExceptionHandler(),
                 new PromotionService(
                         new GiftEventProcessor(Money.of(120_000L), Menu.CHAMPAGNE, 1),
                         new DDayDiscountEventProcessor(
                                 Money.of(10_000L), Money.of(1_000L), Money.of(100L),
-                                LocalDate.of(2023, 12, 1),
-                                LocalDate.of(2023, 12, 25)
+                                LocalDate.of(eventYear, eventMonth, 1),
+                                LocalDate.of(eventYear, eventMonth, 25)
                         )
                 )
         );

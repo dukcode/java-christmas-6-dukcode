@@ -12,9 +12,17 @@ public class OutputConsoleView implements OutputView {
     private static final String ERROR_PREFIX = "[ERROR] ";
     private static final String ERROR_SUFFIX = " 다시 입력해 주세요.";
 
+    private final int eventYear;
+    private final int eventMonth;
+
+    public OutputConsoleView(int eventYear, int eventMonth) {
+        this.eventYear = eventYear;
+        this.eventMonth = eventMonth;
+    }
+
     @Override
     public void printWelcomeMessage() {
-        System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
+        System.out.printf("안녕하세요! 우테코 식당 %d월 이벤트 플래너입니다.\n", eventMonth);
     }
 
     @Override
@@ -24,7 +32,8 @@ public class OutputConsoleView implements OutputView {
 
     @Override
     public void printResultTitle(ReservationDateResponse reservationDateResponse) {
-        System.out.printf("12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n\n",
+        System.out.printf("%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n\n",
+                eventMonth,
                 reservationDateResponse.getDayOfMonth());
     }
 
