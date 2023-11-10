@@ -55,4 +55,8 @@ public class MenuQuantity {
     public boolean isBeverage() {
         return menu.isBeverage();
     }
+
+    public boolean isSameType(MenuType menuType) {
+        return menu.isSameType(menuType);
+    }
 }

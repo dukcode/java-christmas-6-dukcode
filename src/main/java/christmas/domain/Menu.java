@@ -64,6 +64,10 @@ public enum Menu {
         return cost;
     }
 
+    public boolean isSameType(MenuType menuType) {
+        return type.equals(menuType);
+    }
+
     public boolean isBeverage() {
         return this.type.equals(MenuType.BEVERAGE);
     }

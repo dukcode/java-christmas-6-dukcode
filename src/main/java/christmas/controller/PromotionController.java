@@ -54,10 +54,12 @@ public class PromotionController {
     private void printBenefits(ReservationDate reservationDate, MenuOrders menuOrders) {
         Money dDayEventDiscountAmount = promotionService.calculateDDayEventDiscountAmount(reservationDate, menuOrders);
         Money giftEventDiscountAmount = promotionService.calculateGiftEventDiscountAmount(menuOrders);
+        Money weekdayEventDiscountAmount = promotionService.calculateWeekdayEventDiscountAmount(reservationDate,
+                menuOrders);
 
         outputView.printDiscountAmounts(new DiscountAmountsResponse(
                 dDayEventDiscountAmount,
-                Money.ZERO,
+                weekdayEventDiscountAmount,
                 Money.ZERO,
                 giftEventDiscountAmount
         ));

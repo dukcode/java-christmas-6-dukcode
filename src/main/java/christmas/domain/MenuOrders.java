@@ -62,4 +62,15 @@ public class MenuOrders {
 
         return cost;
     }
+
+    public int countMenuByType(MenuType discountMenuType) {
+        int count = 0;
+        for (MenuQuantity menuQuantity : menuQuantities) {
+            if (menuQuantity.isSameType(discountMenuType)) {
+                count += menuQuantity.getQuantity();
+            }
+        }
+
+        return count;
+    }
 }
