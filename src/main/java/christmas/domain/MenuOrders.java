@@ -73,4 +73,15 @@ public class MenuOrders {
 
         return count;
     }
+
+    public Badge awardBadge() {
+        Money totalOrderAmount = calculateTotalCost();
+        for (Badge badge : Badge.values()) {
+            if (badge.canBeAwardedBadge(totalOrderAmount)) {
+                return badge;
+            }
+        }
+
+        return Badge.NONE;
+    }
 }

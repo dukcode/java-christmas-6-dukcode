@@ -2,12 +2,14 @@ package christmas.controller;
 
 import christmas.controller.dto.request.MenuOrdersRequest;
 import christmas.controller.dto.request.ReservationDateCreateRequest;
+import christmas.controller.dto.response.BadgeAwardResponse;
 import christmas.controller.dto.response.BenefitsResponse;
 import christmas.controller.dto.response.ChargeResponse;
 import christmas.controller.dto.response.DiscountAmountResponse;
 import christmas.controller.dto.response.MenuOrdersResponse;
 import christmas.controller.dto.response.MenuQuantityResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
+import christmas.domain.Badge;
 import christmas.domain.MenuOrders;
 import christmas.domain.MenuQuantity;
 import christmas.domain.Money;
@@ -53,6 +55,12 @@ public class PromotionController {
         printBenefits(reservationDate, menuOrders);
         printTotalDiscountAmount(reservationDate, menuOrders);
         printChargeAfterDiscount(reservationDate, menuOrders);
+        printBadgeAward(reservationDate, menuOrders);
+    }
+
+    private void printBadgeAward(ReservationDate reservationDate, MenuOrders menuOrders) {
+        Badge badgeAward = promotionService.applyBadgeAwardEvent(reservationDate, menuOrders);
+        outputView.printBadgeAward(new BadgeAwardResponse(badgeAward));
     }
 
     private void printChargeAfterDiscount(ReservationDate reservationDate, MenuOrders menuOrders) {

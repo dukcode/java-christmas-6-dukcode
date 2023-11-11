@@ -1,6 +1,7 @@
 package christmas.view;
 
 import christmas.controller.OutputView;
+import christmas.controller.dto.response.BadgeAwardResponse;
 import christmas.controller.dto.response.BenefitsResponse;
 import christmas.controller.dto.response.ChargeResponse;
 import christmas.controller.dto.response.DiscountAmountResponse;
@@ -75,6 +76,13 @@ public class OutputConsoleView implements OutputView {
     public void printChargeAfterDiscount(ChargeResponse chargeAfterDiscount) {
         System.out.println("<할인 후 예상 결제 금액>");
         System.out.println(chargeAfterDiscount);
+        System.out.println();
+    }
+
+    @Override
+    public void printBadgeAward(BadgeAwardResponse badgeAwardResponse) {
+        System.out.println("<12월 이벤트 배지>");
+        System.out.println(badgeAwardResponse);
         System.out.println();
     }
 }

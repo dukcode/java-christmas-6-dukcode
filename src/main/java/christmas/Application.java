@@ -5,6 +5,7 @@ import christmas.domain.Menu;
 import christmas.domain.MenuType;
 import christmas.domain.Money;
 import christmas.handler.InfiniteRetryExceptionHandler;
+import christmas.service.BadgeAwardEventProcessor;
 import christmas.service.DDayDiscountEventProcessor;
 import christmas.service.GiftEventProcessor;
 import christmas.service.PromotionService;
@@ -53,7 +54,8 @@ public class Application {
                                         LocalDate.of(eventYear, eventMonth, 25),
                                         LocalDate.of(eventYear, eventMonth, 31)
                                 )
-                        )
+                        ),
+                        new BadgeAwardEventProcessor()
                 )
         );
 

@@ -1,5 +1,6 @@
 package christmas.service;
 
+import christmas.domain.Badge;
 import christmas.domain.MenuOrders;
 import christmas.domain.MenuQuantity;
 import christmas.domain.Money;
@@ -13,16 +14,20 @@ public class PromotionService {
     private final WeekendDiscountEventProcessor weekendDiscountEventProcessor;
     private final SpecialDiscountEventProcessor specialDiscountEventProcessor;
 
+    private final BadgeAwardEventProcessor badgeAwardEventProcessor;
+
     public PromotionService(GiftEventProcessor giftEventProcessor,
                             DDayDiscountEventProcessor dDayDiscountEventProcessor,
                             WeekdayDiscountEventProcessor weekdayDiscountEventProcessor,
                             WeekendDiscountEventProcessor weekendDiscountEventProcessor,
-                            SpecialDiscountEventProcessor specialDiscountEventProcessor) {
+                            SpecialDiscountEventProcessor specialDiscountEventProcessor,
+                            BadgeAwardEventProcessor badgeAwardEventProcessor) {
         this.giftEventProcessor = giftEventProcessor;
         this.dDayDiscountEventProcessor = dDayDiscountEventProcessor;
         this.weekdayDiscountEventProcessor = weekdayDiscountEventProcessor;
         this.weekendDiscountEventProcessor = weekendDiscountEventProcessor;
         this.specialDiscountEventProcessor = specialDiscountEventProcessor;
+        this.badgeAwardEventProcessor = badgeAwardEventProcessor;
     }
 
     public Money calculatePreDiscountCharge(MenuOrders menuOrders) {
@@ -31,6 +36,11 @@ public class PromotionService {
 
     public MenuQuantity applyGiftEvent(MenuOrders menuOrders) {
         return giftEventProcessor.applyEvent(menuOrders);
+    }
+
+    public Badge applyBadgeAwardEvent(ReservationDate reservationDate, MenuOrders menuOrders) {
+        Money totalBenefitAmount = calculateTotalBenefitAmount(reservationDate, menuOrders);
+        return badgeAwardEventProcessor.applyEvent(totalBenefitAmount);
     }
 
     public Money calculateGiftEventDiscountAmount(MenuOrders menuOrders) {
