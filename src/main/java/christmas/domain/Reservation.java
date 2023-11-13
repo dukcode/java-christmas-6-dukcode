@@ -31,7 +31,7 @@ public class Reservation {
     }
 
     public int countMenusByType(MenuType menuType) {
-        return order.countMenuByType(menuType);
+        return order.countMenusByType(menuType);
     }
 
     public boolean isInDates(Set<LocalDate> dates) {

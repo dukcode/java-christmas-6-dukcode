@@ -63,7 +63,7 @@ public class Order {
         return cost;
     }
 
-    public int countMenuByType(MenuType discountMenuType) {
+    public int countMenusByType(MenuType discountMenuType) {
         int count = 0;
         for (MenuQuantity menuQuantity : menuQuantities) {
             if (menuQuantity.isSameType(discountMenuType)) {
@@ -72,16 +72,5 @@ public class Order {
         }
 
         return count;
-    }
-
-    public Badge awardBadge() {
-        Money totalOrderAmount = calculateTotalCost();
-        for (Badge badge : Badge.values()) {
-            if (badge.canBeAwardedBadge(totalOrderAmount)) {
-                return badge;
-            }
-        }
-
-        return Badge.NONE;
     }
 }

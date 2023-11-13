@@ -20,7 +20,7 @@ public enum Badge {
         return this.name;
     }
 
-    public boolean canBeAwardedBadge(Money orderAmount) {
+    public boolean canBeAward(Money orderAmount) {
         return orderAmount.isGreaterThanOrEqual(minBadgeAwardAmount);
     }
 }

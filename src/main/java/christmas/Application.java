@@ -5,8 +5,8 @@ import christmas.domain.Menu;
 import christmas.domain.MenuType;
 import christmas.domain.Money;
 import christmas.handler.InfiniteRetryExceptionHandler;
-import christmas.service.BadgeAwardEventProcessor;
 import christmas.service.PromotionService;
+import christmas.service.badge.BadgeManager;
 import christmas.service.event.Event;
 import christmas.service.event.condition.CompositeEventCondition;
 import christmas.service.event.condition.MinimumOrderAmountCondition;
@@ -32,10 +32,10 @@ public class Application {
         CompositeEventCondition commonEventCondition = createCommonEventCondition(eventYearMonth);
 
         List<Event> events = createEvents(commonEventCondition, eventYearMonth);
-        BadgeAwardEventProcessor badgeAwardEventProcessor = new BadgeAwardEventProcessor();
+        BadgeManager badgeManager = new BadgeManager();
 
         PromotionController promotionController = createPromotionController(eventYear, eventMonth, events,
-                badgeAwardEventProcessor);
+                badgeManager);
 
         promotionController.run();
     }
@@ -52,12 +52,12 @@ public class Application {
     }
 
     private static PromotionController createPromotionController(int eventYear, int eventMonth, List<Event> events,
-                                                                 BadgeAwardEventProcessor badgeAwardEventProcessor) {
+                                                                 BadgeManager badgeManager) {
         return new PromotionController(
                 new InputConsoleView(eventYear, eventMonth),
                 new OutputConsoleView(eventYear, eventMonth),
                 new InfiniteRetryExceptionHandler(),
-                new PromotionService(events, badgeAwardEventProcessor)
+                new PromotionService(events, badgeManager)
         );
     }
 
