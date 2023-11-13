@@ -8,12 +8,12 @@ public class OrderCreateRequest {
 
     private static final String ORDER_DELIMITER = ",";
 
-    private final List<MenuQuantityRequest> menuQuantityRequests = new ArrayList<>();
+    private final List<MenuQuantityCreateRequest> menuQuantityCreateRequests = new ArrayList<>();
 
     public OrderCreateRequest(String orders) {
         List<String> menuOrders = parseOrders(orders);
         for (String menuOrder : menuOrders) {
-            menuQuantityRequests.add(new MenuQuantityRequest(menuOrder));
+            menuQuantityCreateRequests.add(new MenuQuantityCreateRequest(menuOrder));
         }
     }
 
@@ -23,8 +23,8 @@ public class OrderCreateRequest {
                 .toList();
     }
 
-    public List<MenuQuantityRequest> getMenuOrderRequests() {
-        return menuQuantityRequests;
+    public List<MenuQuantityCreateRequest> getMenuOrderRequests() {
+        return menuQuantityCreateRequests;
     }
 
 }

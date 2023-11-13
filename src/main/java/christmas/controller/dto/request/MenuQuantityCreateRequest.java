@@ -3,13 +3,13 @@ package christmas.controller.dto.request;
 import christmas.controller.dto.exception.ExceptionMessage;
 import christmas.controller.dto.validator.NumberFormatValidator;
 
-public class MenuQuantityRequest {
+public class MenuQuantityCreateRequest {
 
     private static final String MENU_QUANTITY_DELIMITER = "-";
     private final String menuName;
     private final int orderCount;
 
-    public MenuQuantityRequest(String menuOrder) {
+    public MenuQuantityCreateRequest(String menuOrder) {
         validateDelimiter(menuOrder);
 
         String menuName = parseMenuName(menuOrder);

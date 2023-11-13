@@ -3,14 +3,14 @@ package christmas.controller.dto;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import christmas.controller.dto.request.MenuQuantityRequest;
+import christmas.controller.dto.request.MenuQuantityCreateRequest;
 import christmas.controller.dto.request.OrderCreateRequest;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class MenuQuantityRequestTest {
+class MenuQuantityCreateRequestTest {
 
     @Test
     public void 메뉴와_갯수로_MenuOrderRequest_클래스를_생성을_할_수_있다() throws Exception {
@@ -46,7 +46,7 @@ class MenuQuantityRequestTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            new MenuQuantityRequest(order);
+            new MenuQuantityCreateRequest(order);
         }).isInstanceOf(IllegalArgumentException.class);
 
     }
