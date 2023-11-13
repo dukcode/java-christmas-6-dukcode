@@ -1,6 +1,6 @@
 package christmas.controller.dto.response;
 
-import christmas.domain.ReservationDate;
+import christmas.domain.Reservation;
 import java.time.LocalDate;
 
 public class ReservationDateResponse {
@@ -12,8 +12,8 @@ public class ReservationDateResponse {
         this.reservationDate = reservationDate;
     }
 
-    public static ReservationDateResponse from(ReservationDate reservationDate) {
-        return new ReservationDateResponse(reservationDate.getReservationDate());
+    public static ReservationDateResponse from(Reservation reservation) {
+        return new ReservationDateResponse(reservation.getReservationDate());
     }
 
     public int getDayOfMonth() {

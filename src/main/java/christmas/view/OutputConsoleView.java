@@ -2,11 +2,10 @@ package christmas.view;
 
 import christmas.controller.OutputView;
 import christmas.controller.dto.response.BadgeAwardResponse;
-import christmas.controller.dto.response.BenefitsResponse;
+import christmas.controller.dto.response.BenefitAmountsResponse;
 import christmas.controller.dto.response.ChargeResponse;
 import christmas.controller.dto.response.DiscountAmountResponse;
-import christmas.controller.dto.response.MenuOrdersResponse;
-import christmas.controller.dto.response.MenuQuantityResponse;
+import christmas.controller.dto.response.MenuQuantitiesResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
 
 public class OutputConsoleView implements OutputView {
@@ -40,7 +39,7 @@ public class OutputConsoleView implements OutputView {
     }
 
     @Override
-    public void printMenuOrders(MenuOrdersResponse menuOrdersResponse) {
+    public void printMenuOrders(MenuQuantitiesResponse menuOrdersResponse) {
         System.out.println("<주문 메뉴>");
         System.out.println(menuOrdersResponse);
     }
@@ -53,16 +52,15 @@ public class OutputConsoleView implements OutputView {
     }
 
     @Override
-    public void printGiftMenu(MenuQuantityResponse giftMenu) {
+    public void printGifts(MenuQuantitiesResponse menuQuantitiesResponse) {
         System.out.println("<증정 메뉴>");
-        System.out.println(giftMenu);
-        System.out.println();
+        System.out.println(menuQuantitiesResponse);
     }
 
     @Override
-    public void printDiscountAmounts(BenefitsResponse benefitsResponse) {
+    public void printDiscountAmounts(BenefitAmountsResponse benefitAmountsResponse) {
         System.out.println("<혜택 내역>");
-        System.out.println(benefitsResponse);
+        System.out.println(benefitAmountsResponse);
     }
 
     @Override

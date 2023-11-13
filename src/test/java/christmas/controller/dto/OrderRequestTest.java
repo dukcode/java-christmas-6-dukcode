@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class MenuOrdersRequestTest {
+class OrderRequestTest {
 
     @Test
     public void 메뉴_목록으로_MenuOrderRequests_클래스를_생성을_할_수_있다() throws Exception {

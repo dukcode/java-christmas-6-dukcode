@@ -10,7 +10,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class MenuOrdersTest {
+class OrderTest {
 
     @Test
     public void MenuOrders_를_생성할_수_있다() throws Exception {
@@ -22,7 +22,7 @@ class MenuOrdersTest {
         // when
         // then
         assertThatCode(() -> {
-            new MenuOrders(menuQuantities);
+            new Order(menuQuantities);
         }).doesNotThrowAnyException();
     }
 
@@ -36,7 +36,7 @@ class MenuOrdersTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            new MenuOrders(menuQuantities);
+            new Order(menuQuantities);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -48,7 +48,7 @@ class MenuOrdersTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            new MenuOrders(menuQuantities);
+            new Order(menuQuantities);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -62,7 +62,7 @@ class MenuOrdersTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            new MenuOrders(menuQuantities);
+            new Order(menuQuantities);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -70,7 +70,7 @@ class MenuOrdersTest {
     public void 주문_총_금액을_계산할_수_있다() throws Exception {
         // given
 
-        MenuOrders menuOrders = new MenuOrders(List.of(new MenuQuantity(Menu.BBQ_RIB.getName(), 1),
+        Order order = new Order(List.of(new MenuQuantity(Menu.BBQ_RIB.getName(), 1),
                 new MenuQuantity(Menu.CAESAR_SALAD.getName(), 2),
                 new MenuQuantity(Menu.ZERO_COKE.getName(), 3)));
 
@@ -81,7 +81,7 @@ class MenuOrdersTest {
         Money totalAmount = Money.of(79000L);
 
         // when
-        Money calculatedTotalAmount = menuOrders.calculateTotalCost();
+        Money calculatedTotalAmount = order.calculateTotalCost();
 
         // then
         Assertions.assertThat(calculatedTotalAmount).isEqualTo(totalAmount);

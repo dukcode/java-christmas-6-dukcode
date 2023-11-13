@@ -4,13 +4,13 @@ import christmas.domain.exception.ExceptionMessage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuOrders {
+public class Order {
 
     private static final int MAX_ORDER_QUANTITY = 20;
 
     private final List<MenuQuantity> menuQuantities = new ArrayList<>();
 
-    public MenuOrders(List<MenuQuantity> menuQuantities) {
+    public Order(List<MenuQuantity> menuQuantities) {
         validateMenuDuplicated(menuQuantities);
         validateQuantitySize(menuQuantities);
         validateNotOnlyBeverageMenu(menuQuantities);
@@ -50,7 +50,7 @@ public class MenuOrders {
         }
     }
 
-    public List<MenuQuantity> getMenuOrders() {
+    public List<MenuQuantity> getMenuQuantities() {
         return menuQuantities;
     }
 

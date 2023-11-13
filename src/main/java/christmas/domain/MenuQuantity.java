@@ -48,7 +48,7 @@ public class MenuQuantity {
         return menu.getCost().multiply(quantity);
     }
 
-    public boolean isEmpty() {
+    public boolean isNone() {
         return menu.equals(Menu.NONE);
     }
 

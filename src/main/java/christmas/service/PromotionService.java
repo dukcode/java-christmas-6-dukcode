@@ -1,95 +1,75 @@
 package christmas.service;
 
 import christmas.domain.Badge;
-import christmas.domain.MenuOrders;
+import christmas.domain.Menu;
 import christmas.domain.MenuQuantity;
 import christmas.domain.Money;
-import christmas.domain.ReservationDate;
+import christmas.domain.Reservation;
+import christmas.service.event.Event;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PromotionService {
 
-    private final GiftEventProcessor giftEventProcessor;
-    private final DDayDiscountEventProcessor dDayDiscountEventProcessor;
-    private final WeekdayDiscountEventProcessor weekdayDiscountEventProcessor;
-    private final WeekendDiscountEventProcessor weekendDiscountEventProcessor;
-    private final SpecialDiscountEventProcessor specialDiscountEventProcessor;
-
+    private final List<Event> events;
     private final BadgeAwardEventProcessor badgeAwardEventProcessor;
 
-    public PromotionService(GiftEventProcessor giftEventProcessor,
-                            DDayDiscountEventProcessor dDayDiscountEventProcessor,
-                            WeekdayDiscountEventProcessor weekdayDiscountEventProcessor,
-                            WeekendDiscountEventProcessor weekendDiscountEventProcessor,
-                            SpecialDiscountEventProcessor specialDiscountEventProcessor,
-                            BadgeAwardEventProcessor badgeAwardEventProcessor) {
-        this.giftEventProcessor = giftEventProcessor;
-        this.dDayDiscountEventProcessor = dDayDiscountEventProcessor;
-        this.weekdayDiscountEventProcessor = weekdayDiscountEventProcessor;
-        this.weekendDiscountEventProcessor = weekendDiscountEventProcessor;
-        this.specialDiscountEventProcessor = specialDiscountEventProcessor;
+    public PromotionService(List<Event> events, BadgeAwardEventProcessor badgeAwardEventProcessor) {
+        this.events = events;
         this.badgeAwardEventProcessor = badgeAwardEventProcessor;
     }
 
-    public Money calculatePreDiscountCharge(MenuOrders menuOrders) {
-        return menuOrders.calculateTotalCost();
+    public Money calculatePreDiscountCharge(Reservation reservation) {
+        return reservation.calculateTotalCost();
     }
 
-    public MenuQuantity applyGiftEvent(MenuOrders menuOrders) {
-        return giftEventProcessor.applyEvent(menuOrders);
+    public Map<Menu, Integer> receiveGifts(Reservation reservation) {
+
+        Map<Menu, Integer> gifts = new HashMap<>();
+        for (Event event : events) {
+            MenuQuantity gift = event.receiveGift(reservation);
+            if (gift.isNone()) {
+                continue;
+            }
+
+            gifts.put(gift.getMenu(), gifts.getOrDefault(gift.getMenu(), 0) + 1);
+        }
+        return gifts;
     }
 
-    public Badge applyBadgeAwardEvent(ReservationDate reservationDate, MenuOrders menuOrders) {
-        Money totalBenefitAmount = calculateTotalBenefitAmount(reservationDate, menuOrders);
+    public Badge recieveBadge(Reservation reservation) {
+        Money totalBenefitAmount = calculateTotalBenefitAmount(reservation);
         return badgeAwardEventProcessor.applyEvent(totalBenefitAmount);
     }
 
-    public Money calculateGiftEventDiscountAmount(MenuOrders menuOrders) {
-        MenuQuantity giftMenuQuantity = giftEventProcessor.applyEvent(menuOrders);
-        return giftMenuQuantity.calculateCost();
-    }
-
-    public Money calculateDDayEventDiscountAmount(ReservationDate reservationDate, MenuOrders menuOrders) {
-        return dDayDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders);
-    }
-
-    public Money calculateWeekdayEventDiscountAmount(ReservationDate reservationDate, MenuOrders menuOrders) {
-        return weekdayDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders);
-    }
-
-    public Money calculateWeekendEventDiscountAmount(ReservationDate reservationDate, MenuOrders menuOrders) {
-        return weekendDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders);
-    }
-
-    public Money calculateSpecialEventDiscountAmount(ReservationDate reservationDate, MenuOrders menuOrders) {
-        return specialDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders);
-    }
-
-    public Money calculateTotalBenefitAmount(ReservationDate reservationDate, MenuOrders menuOrders) {
-        Money totalBenefitAmount = calculateTotalDiscountAmount(reservationDate, menuOrders);
-        totalBenefitAmount = totalBenefitAmount.add(
-                calculateGiftEventDiscountAmount(menuOrders));
-
+    public Money calculateTotalBenefitAmount(Reservation reservation) {
+        Money totalBenefitAmount = Money.ZERO;
+        for (Event event : events) {
+            totalBenefitAmount = totalBenefitAmount.add(event.calculateBenefitAmount(reservation));
+        }
         return totalBenefitAmount;
     }
 
-    private Money calculateTotalDiscountAmount(ReservationDate reservationDate, MenuOrders menuOrders) {
-        Money totalDiscountAmount = Money.ZERO;
-        totalDiscountAmount = totalDiscountAmount.add(
-                dDayDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders));
-        totalDiscountAmount = totalDiscountAmount.add(
-                weekdayDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders));
-        totalDiscountAmount = totalDiscountAmount.add(
-                weekendDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders));
-        totalDiscountAmount = totalDiscountAmount.add(
-                specialDiscountEventProcessor.calculateDiscountAmount(reservationDate, menuOrders));
+    public Map<String, Money> calculateBenefitAmounts(Reservation reservation) {
+        Map<String, Money> benefitAmounts = new HashMap<>();
+        for (Event event : events) {
+            benefitAmounts.put(event.getEventName(), event.calculateBenefitAmount(reservation));
+        }
+        return benefitAmounts;
+    }
 
+    public Money calculateTotalDiscountAmount(Reservation reservation) {
+        Money totalDiscountAmount = Money.ZERO;
+        for (Event event : events) {
+            totalDiscountAmount = totalDiscountAmount.add(event.calculateDiscountAmount(reservation));
+        }
         return totalDiscountAmount;
     }
 
-    public Money calculateChargeAfterDiscount(ReservationDate reservationDate, MenuOrders menuOrders) {
-        Money preDiscountCharge = calculatePreDiscountCharge(menuOrders);
-        Money totalDiscountAmount = calculateTotalDiscountAmount(reservationDate, menuOrders);
-
+    public Money calculateChargeAfterDiscount(Reservation reservation) {
+        Money preDiscountCharge = calculatePreDiscountCharge(reservation);
+        Money totalDiscountAmount = calculateTotalDiscountAmount(reservation);
         return preDiscountCharge.minus(totalDiscountAmount);
     }
 }
