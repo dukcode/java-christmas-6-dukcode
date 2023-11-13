@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 class MenuQuantityCreateRequestTest {
 
     @Test
-    public void 메뉴와_갯수로_MenuOrderRequest_클래스를_생성을_할_수_있다() throws Exception {
+    public void 메뉴와_갯수로_MenuQuantityCreateRequest_클래스를_생성을_할_수_있다() throws Exception {
         // given
         String order = "시저샐러드-1";
 
@@ -26,7 +26,7 @@ class MenuQuantityCreateRequestTest {
     }
 
     @Test
-    public void 메뉴와_갯수_사이에_공백이_존재해도_MenuOrderRequest_클래스를_생성을_할_수_있다() throws Exception {
+    public void 메뉴와_갯수_사이에_공백이_존재해도_MenuQuantityCreateRequest_클래스를_생성을_할_수_있다() throws Exception {
         // given
         String order = "시저샐러드 - 1";
 
@@ -39,7 +39,7 @@ class MenuQuantityCreateRequestTest {
     }
 
     @Test
-    public void 메뉴_갯수가_숫자_형식이_아니면_MenuOrderRequest_생성_시_예외가_발생한다() throws Exception {
+    public void 메뉴_갯수가_숫자_형식이_아니면_MenuQuantityCreateRequest_생성_시_예외가_발생한다() throws Exception {
         // given
         String order = "시저샐러드-a";
 
@@ -52,9 +52,9 @@ class MenuQuantityCreateRequestTest {
     }
 
     @Test
-    public void 메뉴_갯수_구분자가_올바른_형식이_아니면_MenuOrderRequest_생성_시_예외가_발생한다() throws Exception {
+    public void 메뉴_갯수_구분자가_올바른_형식이_아니면_MenuQuantityCreateRequest_생성_시_예외가_발생한다() throws Exception {
         // given
-        String order = "시저샐러드_a";
+        String order = "시저샐러드_1";
 
         // when
         // then
