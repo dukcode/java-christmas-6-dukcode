@@ -9,11 +9,11 @@ public class MenuQuantityCreateRequest {
     private final String menuName;
     private final int orderCount;
 
-    public MenuQuantityCreateRequest(String menuOrder) {
-        validateDelimiter(menuOrder);
+    public MenuQuantityCreateRequest(String menuQuantity) {
+        validateDelimiter(menuQuantity);
 
-        String menuName = parseMenuName(menuOrder);
-        String orderCount = parseOrderCount(menuOrder);
+        String menuName = parseMenuName(menuQuantity);
+        String orderCount = parseOrderCount(menuQuantity);
 
         validateOrderCount(orderCount);
 
@@ -25,19 +25,19 @@ public class MenuQuantityCreateRequest {
         return order.split(MENU_QUANTITY_DELIMITER)[0].trim();
     }
 
-    private void validateDelimiter(String menuOrder) {
+    private void validateDelimiter(String menuQuantity) {
 
-        if (menuOrder.split(MENU_QUANTITY_DELIMITER).length != 2) {
+        if (menuQuantity.split(MENU_QUANTITY_DELIMITER).length != 2) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_ORDER_FORMAT);
         }
     }
 
-    private String parseOrderCount(String order) {
-        return order.split(MENU_QUANTITY_DELIMITER)[1].trim();
+    private String parseOrderCount(String menuQuantity) {
+        return menuQuantity.split(MENU_QUANTITY_DELIMITER)[1].trim();
     }
 
-    private void validateOrderCount(String orderCount) {
-        NumberFormatValidator.validate(orderCount, ExceptionMessage.INVALID_ORDER_FORMAT);
+    private void validateOrderCount(String menuQuantity) {
+        NumberFormatValidator.validate(menuQuantity, ExceptionMessage.INVALID_ORDER_FORMAT);
     }
 
     public String getMenuName() {
