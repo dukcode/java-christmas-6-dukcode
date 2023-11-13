@@ -51,8 +51,8 @@ public class PromotionController {
     }
 
     private void printResult(Reservation reservation) {
-        outputView.printResultTitle(ReservationDateResponse.from(reservation));
-        outputView.printMenuOrders(MenuQuantitiesResponse.from(reservation.getMenuQuantities()));
+        printResultTitle(reservation);
+        printOrder(reservation);
 
         printPreDiscountCharge(reservation);
         printGifts(reservation);
@@ -61,6 +61,14 @@ public class PromotionController {
         printTotalDiscountAmount(reservation);
         printChargeAfterDiscount(reservation);
         printBadgeAward(reservation);
+    }
+
+    private void printResultTitle(Reservation reservation) {
+        outputView.printResultTitle(ReservationDateResponse.from(reservation));
+    }
+
+    private void printOrder(Reservation reservation) {
+        outputView.printMenuOrders(MenuQuantitiesResponse.from(reservation.getMenuQuantities()));
     }
 
     private void printBadgeAward(Reservation reservation) {
