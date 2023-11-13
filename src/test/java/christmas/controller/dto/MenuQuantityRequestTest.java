@@ -3,8 +3,8 @@ package christmas.controller.dto;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import christmas.controller.dto.request.MenuOrdersRequest;
 import christmas.controller.dto.request.MenuQuantityRequest;
+import christmas.controller.dto.request.OrderCreateRequest;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class MenuQuantityRequestTest {
         // when
         // then
         assertThatCode(() -> {
-            new MenuOrdersRequest(order);
+            new OrderCreateRequest(order);
         }).doesNotThrowAnyException();
 
     }
@@ -33,7 +33,7 @@ class MenuQuantityRequestTest {
         // when
         // then
         assertThatCode(() -> {
-            new MenuOrdersRequest(order);
+            new OrderCreateRequest(order);
         }).doesNotThrowAnyException();
 
     }
@@ -59,7 +59,7 @@ class MenuQuantityRequestTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            new MenuOrdersRequest(order);
+            new OrderCreateRequest(order);
         }).isInstanceOf(IllegalArgumentException.class);
 
     }

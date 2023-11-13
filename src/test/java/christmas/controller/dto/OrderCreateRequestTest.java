@@ -3,13 +3,13 @@ package christmas.controller.dto;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import christmas.controller.dto.request.MenuOrdersRequest;
+import christmas.controller.dto.request.OrderCreateRequest;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class OrderRequestTest {
+class OrderCreateRequestTest {
 
     @Test
     public void 메뉴_목록으로_MenuOrderRequests_클래스를_생성을_할_수_있다() throws Exception {
@@ -19,7 +19,7 @@ class OrderRequestTest {
         // when
         // then
         assertThatCode(() -> {
-            new MenuOrdersRequest(orders);
+            new OrderCreateRequest(orders);
         }).doesNotThrowAnyException();
 
     }
@@ -32,7 +32,7 @@ class OrderRequestTest {
         // when
         // then
         assertThatCode(() -> {
-            new MenuOrdersRequest(orders);
+            new OrderCreateRequest(orders);
         }).doesNotThrowAnyException();
 
     }
@@ -45,7 +45,7 @@ class OrderRequestTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            new MenuOrdersRequest(orders);
+            new OrderCreateRequest(orders);
         }).isInstanceOf(IllegalArgumentException.class);
 
     }
@@ -58,7 +58,7 @@ class OrderRequestTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            new MenuOrdersRequest(orders);
+            new OrderCreateRequest(orders);
         }).isInstanceOf(IllegalArgumentException.class);
 
     }

@@ -1,6 +1,6 @@
 package christmas.controller;
 
-import christmas.controller.dto.request.MenuOrdersRequest;
+import christmas.controller.dto.request.OrderCreateRequest;
 import christmas.controller.dto.request.ReservationDateCreateRequest;
 import christmas.controller.dto.response.BadgeAwardResponse;
 import christmas.controller.dto.response.BenefitAmountsResponse;
@@ -107,9 +107,9 @@ public class PromotionController {
 
     private Order inputMenuOrders() {
         return (Order) exceptionHandler.handle(inputView, outputView, (inputView) -> {
-            MenuOrdersRequest menuOrdersRequest = inputView.inputMenuOrderRequest();
+            OrderCreateRequest orderCreateRequest = inputView.inputMenuOrderRequest();
 
-            List<MenuQuantity> menuQuantities = menuOrdersRequest.getMenuOrderRequests()
+            List<MenuQuantity> menuQuantities = orderCreateRequest.getMenuOrderRequests()
                     .stream()
                     .map(request -> new MenuQuantity(request.getMenuName(), request.getOrderCount()))
                     .toList();
