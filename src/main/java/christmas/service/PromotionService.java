@@ -54,7 +54,12 @@ public class PromotionService {
     public Map<String, Money> calculateBenefitAmounts(Reservation reservation) {
         Map<String, Money> benefitAmounts = new HashMap<>();
         for (Event event : events) {
-            benefitAmounts.put(event.getEventName(), event.calculateBenefitAmount(reservation));
+            Money benefitAmount = event.calculateBenefitAmount(reservation);
+            if (benefitAmount.equals(Money.ZERO)) {
+                continue;
+            }
+
+            benefitAmounts.put(event.getEventName(), benefitAmount);
         }
         return benefitAmounts;
     }

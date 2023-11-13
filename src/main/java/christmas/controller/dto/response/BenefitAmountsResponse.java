@@ -23,32 +23,19 @@ public class BenefitAmountsResponse {
 
     @Override
     public String toString() {
-        if (isAllZero()) {
+        if (benefitAmounts.isEmpty()) {
             return "없음\n";
         }
 
         return createEventDiscountAmountString();
     }
 
-    private boolean isAllZero() {
-        for (String title : benefitAmounts.keySet()) {
-            Money discountAmount = benefitAmounts.get(title);
-            if (!discountAmount.equals(Money.ZERO)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private String createEventDiscountAmountString() {
         StringBuilder stringBuilder = new StringBuilder();
         for (String title : benefitAmounts.keySet()) {
-            Money discountAmount = benefitAmounts.get(title);
-            if (discountAmount.equals(Money.ZERO)) {
-                continue;
-            }
+            Money benefitAmount = benefitAmounts.get(title);
             stringBuilder.append(String.format(EVENT_NAME_DISCOUNT_AMOUNT_STRING_FORMAT,
-                    title, benefitAmounts.get(title).toString()));
+                    title, benefitAmount));
             stringBuilder.append("\n");
         }
 
