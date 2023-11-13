@@ -60,7 +60,7 @@ public class PromotionController {
         printBenefitAmounts(reservation);
         printTotalDiscountAmount(reservation);
         printChargeAfterDiscount(reservation);
-        printBadgeAward(reservation);
+        printBadge(reservation);
     }
 
     private void printResultTitle(Reservation reservation) {
@@ -71,9 +71,9 @@ public class PromotionController {
         outputView.printMenuOrders(MenuQuantitiesResponse.from(reservation.getMenuQuantities()));
     }
 
-    private void printBadgeAward(Reservation reservation) {
-        Badge badgeAward = promotionService.recieveBadge(reservation);
-        outputView.printBadge(new BadgeResponse(badgeAward));
+    private void printBadge(Reservation reservation) {
+        Badge badge = promotionService.recieveBadge(reservation);
+        outputView.printBadge(new BadgeResponse(badge));
     }
 
     private void printChargeAfterDiscount(Reservation reservation) {
