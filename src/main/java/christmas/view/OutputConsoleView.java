@@ -4,9 +4,9 @@ import christmas.controller.OutputView;
 import christmas.controller.dto.response.BadgeResponse;
 import christmas.controller.dto.response.BenefitAmountsResponse;
 import christmas.controller.dto.response.ChargeResponse;
-import christmas.controller.dto.response.DiscountAmountResponse;
 import christmas.controller.dto.response.MenuQuantitiesResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
+import christmas.controller.dto.response.TotalBenefitAmountResponse;
 
 public class OutputConsoleView implements OutputView {
 
@@ -64,9 +64,9 @@ public class OutputConsoleView implements OutputView {
     }
 
     @Override
-    public void printTotalBenefitAmount(DiscountAmountResponse discountAmountResponse) {
+    public void printTotalBenefitAmount(TotalBenefitAmountResponse totalBenefitAmountResponse) {
         System.out.println("<총혜택 금액>");
-        System.out.println(discountAmountResponse);
+        System.out.println(totalBenefitAmountResponse);
         System.out.println();
     }
 

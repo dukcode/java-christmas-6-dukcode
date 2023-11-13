@@ -2,13 +2,13 @@ package christmas.controller.dto.response;
 
 import christmas.domain.Money;
 
-public class DiscountAmountResponse {
+public class TotalBenefitAmountResponse {
 
     private static final String TOTAL_DISCOUNT_AMOUNT_STRING_FORMAT = "-%s";
 
     private final Money totalDiscountAmount;
 
-    public DiscountAmountResponse(Money totalDiscountAmount) {
+    public TotalBenefitAmountResponse(Money totalDiscountAmount) {
         this.totalDiscountAmount = totalDiscountAmount;
     }
 

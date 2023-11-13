@@ -5,9 +5,9 @@ import christmas.controller.dto.request.ReservationDateCreateRequest;
 import christmas.controller.dto.response.BadgeResponse;
 import christmas.controller.dto.response.BenefitAmountsResponse;
 import christmas.controller.dto.response.ChargeResponse;
-import christmas.controller.dto.response.DiscountAmountResponse;
 import christmas.controller.dto.response.MenuQuantitiesResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
+import christmas.controller.dto.response.TotalBenefitAmountResponse;
 import christmas.domain.Badge;
 import christmas.domain.Menu;
 import christmas.domain.MenuQuantity;
@@ -83,7 +83,7 @@ public class PromotionController {
 
     private void printTotalDiscountAmount(Reservation reservation) {
         Money totalBenefitAmount = promotionService.calculateTotalBenefitAmount(reservation);
-        outputView.printTotalBenefitAmount(new DiscountAmountResponse(totalBenefitAmount));
+        outputView.printTotalBenefitAmount(new TotalBenefitAmountResponse(totalBenefitAmount));
     }
 
     private void printBenefitAmounts(Reservation reservation) {

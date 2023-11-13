@@ -3,9 +3,9 @@ package christmas.controller;
 import christmas.controller.dto.response.BadgeResponse;
 import christmas.controller.dto.response.BenefitAmountsResponse;
 import christmas.controller.dto.response.ChargeResponse;
-import christmas.controller.dto.response.DiscountAmountResponse;
 import christmas.controller.dto.response.MenuQuantitiesResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
+import christmas.controller.dto.response.TotalBenefitAmountResponse;
 
 public interface OutputView {
     void printWelcomeMessage();
@@ -22,7 +22,7 @@ public interface OutputView {
 
     void printDiscountAmounts(BenefitAmountsResponse benefitAmountsResponse);
 
-    void printTotalBenefitAmount(DiscountAmountResponse discountAmountResponse);
+    void printTotalBenefitAmount(TotalBenefitAmountResponse totalBenefitAmountResponse);
 
     void printChargeAfterDiscount(ChargeResponse chargeAfterDiscount);
 
