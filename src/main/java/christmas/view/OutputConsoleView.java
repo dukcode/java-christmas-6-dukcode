@@ -1,7 +1,7 @@
 package christmas.view;
 
 import christmas.controller.OutputView;
-import christmas.controller.dto.response.BadgeAwardResponse;
+import christmas.controller.dto.response.BadgeResponse;
 import christmas.controller.dto.response.BenefitAmountsResponse;
 import christmas.controller.dto.response.ChargeResponse;
 import christmas.controller.dto.response.DiscountAmountResponse;
@@ -78,9 +78,9 @@ public class OutputConsoleView implements OutputView {
     }
 
     @Override
-    public void printBadgeAward(BadgeAwardResponse badgeAwardResponse) {
+    public void printBadge(BadgeResponse badgeResponse) {
         System.out.println("<12월 이벤트 배지>");
-        System.out.println(badgeAwardResponse);
+        System.out.println(badgeResponse);
         System.out.println();
     }
 }

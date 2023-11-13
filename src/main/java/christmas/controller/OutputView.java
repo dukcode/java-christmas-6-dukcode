@@ -1,6 +1,6 @@
 package christmas.controller;
 
-import christmas.controller.dto.response.BadgeAwardResponse;
+import christmas.controller.dto.response.BadgeResponse;
 import christmas.controller.dto.response.BenefitAmountsResponse;
 import christmas.controller.dto.response.ChargeResponse;
 import christmas.controller.dto.response.DiscountAmountResponse;
@@ -26,5 +26,5 @@ public interface OutputView {
 
     void printChargeAfterDiscount(ChargeResponse chargeAfterDiscount);
 
-    void printBadgeAward(BadgeAwardResponse badgeAwardResponse);
+    void printBadge(BadgeResponse badgeResponse);
 }
