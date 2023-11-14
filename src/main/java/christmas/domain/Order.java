@@ -63,10 +63,10 @@ public class Order {
         return cost;
     }
 
-    public int countMenusByType(MenuType discountMenuType) {
+    public int countMenusByType(MenuType menuType) {
         int count = 0;
         for (MenuQuantity menuQuantity : menuQuantities) {
-            if (menuQuantity.isSameMenuType(discountMenuType)) {
+            if (menuQuantity.isSameMenuType(menuType)) {
                 count += menuQuantity.getQuantity();
             }
         }
