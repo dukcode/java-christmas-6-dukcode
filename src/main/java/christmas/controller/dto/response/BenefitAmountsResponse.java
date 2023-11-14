@@ -13,11 +13,6 @@ public class BenefitAmountsResponse {
     public BenefitAmountsResponse(Map<String, Money> benefitAmounts) {
         for (String eventTitle : benefitAmounts.keySet()) {
             Money benefitAmount = benefitAmounts.get(eventTitle);
-
-            if (benefitAmount.equals(Money.ZERO)) {
-                continue;
-            }
-
             this.benefitAmounts.put(eventTitle, benefitAmount);
         }
     }
