@@ -3,6 +3,7 @@ package christmas.application.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.application.domain.Badge;
+import christmas.application.domain.EventBenefitAmount;
 import christmas.application.domain.Menu;
 import christmas.application.domain.MenuQuantity;
 import christmas.application.domain.MenuType;
@@ -16,7 +17,6 @@ import christmas.repository.DefaultBadgeRepository;
 import christmas.repository.DefaultMenuRepository;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -173,16 +173,15 @@ class PromotionServiceTest {
                 new Event("이벤트2", r -> true, eventPolicy));
 
         // when
-        Map<String, Money> benefitAmounts = promotionService.calculateBenefitAmounts(reservation);
+        List<EventBenefitAmount> eventBenefitAmounts = promotionService.calculateBenefitAmounts(reservation);
 
         // then
-        assertThat(benefitAmounts.size()).isEqualTo(2);
+        assertThat(eventBenefitAmounts.size()).isEqualTo(2);
 
-        assertThat(benefitAmounts.containsKey("이벤트1")).isTrue();
-        assertThat(benefitAmounts.get("이벤트1")).isEqualTo(Money.of(12_000L));
-
-        assertThat(benefitAmounts.containsKey("이벤트2")).isTrue();
-        assertThat(benefitAmounts.get("이벤트2")).isEqualTo(Money.of(12_000L));
+        for (EventBenefitAmount eventBenefitAmount : eventBenefitAmounts) {
+            assertThat(eventBenefitAmount.getBenefitAmount()).isEqualTo(Money.of(12_000L));
+            assertThat(eventBenefitAmount.getEventName()).contains("이벤트");
+        }
     }
 
     @Test

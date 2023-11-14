@@ -1,10 +1,12 @@
 package christmas.application.service;
 
 import christmas.application.domain.Badge;
+import christmas.application.domain.EventBenefitAmount;
 import christmas.application.domain.Menu;
 import christmas.application.domain.MenuQuantity;
 import christmas.application.domain.Money;
 import christmas.application.domain.Reservation;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,17 +57,17 @@ public class PromotionService {
         return totalBenefitAmount;
     }
 
-    public Map<String, Money> calculateBenefitAmounts(Reservation reservation) {
-        Map<String, Money> benefitAmounts = new HashMap<>();
+    public List<EventBenefitAmount> calculateBenefitAmounts(Reservation reservation) {
+        List<EventBenefitAmount> eventBenefitAmounts = new ArrayList<>();
         for (Event event : events) {
             Money benefitAmount = event.calculateBenefitAmount(reservation);
             if (benefitAmount.equals(Money.ZERO)) {
                 continue;
             }
 
-            benefitAmounts.put(event.getEventName(), benefitAmount);
+            eventBenefitAmounts.add(new EventBenefitAmount(event, benefitAmount));
         }
-        return benefitAmounts;
+        return eventBenefitAmounts;
     }
 
     public Money calculateTotalDiscountAmount(Reservation reservation) {

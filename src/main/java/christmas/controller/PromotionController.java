@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import christmas.application.domain.Badge;
+import christmas.application.domain.EventBenefitAmount;
 import christmas.application.domain.MenuQuantity;
 import christmas.application.domain.Money;
 import christmas.application.domain.Order;
@@ -17,7 +18,6 @@ import christmas.controller.dto.response.MenuQuantitiesResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
 import christmas.controller.dto.response.TotalBenefitAmountResponse;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class PromotionController {
@@ -108,13 +108,13 @@ public class PromotionController {
     }
 
     private void printBenefitAmounts(Reservation reservation) {
-        Map<String, Money> benefitAmounts = promotionService.calculateBenefitAmounts(reservation);
-        if (benefitAmounts.isEmpty()) {
+        List<EventBenefitAmount> eventBenefitAmounts = promotionService.calculateBenefitAmounts(reservation);
+        if (eventBenefitAmounts.isEmpty()) {
             outputView.printDiscountAmounts(null);
             return;
         }
 
-        outputView.printDiscountAmounts(new BenefitAmountsResponse(benefitAmounts));
+        outputView.printDiscountAmounts(BenefitAmountsResponse.from(eventBenefitAmounts));
     }
 
     private void printGifts(Reservation reservation) {
