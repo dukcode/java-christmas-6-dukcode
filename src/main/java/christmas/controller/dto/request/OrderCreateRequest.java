@@ -1,5 +1,6 @@
 package christmas.controller.dto.request;
 
+import christmas.domain.OrderCreate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,4 +28,9 @@ public class OrderCreateRequest {
         return menuQuantityCreateRequests;
     }
 
+    public OrderCreate toOrderCreate() {
+        return new OrderCreate(menuQuantityCreateRequests.stream()
+                .map(MenuQuantityCreateRequest::toMenuQuantityCreate)
+                .toList());
+    }
 }

@@ -19,7 +19,7 @@ public class Order {
 
     private void validateNotOnlyBeverageMenu(List<MenuQuantity> menuQuantities) {
         for (MenuQuantity menuQuantity : menuQuantities) {
-            if (!menuQuantity.isBeverage()) {
+            if (!menuQuantity.isSameType(MenuType.BEVERAGE)) {
                 return;
             }
         }

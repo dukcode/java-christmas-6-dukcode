@@ -1,11 +1,13 @@
 package christmas;
 
 import christmas.controller.PromotionController;
-import christmas.domain.Menu;
 import christmas.domain.MenuType;
 import christmas.domain.Money;
 import christmas.handler.InfiniteRetryExceptionHandler;
+import christmas.repository.DefaultMenuRepository;
+import christmas.repository.MenuRepository;
 import christmas.service.PromotionService;
+import christmas.service.ReservationService;
 import christmas.service.badge.BadgeManager;
 import christmas.service.event.Event;
 import christmas.service.event.condition.CompositeEventCondition;
@@ -29,44 +31,54 @@ public class Application {
 
         YearMonth eventYearMonth = YearMonth.of(eventYear, eventMonth);
 
+        MenuRepository menuRepository = createMenuRepository();
+
         CompositeEventCondition commonEventCondition = createCommonEventCondition(eventYearMonth);
 
-        List<Event> events = createEvents(commonEventCondition, eventYearMonth);
+        List<Event> events = createEvents(commonEventCondition, eventYearMonth, menuRepository);
         BadgeManager badgeManager = new BadgeManager();
 
-        PromotionController promotionController = createPromotionController(eventYear, eventMonth, events,
+        PromotionController promotionController = createPromotionController(eventYear, eventMonth, menuRepository,
+                events,
                 badgeManager);
 
         promotionController.run();
     }
 
-    private static List<Event> createEvents(CompositeEventCondition commonEventCondition, YearMonth eventYearMonth) {
+    private static MenuRepository createMenuRepository() {
+        return new DefaultMenuRepository();
+    }
+
+    private static List<Event> createEvents(CompositeEventCondition commonEventCondition, YearMonth eventYearMonth,
+                                            MenuRepository menuRepository) {
         Event christmasDDayDiscountEvent = createChristmasDDayDiscountEvent(commonEventCondition, eventYearMonth);
         Event weekdayDiscountEvent = createWeekdayDiscountEvent(commonEventCondition);
         Event weekendDiscountEvent = createWeekendDiscountEvent(commonEventCondition);
         Event specialDayDiscountEvent = createSpecialDayDiscountEvent(commonEventCondition, eventYearMonth);
-        Event giftEvent = createGiftEvent(commonEventCondition);
+        Event giftEvent = createGiftEvent(commonEventCondition, menuRepository);
 
         return List.of(christmasDDayDiscountEvent, weekdayDiscountEvent, weekendDiscountEvent,
                 specialDayDiscountEvent, giftEvent);
     }
 
-    private static PromotionController createPromotionController(int eventYear, int eventMonth, List<Event> events,
+    private static PromotionController createPromotionController(int eventYear, int eventMonth,
+                                                                 MenuRepository menuRepository, List<Event> events,
                                                                  BadgeManager badgeManager) {
         return new PromotionController(
                 new InputConsoleView(eventYear, eventMonth),
                 new OutputConsoleView(eventYear, eventMonth),
                 new InfiniteRetryExceptionHandler(),
-                new PromotionService(events, badgeManager)
-        );
+                new PromotionService(events, badgeManager),
+                new ReservationService(menuRepository));
     }
 
-    private static Event createGiftEvent(CompositeEventCondition commonEventCondition) {
+    private static Event createGiftEvent(CompositeEventCondition commonEventCondition, MenuRepository menuRepository) {
         return new Event("증정 이벤트",
                 commonEventCondition,
                 new GiftEventPolicy(
+                        menuRepository,
                         Money.of(120_000),
-                        Menu.CHAMPAGNE,
+                        "샴페인",
                         1
                 )
         );

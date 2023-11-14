@@ -2,6 +2,7 @@ package christmas.controller.dto.request;
 
 import christmas.controller.dto.exception.ExceptionMessage;
 import christmas.controller.dto.validator.NumberFormatValidator;
+import christmas.domain.MenuQuantityCreate;
 
 public class MenuQuantityCreateRequest {
 
@@ -46,5 +47,9 @@ public class MenuQuantityCreateRequest {
 
     public int getOrderCount() {
         return orderCount;
+    }
+
+    public MenuQuantityCreate toMenuQuantityCreate() {
+        return new MenuQuantityCreate(menuName, orderCount);
     }
 }

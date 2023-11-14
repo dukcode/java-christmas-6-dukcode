@@ -16,6 +16,7 @@ import christmas.domain.Order;
 import christmas.domain.Reservation;
 import christmas.domain.ReservationDate;
 import christmas.service.PromotionService;
+import christmas.service.ReservationService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,27 +28,43 @@ public class PromotionController {
     private final ExceptionHandler exceptionHandler;
 
     private final PromotionService promotionService;
+    private final ReservationService reservationService;
 
 
     public PromotionController(InputView inputView, OutputView outputView,
                                ExceptionHandler exceptionHandler,
-                               PromotionService promotionService) {
+                               PromotionService promotionService, ReservationService reservationService) {
 
         this.inputView = inputView;
         this.outputView = outputView;
         this.exceptionHandler = exceptionHandler;
         this.promotionService = promotionService;
+        this.reservationService = reservationService;
     }
 
     public void run() {
-        outputView.printWelcomeMessage();
+        printWelcomeMessage();
 
         ReservationDate reservationDate = inputReservationDate();
-        Order order = inputMenuOrders();
+        Order order = inputOrder();
 
-        Reservation reservation = new Reservation(order, reservationDate);
-
+        Reservation reservation = createReservation(order, reservationDate);
         printResult(reservation);
+    }
+
+    private void printWelcomeMessage() {
+        outputView.printWelcomeMessage();
+    }
+
+    private Reservation createReservation(Order order, ReservationDate reservationDate) {
+        return reservationService.createReservation(order, reservationDate);
+    }
+
+    private Order inputOrder() {
+        return (Order) exceptionHandler.handle(inputView, outputView, (inputView) -> {
+            OrderCreateRequest orderCreateRequest = inputView.inputMenuOrderRequest();
+            return reservationService.createOrder(orderCreateRequest.toOrderCreate());
+        });
     }
 
     private void printResult(Reservation reservation) {
@@ -110,19 +127,6 @@ public class PromotionController {
         return (ReservationDate) exceptionHandler.handle(inputView, outputView, (inputView) -> {
             ReservationDateCreateRequest reservationDateCreateRequest = inputView.inputReservationDate();
             return new ReservationDate(reservationDateCreateRequest.getReservationDate());
-        });
-    }
-
-    private Order inputMenuOrders() {
-        return (Order) exceptionHandler.handle(inputView, outputView, (inputView) -> {
-            OrderCreateRequest orderCreateRequest = inputView.inputMenuOrderRequest();
-
-            List<MenuQuantity> menuQuantities = orderCreateRequest.getMenuOrderRequests()
-                    .stream()
-                    .map(request -> new MenuQuantity(request.getMenuName(), request.getOrderCount()))
-                    .toList();
-
-            return new Order(menuQuantities);
         });
     }
 }

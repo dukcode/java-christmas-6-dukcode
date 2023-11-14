@@ -16,22 +16,8 @@ public class MenuQuantity {
         this.quantity = quantity;
     }
 
-    public MenuQuantity(String menuName, int quantity) {
-        validateMenuExist(menuName);
-        validateQuantityPositive(quantity);
-
-        this.menu = Menu.withName(menuName);
-        this.quantity = quantity;
-    }
-
     private void validateQuantityPositive(int quantity) {
         if (quantity <= 0) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_ORDER);
-        }
-    }
-
-    private void validateMenuExist(String menuName) {
-        if (!Menu.contains(menuName)) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_ORDER);
         }
     }
@@ -52,11 +38,7 @@ public class MenuQuantity {
         return menu.equals(Menu.NONE);
     }
 
-    public boolean isBeverage() {
-        return menu.isBeverage();
-    }
-
     public boolean isSameType(MenuType menuType) {
-        return menu.isSameType(menuType);
+        return menu.isMenuTypeEquals(menuType);
     }
 }
