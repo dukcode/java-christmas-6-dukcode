@@ -1,7 +1,6 @@
 package christmas.controller;
 
 import christmas.application.domain.Badge;
-import christmas.application.domain.Menu;
 import christmas.application.domain.MenuQuantity;
 import christmas.application.domain.Money;
 import christmas.application.domain.Order;
@@ -17,7 +16,6 @@ import christmas.controller.dto.response.ChargeResponse;
 import christmas.controller.dto.response.MenuQuantitiesResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
 import christmas.controller.dto.response.TotalBenefitAmountResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -120,19 +118,9 @@ public class PromotionController {
     }
 
     private void printGifts(Reservation reservation) {
-        Map<Menu, Integer> gifts = promotionService.receiveGifts(reservation);
+        List<MenuQuantity> gifts = promotionService.receiveGifts(reservation);
 
-        List<MenuQuantity> menuQuantities = new ArrayList<>();
-        for (Menu menu : gifts.keySet()) {
-            menuQuantities.add(new MenuQuantity(menu, gifts.get(menu)));
-        }
-
-        if (menuQuantities.isEmpty()) {
-            outputView.printGifts(null);
-            return;
-        }
-
-        outputView.printGifts(MenuQuantitiesResponse.from(menuQuantities));
+        outputView.printGifts(MenuQuantitiesResponse.from(gifts));
     }
 
     private void printPreDiscountCharge(Reservation reservation) {

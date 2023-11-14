@@ -10,15 +10,10 @@ import christmas.application.domain.Money;
 import christmas.application.domain.Order;
 import christmas.application.domain.Reservation;
 import christmas.application.domain.ReservationDate;
-import christmas.application.service.PromotionService;
+import christmas.application.service.event.policy.GiftEventPolicy;
 import christmas.mock.TestEventPolicy;
-import christmas.application.service.BadgeRepository;
 import christmas.repository.DefaultBadgeRepository;
 import christmas.repository.DefaultMenuRepository;
-import christmas.application.service.MenuRepository;
-import christmas.application.service.Event;
-import christmas.application.service.EventPolicy;
-import christmas.application.service.event.policy.GiftEventPolicy;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -90,12 +85,12 @@ class PromotionServiceTest {
         PromotionService promotionService = new PromotionService(badgeRepository, event1, event2);
 
         // when
-        Map<Menu, Integer> gifts = promotionService.receiveGifts(reservation);
+        List<MenuQuantity> gifts = promotionService.receiveGifts(reservation);
 
         // then
         assertThat(gifts.size()).isEqualTo(1);
-        assertThat(gifts.containsKey(new Menu("샴페인", Money.of(25_000L), MenuType.BEVERAGE))).isTrue();
-        assertThat(gifts.get(new Menu("샴페인", Money.of(25_000L), MenuType.BEVERAGE))).isEqualTo(3);
+        assertThat(gifts.get(0).getMenu()).isEqualTo(new Menu("샴페인", Money.of(25_000L), MenuType.BEVERAGE));
+        assertThat(gifts.get(0).getQuantity()).isEqualTo(3);
     }
 
     @Test

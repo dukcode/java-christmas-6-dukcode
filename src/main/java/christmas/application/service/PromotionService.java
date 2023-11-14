@@ -24,7 +24,7 @@ public class PromotionService {
         return reservation.calculateTotalCost();
     }
 
-    public Map<Menu, Integer> receiveGifts(Reservation reservation) {
+    public List<MenuQuantity> receiveGifts(Reservation reservation) {
 
         Map<Menu, Integer> gifts = new HashMap<>();
         for (Event event : events) {
@@ -36,7 +36,10 @@ public class PromotionService {
             MenuQuantity gift = giftOptional.get();
             gifts.put(gift.getMenu(), gifts.getOrDefault(gift.getMenu(), 0) + gift.getQuantity());
         }
-        return gifts;
+
+        return gifts.keySet().stream().
+                map(menu -> new MenuQuantity(menu, gifts.get(menu)))
+                .toList();
     }
 
     public Optional<Badge> receiveBadge(Reservation reservation) {
