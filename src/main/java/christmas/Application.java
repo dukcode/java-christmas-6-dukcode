@@ -1,5 +1,8 @@
 package christmas;
 
+import christmas.controller.ExceptionHandler;
+import christmas.controller.InputView;
+import christmas.controller.OutputView;
 import christmas.controller.PromotionController;
 import christmas.controller.handler.InfiniteRetryExceptionHandler;
 import christmas.domain.MenuType;
@@ -11,6 +14,7 @@ import christmas.repository.MenuRepository;
 import christmas.service.PromotionService;
 import christmas.service.ReservationService;
 import christmas.service.event.Event;
+import christmas.service.event.EventCondition;
 import christmas.service.event.condition.CompositeEventCondition;
 import christmas.service.event.condition.MinimumOrderAmountCondition;
 import christmas.service.event.condition.PeriodEventCondition;
@@ -22,61 +26,112 @@ import christmas.service.event.policy.WeekendEventPolicy;
 import christmas.view.InputConsoleView;
 import christmas.view.OutputConsoleView;
 import java.time.YearMonth;
-import java.util.List;
 import java.util.Set;
 
 public class Application {
+    private static final int EVENT_YEAR = 2023;
+    private static final int EVENT_MONTH = 12;
+
+    private static final YearMonth eventYearMonth = YearMonth.of(EVENT_YEAR, EVENT_MONTH);
+
     public static void main(String[] args) {
-        int eventYear = 2023;
-        int eventMonth = 12;
 
-        YearMonth eventYearMonth = YearMonth.of(eventYear, eventMonth);
+        MenuRepository menuRepository = menuRepository();
+        BadgeRepository badgeRepository = badgeRepository();
 
-        MenuRepository menuRepository = createMenuRepository();
+        PromotionService promotionService = createPromotionService(menuRepository, badgeRepository);
+        ReservationService reservationService = createReservationService(menuRepository);
 
-        CompositeEventCondition commonEventCondition = createCommonEventCondition(eventYearMonth);
-
-        BadgeRepository badgeRepository = new DefaultBadgeRepository();
-
-        List<Event> events = createEvents(commonEventCondition, eventYearMonth, menuRepository);
-
-        PromotionController promotionController = createPromotionController(eventYear, eventMonth, menuRepository,
-                events,
-                badgeRepository);
+        PromotionController promotionController = createPromotionController(promotionService, reservationService);
 
         promotionController.run();
     }
 
-    private static MenuRepository createMenuRepository() {
+    private static PromotionController createPromotionController(PromotionService promotionService,
+                                                                 ReservationService reservationService) {
+        InputView inputView = inputView();
+        OutputView outputView = outputView();
+        ExceptionHandler exceptionHandler = exceptionHandler();
+
+        return promotionController(inputView, outputView,
+                exceptionHandler, promotionService, reservationService);
+    }
+
+    private static ReservationService createReservationService(MenuRepository menuRepository) {
+        return reservationService(menuRepository);
+    }
+
+    private static PromotionService createPromotionService(MenuRepository menuRepository,
+                                                           BadgeRepository badgeRepository) {
+        EventCondition eventCondition = eventCondition();
+
+        Event christmasDDayDiscountEvent = christmasDDayDiscountEvent(eventCondition);
+        Event weekdayDiscountEvent = weekdayDiscountEvent(eventCondition);
+        Event weekendDiscountEvent = weekendDiscountEvent(eventCondition);
+        Event giftEvent = giftEvent(eventCondition, menuRepository);
+        Event specialDayDiscountEvent = specialDayDiscountEvent(eventCondition);
+
+        return promotionService(badgeRepository,
+                christmasDDayDiscountEvent,
+                weekdayDiscountEvent,
+                weekendDiscountEvent,
+                giftEvent,
+                specialDayDiscountEvent);
+    }
+
+    private static EventCondition eventCondition() {
+        PeriodEventCondition periodEventCondition = periodEventCondition();
+        MinimumOrderAmountCondition minimumOrderAmountCondition = minimumOrderAmountCondition();
+        return new CompositeEventCondition(periodEventCondition, minimumOrderAmountCondition);
+    }
+
+    private static MinimumOrderAmountCondition minimumOrderAmountCondition() {
+        return new MinimumOrderAmountCondition(Money.of(10_000L));
+    }
+
+    private static PeriodEventCondition periodEventCondition() {
+        return PeriodEventCondition.wholeMonth(eventYearMonth);
+    }
+
+    private static DefaultBadgeRepository badgeRepository() {
+        return new DefaultBadgeRepository();
+    }
+
+    private static MenuRepository menuRepository() {
         return new DefaultMenuRepository();
     }
 
-    private static List<Event> createEvents(CompositeEventCondition commonEventCondition, YearMonth eventYearMonth,
-                                            MenuRepository menuRepository) {
-        Event christmasDDayDiscountEvent = createChristmasDDayDiscountEvent(commonEventCondition, eventYearMonth);
-        Event weekdayDiscountEvent = createWeekdayDiscountEvent(commonEventCondition);
-        Event weekendDiscountEvent = createWeekendDiscountEvent(commonEventCondition);
-        Event specialDayDiscountEvent = createSpecialDayDiscountEvent(commonEventCondition, eventYearMonth);
-        Event giftEvent = createGiftEvent(commonEventCondition, menuRepository);
-
-        return List.of(christmasDDayDiscountEvent, weekdayDiscountEvent, weekendDiscountEvent,
-                specialDayDiscountEvent, giftEvent);
+    private static PromotionController promotionController(InputView inputView, OutputView outputView,
+                                                           ExceptionHandler exceptionHandler,
+                                                           PromotionService promotionService,
+                                                           ReservationService reservationService) {
+        return new PromotionController(inputView, outputView,
+                exceptionHandler, promotionService, reservationService);
     }
 
-    private static PromotionController createPromotionController(int eventYear, int eventMonth,
-                                                                 MenuRepository menuRepository, List<Event> events,
-                                                                 BadgeRepository badgeRepository) {
-        return new PromotionController(
-                new InputConsoleView(eventYear, eventMonth),
-                new OutputConsoleView(eventYear, eventMonth),
-                new InfiniteRetryExceptionHandler(),
-                new PromotionService(events, badgeRepository),
-                new ReservationService(menuRepository));
+    private static ReservationService reservationService(MenuRepository menuRepository) {
+        return new ReservationService(menuRepository);
     }
 
-    private static Event createGiftEvent(CompositeEventCondition commonEventCondition, MenuRepository menuRepository) {
+    private static PromotionService promotionService(BadgeRepository badgeRepository, Event... events) {
+        return new PromotionService(events, badgeRepository);
+    }
+
+    private static ExceptionHandler exceptionHandler() {
+        return new InfiniteRetryExceptionHandler();
+    }
+
+    private static OutputConsoleView outputView() {
+        return new OutputConsoleView(eventYearMonth.getYear(), eventYearMonth.getMonthValue());
+    }
+
+    private static InputView inputView() {
+        return new InputConsoleView(eventYearMonth.getYear(), eventYearMonth.getMonthValue());
+    }
+
+    private static Event giftEvent(EventCondition eventCondition, MenuRepository menuRepository) {
         return new Event("증정 이벤트",
-                commonEventCondition,
+                eventCondition,
                 new GiftEventPolicy(
                         menuRepository,
                         Money.of(120_000),
@@ -86,11 +141,10 @@ public class Application {
         );
     }
 
-    private static Event createSpecialDayDiscountEvent(CompositeEventCondition commonEventCondition,
-                                                       YearMonth eventYearMonth) {
+    private static Event specialDayDiscountEvent(EventCondition eventCondition) {
         return new Event(
                 "특별 할인",
-                commonEventCondition,
+                eventCondition,
                 new SpecialDayEventPolicy(
                         Money.of(1_000L),
                         Set.of(
@@ -104,42 +158,33 @@ public class Application {
                 ));
     }
 
-    private static Event createWeekendDiscountEvent(CompositeEventCondition commonEventCondition) {
+    private static Event weekendDiscountEvent(EventCondition eventCondition) {
         return new Event(
                 "주말 할인",
-                commonEventCondition,
+                eventCondition,
                 new WeekendEventPolicy(MenuType.MAIN_DISH,
                         Money.of(2_023L))
         );
     }
 
-    private static Event createWeekdayDiscountEvent(CompositeEventCondition commonEventCondition) {
+    private static Event weekdayDiscountEvent(EventCondition eventCondition) {
         return new Event(
                 "평일 할인",
-                commonEventCondition,
+                eventCondition,
                 new WeekdayEventPolicy(MenuType.DESSERT,
                         Money.of(2_023L))
         );
     }
 
-    private static Event createChristmasDDayDiscountEvent(CompositeEventCondition commonEventCondition,
-                                                          YearMonth eventYearMonth) {
+    private static Event christmasDDayDiscountEvent(EventCondition eventCondition) {
         return new Event(
                 "크리스마스 디데이 할인",
-                commonEventCondition,
+                eventCondition,
                 new DDayEventPolicy(
                         eventYearMonth.atDay(1),
                         eventYearMonth.atDay(25),
                         Money.of(1_000L),
                         Money.of(100L))
         );
-    }
-
-    private static CompositeEventCondition createCommonEventCondition(YearMonth eventYearMonth) {
-        return new CompositeEventCondition(
-                List.of(
-                        PeriodEventCondition.wholeMonth(eventYearMonth),
-                        new MinimumOrderAmountCondition(Money.of(10_000))
-                ));
     }
 }

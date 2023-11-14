@@ -17,8 +17,8 @@ public class PromotionService {
     private final List<Event> events;
     private final BadgeRepository badgeRepository;
 
-    public PromotionService(List<Event> events, BadgeRepository badgeRepository) {
-        this.events = events;
+    public PromotionService(Event[] events, BadgeRepository badgeRepository) {
+        this.events = List.of(events);
         this.badgeRepository = badgeRepository;
     }
 

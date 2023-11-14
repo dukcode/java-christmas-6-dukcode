@@ -8,8 +8,8 @@ public class CompositeEventCondition implements EventCondition {
 
     private final List<EventCondition> eventConditions;
 
-    public CompositeEventCondition(List<EventCondition> eventConditions) {
-        this.eventConditions = eventConditions;
+    public CompositeEventCondition(EventCondition... eventConditions) {
+        this.eventConditions = List.of(eventConditions);
     }
 
     @Override
