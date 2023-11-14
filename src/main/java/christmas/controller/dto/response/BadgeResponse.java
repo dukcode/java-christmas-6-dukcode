@@ -12,10 +12,6 @@ public class BadgeResponse {
 
     @Override
     public String toString() {
-        if (badge.equals(Badge.NONE)) {
-            return "없음";
-        }
-
         return badge.toString();
     }
 }

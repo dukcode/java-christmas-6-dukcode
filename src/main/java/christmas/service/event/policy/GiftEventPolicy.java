@@ -6,6 +6,7 @@ import christmas.domain.Money;
 import christmas.domain.Reservation;
 import christmas.repository.MenuRepository;
 import christmas.service.event.EventPolicy;
+import java.util.Optional;
 
 public class GiftEventPolicy implements EventPolicy {
 
@@ -33,13 +34,13 @@ public class GiftEventPolicy implements EventPolicy {
     }
 
     @Override
-    public MenuQuantity receiveGift(Reservation reservation) {
+    public Optional<MenuQuantity> receiveGift(Reservation reservation) {
         Money totalCost = reservation.calculateTotalCost();
 
         if (totalCost.isGreaterThanOrEqual(eventMinOrderAmount)) {
-            return new MenuQuantity(giftMenu, quantity);
+            return Optional.of(new MenuQuantity(giftMenu, quantity));
         }
 
-        return MenuQuantity.EMPTY;
+        return Optional.empty();
     }
 }

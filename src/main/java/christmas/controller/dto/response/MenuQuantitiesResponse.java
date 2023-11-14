@@ -20,9 +20,6 @@ public class MenuQuantitiesResponse {
 
     @Override
     public String toString() {
-        if (menuQuantityResponses.isEmpty()) {
-            return "없음\n";
-        }
 
         return createMenuQuantiesString();
     }

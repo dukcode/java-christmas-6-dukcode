@@ -6,25 +6,26 @@ import christmas.controller.dto.response.ChargeResponse;
 import christmas.controller.dto.response.MenuQuantitiesResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
 import christmas.controller.dto.response.TotalBenefitAmountResponse;
+import java.util.Optional;
 
 public interface OutputView {
     void printWelcomeMessage();
 
     void printError(Exception e);
 
-    void printResultTitle(ReservationDateResponse reservationDateResponse);
+    void printResultTitle(ReservationDateResponse reservationDate);
 
-    void printMenuOrders(MenuQuantitiesResponse menuOrdersResponse);
+    void printMenuOrders(MenuQuantitiesResponse menuOrders);
 
     void printPreDiscountCharge(ChargeResponse preDiscountCharge);
 
-    void printGifts(MenuQuantitiesResponse menuQuantitiesResponse);
+    void printGifts(Optional<MenuQuantitiesResponse> menuQuantities);
 
-    void printDiscountAmounts(BenefitAmountsResponse benefitAmountsResponse);
+    void printDiscountAmounts(Optional<BenefitAmountsResponse> benefitAmounts);
 
-    void printTotalBenefitAmount(TotalBenefitAmountResponse totalBenefitAmountResponse);
+    void printTotalBenefitAmount(TotalBenefitAmountResponse totalBenefitAmount);
 
     void printChargeAfterDiscount(ChargeResponse chargeAfterDiscount);
 
-    void printBadge(BadgeResponse badgeResponse);
+    void printBadge(Optional<BadgeResponse> badgeResponse);
 }

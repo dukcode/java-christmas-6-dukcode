@@ -7,6 +7,7 @@ import christmas.controller.dto.response.ChargeResponse;
 import christmas.controller.dto.response.MenuQuantitiesResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
 import christmas.controller.dto.response.TotalBenefitAmountResponse;
+import java.util.Optional;
 
 public class OutputConsoleView implements OutputView {
 
@@ -52,21 +53,30 @@ public class OutputConsoleView implements OutputView {
     }
 
     @Override
-    public void printGifts(MenuQuantitiesResponse menuQuantitiesResponse) {
+    public void printGifts(Optional<MenuQuantitiesResponse> menuQuantities) {
         System.out.println("<증정 메뉴>");
-        System.out.println(menuQuantitiesResponse);
+        System.out.println(convertOptional(menuQuantities));
+    }
+
+    public <T> String convertOptional(Optional<T> optional) {
+
+        if (optional.isEmpty()) {
+            return "없음";
+        }
+
+        return optional.toString();
     }
 
     @Override
-    public void printDiscountAmounts(BenefitAmountsResponse benefitAmountsResponse) {
+    public void printDiscountAmounts(Optional<BenefitAmountsResponse> benefitAmounts) {
         System.out.println("<혜택 내역>");
-        System.out.println(benefitAmountsResponse);
+        System.out.println(convertOptional(benefitAmounts));
     }
 
     @Override
-    public void printTotalBenefitAmount(TotalBenefitAmountResponse totalBenefitAmountResponse) {
+    public void printTotalBenefitAmount(TotalBenefitAmountResponse totalBenefitAmount) {
         System.out.println("<총혜택 금액>");
-        System.out.println(totalBenefitAmountResponse);
+        System.out.println(totalBenefitAmount);
         System.out.println();
     }
 
@@ -78,9 +88,9 @@ public class OutputConsoleView implements OutputView {
     }
 
     @Override
-    public void printBadge(BadgeResponse badgeResponse) {
+    public void printBadge(Optional<BadgeResponse> badge) {
         System.out.println("<12월 이벤트 배지>");
-        System.out.println(badgeResponse);
+        System.out.println(convertOptional(badge));
         System.out.println();
     }
 }

@@ -3,6 +3,7 @@ package christmas.service.event;
 import christmas.domain.MenuQuantity;
 import christmas.domain.Money;
 import christmas.domain.Reservation;
+import java.util.Optional;
 
 public class Event {
 
@@ -27,19 +28,24 @@ public class Event {
     public Money calculateBenefitAmount(Reservation reservation) {
         if (eventCondition.isSatisfiedBy(reservation)) {
             Money discountAmount = eventPolicy.calculateDiscountAmount(reservation);
-            MenuQuantity menuQuantity = eventPolicy.receiveGift(reservation);
-            return discountAmount.add(menuQuantity.calculateCost());
+            Optional<MenuQuantity> giftOptional = eventPolicy.receiveGift(reservation);
+            if (giftOptional.isEmpty()) {
+                return discountAmount;
+            }
+
+            MenuQuantity gift = giftOptional.get();
+            return discountAmount.add(gift.calculateCost());
         }
 
         return Money.ZERO;
     }
 
-    public MenuQuantity receiveGift(Reservation reservation) {
+    public Optional<MenuQuantity> receiveGift(Reservation reservation) {
         if (eventCondition.isSatisfiedBy(reservation)) {
             return eventPolicy.receiveGift(reservation);
         }
 
-        return MenuQuantity.EMPTY;
+        return Optional.empty();
     }
 
     public String getEventName() {

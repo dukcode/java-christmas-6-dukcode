@@ -1,6 +1,5 @@
 package christmas.controller.dto.response;
 
-import christmas.domain.Menu;
 import christmas.domain.MenuQuantity;
 
 public class MenuQuantityResponse {
@@ -17,15 +16,8 @@ public class MenuQuantityResponse {
         return new MenuQuantityResponse(menuQuantity.getMenu().getName(), menuQuantity.getQuantity());
     }
 
-    private boolean isEmpty() {
-        return menuName.equals(Menu.NONE.getName());
-    }
-
     @Override
     public String toString() {
-        if (isEmpty()) {
-            return "없음";
-        }
         return String.format("%s %d개", menuName, quantity);
     }
 }

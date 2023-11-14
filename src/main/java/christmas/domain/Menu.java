@@ -2,8 +2,6 @@ package christmas.domain;
 
 public class Menu {
 
-    public static final Menu NONE = new Menu("NONE", Money.ZERO, MenuType.NONE);
-
     private final String name;
     private final Money cost;
     private final MenuType type;

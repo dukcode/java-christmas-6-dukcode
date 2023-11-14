@@ -4,8 +4,6 @@ import christmas.domain.exception.ExceptionMessage;
 
 public class MenuQuantity {
 
-    public static final MenuQuantity EMPTY = new MenuQuantity(Menu.NONE, 1);
-
     private final Menu menu;
     private final int quantity;
 
@@ -32,10 +30,6 @@ public class MenuQuantity {
 
     public Money calculateCost() {
         return menu.getCost().multiply(quantity);
-    }
-
-    public boolean isNone() {
-        return menu.equals(Menu.NONE);
     }
 
     public boolean isSameType(MenuType menuType) {

@@ -5,6 +5,7 @@ import christmas.domain.Money;
 import christmas.domain.Reservation;
 import christmas.service.event.EventPolicy;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Set;
 
 public class SpecialDayEventPolicy implements EventPolicy {
@@ -27,7 +28,7 @@ public class SpecialDayEventPolicy implements EventPolicy {
     }
 
     @Override
-    public MenuQuantity receiveGift(Reservation reservation) {
-        return MenuQuantity.EMPTY;
+    public Optional<MenuQuantity> receiveGift(Reservation reservation) {
+        return Optional.empty();
     }
 }

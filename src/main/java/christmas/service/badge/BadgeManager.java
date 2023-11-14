@@ -2,19 +2,20 @@ package christmas.service.badge;
 
 import christmas.domain.Badge;
 import christmas.domain.Money;
+import java.util.Optional;
 
 public class BadgeManager {
 
     public BadgeManager() {
     }
 
-    public Badge awardBadge(Money totalBenefitAmount) {
+    public Optional<Badge> awardBadge(Money totalBenefitAmount) {
         for (Badge badge : Badge.values()) {
             if (badge.canBeAward(totalBenefitAmount)) {
-                return badge;
+                return Optional.of(badge);
             }
         }
 
-        return Badge.NONE;
+        return Optional.empty();
     }
 }

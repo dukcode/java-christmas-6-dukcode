@@ -23,14 +23,6 @@ public class BenefitAmountsResponse {
 
     @Override
     public String toString() {
-        if (benefitAmounts.isEmpty()) {
-            return "없음\n";
-        }
-
-        return createEventDiscountAmountString();
-    }
-
-    private String createEventDiscountAmountString() {
         StringBuilder stringBuilder = new StringBuilder();
         for (String title : benefitAmounts.keySet()) {
             Money benefitAmount = benefitAmounts.get(title);

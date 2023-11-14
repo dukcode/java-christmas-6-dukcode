@@ -20,6 +20,7 @@ import christmas.service.ReservationService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class PromotionController {
     private final InputView inputView;
@@ -89,8 +90,12 @@ public class PromotionController {
     }
 
     private void printBadge(Reservation reservation) {
-        Badge badge = promotionService.recieveBadge(reservation);
-        outputView.printBadge(new BadgeResponse(badge));
+        Optional<Badge> badgeOptional = promotionService.recieveBadge(reservation);
+        if (badgeOptional.isEmpty()) {
+            outputView.printBadge(Optional.empty());
+            return;
+        }
+        outputView.printBadge(Optional.of(new BadgeResponse(badgeOptional.get())));
     }
 
     private void printChargeAfterDiscount(Reservation reservation) {
@@ -105,7 +110,12 @@ public class PromotionController {
 
     private void printBenefitAmounts(Reservation reservation) {
         Map<String, Money> benefitAmounts = promotionService.calculateBenefitAmounts(reservation);
-        outputView.printDiscountAmounts(new BenefitAmountsResponse(benefitAmounts));
+        if (benefitAmounts.isEmpty()) {
+            outputView.printDiscountAmounts(Optional.empty());
+            return;
+        }
+
+        outputView.printDiscountAmounts(Optional.of(new BenefitAmountsResponse(benefitAmounts)));
     }
 
     private void printGifts(Reservation reservation) {
@@ -115,7 +125,13 @@ public class PromotionController {
         for (Menu menu : gifts.keySet()) {
             menuQuantities.add(new MenuQuantity(menu, gifts.get(menu)));
         }
-        outputView.printGifts(MenuQuantitiesResponse.from(menuQuantities));
+
+        if (menuQuantities.isEmpty()) {
+            outputView.printGifts(Optional.empty());
+            return;
+        }
+
+        outputView.printGifts(Optional.of(MenuQuantitiesResponse.from(menuQuantities)));
     }
 
     private void printPreDiscountCharge(Reservation reservation) {

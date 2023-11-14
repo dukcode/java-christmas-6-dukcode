@@ -10,6 +10,7 @@ import christmas.service.event.Event;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class PromotionService {
 
@@ -29,17 +30,18 @@ public class PromotionService {
 
         Map<Menu, Integer> gifts = new HashMap<>();
         for (Event event : events) {
-            MenuQuantity gift = event.receiveGift(reservation);
-            if (gift.isNone()) {
+            Optional<MenuQuantity> giftOptional = event.receiveGift(reservation);
+            if (giftOptional.isEmpty()) {
                 continue;
             }
 
+            MenuQuantity gift = giftOptional.get();
             gifts.put(gift.getMenu(), gifts.getOrDefault(gift.getMenu(), 0) + 1);
         }
         return gifts;
     }
 
-    public Badge recieveBadge(Reservation reservation) {
+    public Optional<Badge> recieveBadge(Reservation reservation) {
         Money totalBenefitAmount = calculateTotalBenefitAmount(reservation);
         return badgeManager.awardBadge(totalBenefitAmount);
     }
