@@ -4,6 +4,7 @@ import christmas.domain.Menu;
 import christmas.domain.MenuQuantity;
 import christmas.domain.Money;
 import christmas.domain.Reservation;
+import christmas.domain.exception.NotFoundException;
 import christmas.repository.MenuRepository;
 import christmas.service.event.EventPolicy;
 import java.util.Optional;
@@ -24,7 +25,7 @@ public class GiftEventPolicy implements EventPolicy {
 
     private void validateGiftMenuExist(MenuRepository menuRepository, String giftMenu) {
         if (!menuRepository.existByName(giftMenu)) {
-            throw new RuntimeException("존재하지 않는 메뉴 입니다.");
+            throw new NotFoundException("존재하지 않는 메뉴 입니다.");
         }
     }
 
