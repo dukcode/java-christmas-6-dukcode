@@ -23,7 +23,7 @@ public class DefaultBadgeRepository implements BadgeRepository {
     @Override
     public Optional<Badge> findBadgeByTotalBenefitAmount(Money totalBenefitAmount) {
         for (Badge badge : badges) {
-            if (totalBenefitAmount.isGreaterThanOrEqual(badge.getMinBadgeAwardAmount())) {
+            if (badge.canBeAward(totalBenefitAmount)) {
                 return Optional.of(badge);
             }
         }
