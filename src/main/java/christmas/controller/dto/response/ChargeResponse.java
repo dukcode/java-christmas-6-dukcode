@@ -5,8 +5,12 @@ import christmas.domain.Money;
 public class ChargeResponse {
     private final Money charge;
 
-    public ChargeResponse(Money charge) {
+    private ChargeResponse(Money charge) {
         this.charge = charge;
+    }
+
+    public static ChargeResponse from(Money charge) {
+        return new ChargeResponse(charge);
     }
 
     @Override

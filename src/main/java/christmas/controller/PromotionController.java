@@ -101,7 +101,7 @@ public class PromotionController {
 
     private void printChargeAfterDiscount(Reservation reservation) {
         Money chargeAfterDiscount = promotionService.calculateChargeAfterDiscount(reservation);
-        outputView.printChargeAfterDiscount(new ChargeResponse(chargeAfterDiscount));
+        outputView.printChargeAfterDiscount(ChargeResponse.from(chargeAfterDiscount));
     }
 
     private void printTotalDiscountAmount(Reservation reservation) {
@@ -137,7 +137,7 @@ public class PromotionController {
 
     private void printPreDiscountCharge(Reservation reservation) {
         Money preDiscountCharge = promotionService.calculatePreDiscountCharge(reservation);
-        outputView.printPreDiscountCharge(new ChargeResponse(preDiscountCharge));
+        outputView.printPreDiscountCharge(ChargeResponse.from(preDiscountCharge));
     }
 
     private ReservationDate inputReservationDate() {

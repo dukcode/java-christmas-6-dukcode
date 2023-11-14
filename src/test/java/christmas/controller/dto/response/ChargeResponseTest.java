@@ -17,7 +17,7 @@ class ChargeResponseTest {
         // when
         // then
         Assertions.assertThatCode(() -> {
-            new ChargeResponse(charge);
+            ChargeResponse.from(charge);
         }).doesNotThrowAnyException();
     }
 
@@ -25,7 +25,7 @@ class ChargeResponseTest {
     public void Money_가_0원_일_때_toString_메서드를_호출하면_없음_을_반환한다() throws Exception {
         // given
         Money charge = Money.of(0L);
-        ChargeResponse chargeResponse = new ChargeResponse(charge);
+        ChargeResponse chargeResponse = ChargeResponse.from(charge);
 
         // when
         String string = chargeResponse.toString();
@@ -38,7 +38,7 @@ class ChargeResponseTest {
     public void Money_가_0원이_아닐_때_toString_메서드를_호출하면_지정된_형식을_반환한다() throws Exception {
         // given
         Money charge = Money.of(10_000L);
-        ChargeResponse chargeResponse = new ChargeResponse(charge);
+        ChargeResponse chargeResponse = ChargeResponse.from(charge);
 
         // when
         String string = chargeResponse.toString();
