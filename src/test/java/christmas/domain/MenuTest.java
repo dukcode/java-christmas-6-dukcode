@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -8,6 +9,19 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class MenuTest {
+
+    @Test
+    public void Menu_를_생성할_수_있다() throws Exception {
+        // given
+        int orderCount = 1;
+
+        // when
+        // then
+        assertThatCode(() -> {
+            Menu menu = new Menu("메뉴", Money.of(10_000L), MenuType.MAIN_DISH);
+        }).doesNotThrowAnyException();
+
+    }
 
     @Test
     public void isSameName_호출_시_Menu_이름이_같으면_true_를_반환한다() throws Exception {
