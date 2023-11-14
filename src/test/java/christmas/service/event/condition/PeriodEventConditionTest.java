@@ -1,6 +1,6 @@
 package christmas.service.event.condition;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.domain.Menu;
 import christmas.domain.MenuQuantity;
@@ -11,7 +11,6 @@ import christmas.domain.Reservation;
 import christmas.domain.ReservationDate;
 import java.time.LocalDate;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
