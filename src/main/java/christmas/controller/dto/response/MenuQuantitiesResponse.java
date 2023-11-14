@@ -2,6 +2,7 @@ package christmas.controller.dto.response;
 
 import christmas.domain.MenuQuantity;
 import java.util.List;
+import java.util.StringJoiner;
 
 public class MenuQuantitiesResponse {
 
@@ -20,17 +21,12 @@ public class MenuQuantitiesResponse {
 
     @Override
     public String toString() {
-
-        return createMenuQuantiesString();
-    }
-
-    private String createMenuQuantiesString() {
-        StringBuilder sb = new StringBuilder();
+        StringJoiner stringJoiner = new StringJoiner("\n");
         for (MenuQuantityResponse menuQuantityResponse : menuQuantityResponses) {
-            sb.append(menuQuantityResponse.toString());
-            sb.append("\n");
+            stringJoiner.add(menuQuantityResponse.toString());
         }
 
-        return sb.toString();
+        return stringJoiner.toString();
     }
+
 }

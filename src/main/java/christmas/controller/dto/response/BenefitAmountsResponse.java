@@ -3,6 +3,7 @@ package christmas.controller.dto.response;
 import christmas.domain.Money;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringJoiner;
 
 public class BenefitAmountsResponse {
 
@@ -23,15 +24,14 @@ public class BenefitAmountsResponse {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringJoiner stringJoiner = new StringJoiner("\n");
         for (String title : benefitAmounts.keySet()) {
             Money benefitAmount = benefitAmounts.get(title);
-            stringBuilder.append(String.format(EVENT_NAME_DISCOUNT_AMOUNT_STRING_FORMAT,
+            stringJoiner.add(String.format(EVENT_NAME_DISCOUNT_AMOUNT_STRING_FORMAT,
                     title, benefitAmount));
-            stringBuilder.append("\n");
         }
 
-        return stringBuilder.toString();
+        return stringJoiner.toString();
     }
 
 }

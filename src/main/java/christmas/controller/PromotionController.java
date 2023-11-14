@@ -90,7 +90,7 @@ public class PromotionController {
     }
 
     private void printBadge(Reservation reservation) {
-        Optional<Badge> badgeOptional = promotionService.recieveBadge(reservation);
+        Optional<Badge> badgeOptional = promotionService.receiveBadge(reservation);
         if (badgeOptional.isEmpty()) {
             outputView.printBadge(Optional.empty());
             return;

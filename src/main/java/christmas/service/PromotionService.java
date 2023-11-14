@@ -41,7 +41,7 @@ public class PromotionService {
         return gifts;
     }
 
-    public Optional<Badge> recieveBadge(Reservation reservation) {
+    public Optional<Badge> receiveBadge(Reservation reservation) {
         Money totalBenefitAmount = calculateTotalBenefitAmount(reservation);
         return badgeManager.awardBadge(totalBenefitAmount);
     }

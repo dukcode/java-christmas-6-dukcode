@@ -41,8 +41,10 @@ public class OutputConsoleView implements OutputView {
 
     @Override
     public void printMenuOrders(MenuQuantitiesResponse menuOrdersResponse) {
-        System.out.println("<주문 메뉴>");
+        String x = "<주문 메뉴>";
+        System.out.println(x);
         System.out.println(menuOrdersResponse);
+        System.out.println();
     }
 
     @Override
@@ -56,21 +58,23 @@ public class OutputConsoleView implements OutputView {
     public void printGifts(Optional<MenuQuantitiesResponse> menuQuantities) {
         System.out.println("<증정 메뉴>");
         System.out.println(convertOptional(menuQuantities));
+        System.out.println();
     }
 
-    public <T> String convertOptional(Optional<T> optional) {
+    private <T> String convertOptional(Optional<T> optional) {
 
         if (optional.isEmpty()) {
             return "없음";
         }
 
-        return optional.toString();
+        return optional.get().toString();
     }
 
     @Override
     public void printDiscountAmounts(Optional<BenefitAmountsResponse> benefitAmounts) {
         System.out.println("<혜택 내역>");
         System.out.println(convertOptional(benefitAmounts));
+        System.out.println();
     }
 
     @Override
