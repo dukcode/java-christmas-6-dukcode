@@ -114,7 +114,7 @@ public class Application {
     }
 
     private static PromotionService promotionService(BadgeRepository badgeRepository, Event... events) {
-        return new PromotionService(events, badgeRepository);
+        return new PromotionService(badgeRepository, events);
     }
 
     private static ExceptionHandler exceptionHandler() {

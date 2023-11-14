@@ -17,7 +17,7 @@ public class PromotionService {
     private final List<Event> events;
     private final BadgeRepository badgeRepository;
 
-    public PromotionService(Event[] events, BadgeRepository badgeRepository) {
+    public PromotionService(BadgeRepository badgeRepository, Event... events) {
         this.events = List.of(events);
         this.badgeRepository = badgeRepository;
     }
@@ -36,7 +36,7 @@ public class PromotionService {
             }
 
             MenuQuantity gift = giftOptional.get();
-            gifts.put(gift.getMenu(), gifts.getOrDefault(gift.getMenu(), 0) + 1);
+            gifts.put(gift.getMenu(), gifts.getOrDefault(gift.getMenu(), 0) + gift.getQuantity());
         }
         return gifts;
     }
