@@ -6,7 +6,7 @@ import christmas.domain.Menu;
 import christmas.domain.MenuQuantity;
 import christmas.domain.MenuType;
 import christmas.domain.Money;
-import christmas.domain.Reservation;
+import christmas.mock.TestEventPolicy;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -20,17 +20,9 @@ class EventTest {
 
     @BeforeEach
     public void init() {
-        eventPolicy = new EventPolicy() {
-            @Override
-            public Money calculateDiscountAmount(Reservation reservation) {
-                return Money.of(10_000);
-            }
-
-            @Override
-            public Optional<MenuQuantity> receiveGift(Reservation reservation) {
-                return Optional.of(new MenuQuantity(new Menu("메뉴", Money.of(1_000L), MenuType.MAIN_DISH), 2));
-            }
-        };
+        eventPolicy = new TestEventPolicy(Money.of(10_000L),
+                new Menu("메뉴", Money.of(1_000L), MenuType.MAIN_DISH),
+                2);
     }
 
     @Test
