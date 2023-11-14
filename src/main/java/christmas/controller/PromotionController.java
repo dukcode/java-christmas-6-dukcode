@@ -1,13 +1,5 @@
 package christmas.controller;
 
-import christmas.controller.dto.request.OrderCreateRequest;
-import christmas.controller.dto.request.ReservationDateCreateRequest;
-import christmas.controller.dto.response.BadgeResponse;
-import christmas.controller.dto.response.BenefitAmountsResponse;
-import christmas.controller.dto.response.ChargeResponse;
-import christmas.controller.dto.response.MenuQuantitiesResponse;
-import christmas.controller.dto.response.ReservationDateResponse;
-import christmas.controller.dto.response.TotalBenefitAmountResponse;
 import christmas.application.domain.Badge;
 import christmas.application.domain.Menu;
 import christmas.application.domain.MenuQuantity;
@@ -17,6 +9,14 @@ import christmas.application.domain.Reservation;
 import christmas.application.domain.ReservationDate;
 import christmas.application.service.PromotionService;
 import christmas.application.service.ReservationService;
+import christmas.controller.dto.request.OrderCreateRequest;
+import christmas.controller.dto.request.ReservationDateCreateRequest;
+import christmas.controller.dto.response.BadgeResponse;
+import christmas.controller.dto.response.BenefitAmountsResponse;
+import christmas.controller.dto.response.ChargeResponse;
+import christmas.controller.dto.response.MenuQuantitiesResponse;
+import christmas.controller.dto.response.ReservationDateResponse;
+import christmas.controller.dto.response.TotalBenefitAmountResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -93,10 +93,10 @@ public class PromotionController {
     private void printBadge(Reservation reservation) {
         Optional<Badge> badgeOptional = promotionService.receiveBadge(reservation);
         if (badgeOptional.isEmpty()) {
-            outputView.printBadge(Optional.empty());
+            outputView.printBadge(null);
             return;
         }
-        outputView.printBadge(Optional.of(BadgeResponse.from(badgeOptional.get())));
+        outputView.printBadge(BadgeResponse.from(badgeOptional.get()));
     }
 
     private void printChargeAfterDiscount(Reservation reservation) {
@@ -112,11 +112,11 @@ public class PromotionController {
     private void printBenefitAmounts(Reservation reservation) {
         Map<String, Money> benefitAmounts = promotionService.calculateBenefitAmounts(reservation);
         if (benefitAmounts.isEmpty()) {
-            outputView.printDiscountAmounts(Optional.empty());
+            outputView.printDiscountAmounts(null);
             return;
         }
 
-        outputView.printDiscountAmounts(Optional.of(new BenefitAmountsResponse(benefitAmounts)));
+        outputView.printDiscountAmounts(new BenefitAmountsResponse(benefitAmounts));
     }
 
     private void printGifts(Reservation reservation) {
@@ -128,11 +128,11 @@ public class PromotionController {
         }
 
         if (menuQuantities.isEmpty()) {
-            outputView.printGifts(Optional.empty());
+            outputView.printGifts(null);
             return;
         }
 
-        outputView.printGifts(Optional.of(MenuQuantitiesResponse.from(menuQuantities)));
+        outputView.printGifts(MenuQuantitiesResponse.from(menuQuantities));
     }
 
     private void printPreDiscountCharge(Reservation reservation) {

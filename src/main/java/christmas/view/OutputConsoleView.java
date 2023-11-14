@@ -7,7 +7,7 @@ import christmas.controller.dto.response.ChargeResponse;
 import christmas.controller.dto.response.MenuQuantitiesResponse;
 import christmas.controller.dto.response.ReservationDateResponse;
 import christmas.controller.dto.response.TotalBenefitAmountResponse;
-import java.util.Optional;
+import java.util.Objects;
 
 public class OutputConsoleView implements OutputView {
 
@@ -55,25 +55,25 @@ public class OutputConsoleView implements OutputView {
     }
 
     @Override
-    public void printGifts(Optional<MenuQuantitiesResponse> menuQuantities) {
+    public void printGifts(MenuQuantitiesResponse menuQuantities) {
         System.out.println("<증정 메뉴>");
-        System.out.println(convertOptional(menuQuantities));
+        System.out.println(convertWhenNull(menuQuantities));
         System.out.println();
     }
 
-    private <T> String convertOptional(Optional<T> optional) {
+    private <T> String convertWhenNull(T optional) {
 
-        if (optional.isEmpty()) {
+        if (Objects.isNull(optional)) {
             return "없음";
         }
 
-        return optional.get().toString();
+        return optional.toString();
     }
 
     @Override
-    public void printDiscountAmounts(Optional<BenefitAmountsResponse> benefitAmounts) {
+    public void printDiscountAmounts(BenefitAmountsResponse benefitAmounts) {
         System.out.println("<혜택 내역>");
-        System.out.println(convertOptional(benefitAmounts));
+        System.out.println(convertWhenNull(benefitAmounts));
         System.out.println();
     }
 
@@ -92,9 +92,9 @@ public class OutputConsoleView implements OutputView {
     }
 
     @Override
-    public void printBadge(Optional<BadgeResponse> badge) {
+    public void printBadge(BadgeResponse badge) {
         System.out.println("<12월 이벤트 배지>");
-        System.out.println(convertOptional(badge));
+        System.out.println(convertWhenNull(badge));
         System.out.println();
     }
 }
