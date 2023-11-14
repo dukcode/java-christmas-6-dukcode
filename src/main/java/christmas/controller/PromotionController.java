@@ -106,7 +106,7 @@ public class PromotionController {
 
     private void printTotalDiscountAmount(Reservation reservation) {
         Money totalBenefitAmount = promotionService.calculateTotalBenefitAmount(reservation);
-        outputView.printTotalBenefitAmount(new TotalBenefitAmountResponse(totalBenefitAmount));
+        outputView.printTotalBenefitAmount(TotalBenefitAmountResponse.from(totalBenefitAmount));
     }
 
     private void printBenefitAmounts(Reservation reservation) {

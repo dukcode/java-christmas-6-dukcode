@@ -8,8 +8,12 @@ public class TotalBenefitAmountResponse {
 
     private final Money totalDiscountAmount;
 
-    public TotalBenefitAmountResponse(Money totalDiscountAmount) {
+    private TotalBenefitAmountResponse(Money totalDiscountAmount) {
         this.totalDiscountAmount = totalDiscountAmount;
+    }
+
+    public static TotalBenefitAmountResponse from(Money totalDiscountAmount) {
+        return new TotalBenefitAmountResponse(totalDiscountAmount);
     }
 
     @Override
