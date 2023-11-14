@@ -4,14 +4,18 @@ import christmas.domain.Badge;
 
 public class BadgeResponse {
 
-    private final Badge badge;
+    private final String badgeName;
 
-    public BadgeResponse(Badge badge) {
-        this.badge = badge;
+    private BadgeResponse(String badgeName) {
+        this.badgeName = badgeName;
+    }
+
+    public static BadgeResponse from(Badge badge) {
+        return new BadgeResponse(badge.getName());
     }
 
     @Override
     public String toString() {
-        return badge.toString();
+        return badgeName;
     }
 }

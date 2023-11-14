@@ -4,11 +4,12 @@ import christmas.controller.PromotionController;
 import christmas.controller.handler.InfiniteRetryExceptionHandler;
 import christmas.domain.MenuType;
 import christmas.domain.Money;
+import christmas.repository.BadgeRepository;
+import christmas.repository.DefaultBadgeRepository;
 import christmas.repository.DefaultMenuRepository;
 import christmas.repository.MenuRepository;
 import christmas.service.PromotionService;
 import christmas.service.ReservationService;
-import christmas.service.badge.BadgeManager;
 import christmas.service.event.Event;
 import christmas.service.event.condition.CompositeEventCondition;
 import christmas.service.event.condition.MinimumOrderAmountCondition;
@@ -35,12 +36,13 @@ public class Application {
 
         CompositeEventCondition commonEventCondition = createCommonEventCondition(eventYearMonth);
 
+        BadgeRepository badgeRepository = new DefaultBadgeRepository();
+
         List<Event> events = createEvents(commonEventCondition, eventYearMonth, menuRepository);
-        BadgeManager badgeManager = new BadgeManager();
 
         PromotionController promotionController = createPromotionController(eventYear, eventMonth, menuRepository,
                 events,
-                badgeManager);
+                badgeRepository);
 
         promotionController.run();
     }
@@ -63,12 +65,12 @@ public class Application {
 
     private static PromotionController createPromotionController(int eventYear, int eventMonth,
                                                                  MenuRepository menuRepository, List<Event> events,
-                                                                 BadgeManager badgeManager) {
+                                                                 BadgeRepository badgeRepository) {
         return new PromotionController(
                 new InputConsoleView(eventYear, eventMonth),
                 new OutputConsoleView(eventYear, eventMonth),
                 new InfiniteRetryExceptionHandler(),
-                new PromotionService(events, badgeManager),
+                new PromotionService(events, badgeRepository),
                 new ReservationService(menuRepository));
     }
 

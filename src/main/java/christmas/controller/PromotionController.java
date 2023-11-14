@@ -34,7 +34,8 @@ public class PromotionController {
 
     public PromotionController(InputView inputView, OutputView outputView,
                                ExceptionHandler exceptionHandler,
-                               PromotionService promotionService, ReservationService reservationService) {
+                               PromotionService promotionService,
+                               ReservationService reservationService) {
 
         this.inputView = inputView;
         this.outputView = outputView;
@@ -95,7 +96,7 @@ public class PromotionController {
             outputView.printBadge(Optional.empty());
             return;
         }
-        outputView.printBadge(Optional.of(new BadgeResponse(badgeOptional.get())));
+        outputView.printBadge(Optional.of(BadgeResponse.from(badgeOptional.get())));
     }
 
     private void printChargeAfterDiscount(Reservation reservation) {

@@ -5,7 +5,7 @@ import christmas.domain.Menu;
 import christmas.domain.MenuQuantity;
 import christmas.domain.Money;
 import christmas.domain.Reservation;
-import christmas.service.badge.BadgeManager;
+import christmas.repository.BadgeRepository;
 import christmas.service.event.Event;
 import java.util.HashMap;
 import java.util.List;
@@ -15,11 +15,11 @@ import java.util.Optional;
 public class PromotionService {
 
     private final List<Event> events;
-    private final BadgeManager badgeManager;
+    private final BadgeRepository badgeRepository;
 
-    public PromotionService(List<Event> events, BadgeManager badgeManager) {
+    public PromotionService(List<Event> events, BadgeRepository badgeRepository) {
         this.events = events;
-        this.badgeManager = badgeManager;
+        this.badgeRepository = badgeRepository;
     }
 
     public Money calculatePreDiscountCharge(Reservation reservation) {
@@ -43,7 +43,7 @@ public class PromotionService {
 
     public Optional<Badge> receiveBadge(Reservation reservation) {
         Money totalBenefitAmount = calculateTotalBenefitAmount(reservation);
-        return badgeManager.awardBadge(totalBenefitAmount);
+        return badgeRepository.findBadgeByTotalBenefitAmount(totalBenefitAmount);
     }
 
     public Money calculateTotalBenefitAmount(Reservation reservation) {
