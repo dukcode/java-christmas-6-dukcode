@@ -32,7 +32,7 @@ public class MenuQuantity {
         return menu.getCost().multiply(quantity);
     }
 
-    public boolean isSameType(MenuType menuType) {
+    public boolean isSameMenuType(MenuType menuType) {
         return menu.isSameMenuType(menuType);
     }
 }

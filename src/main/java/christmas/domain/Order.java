@@ -19,7 +19,7 @@ public class Order {
 
     private void validateNotOnlyBeverageMenu(List<MenuQuantity> menuQuantities) {
         for (MenuQuantity menuQuantity : menuQuantities) {
-            if (!menuQuantity.isSameType(MenuType.BEVERAGE)) {
+            if (!menuQuantity.isSameMenuType(MenuType.BEVERAGE)) {
                 return;
             }
         }
@@ -66,7 +66,7 @@ public class Order {
     public int countMenusByType(MenuType discountMenuType) {
         int count = 0;
         for (MenuQuantity menuQuantity : menuQuantities) {
-            if (menuQuantity.isSameType(discountMenuType)) {
+            if (menuQuantity.isSameMenuType(discountMenuType)) {
                 count += menuQuantity.getQuantity();
             }
         }
