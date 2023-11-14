@@ -10,20 +10,11 @@ public class Badge {
         this.minBadgeAwardAmount = minBadgeAwardAmount;
     }
 
-    @Override
-    public String toString() {
-        return this.name;
-    }
-
     public String getName() {
         return name;
     }
 
     public Money getMinBadgeAwardAmount() {
         return minBadgeAwardAmount;
-    }
-
-    public boolean canBeAward(Money orderAmount) {
-        return orderAmount.isGreaterThanOrEqual(minBadgeAwardAmount);
     }
 }
