@@ -4,7 +4,6 @@ package christmas.controller.dto;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import camp.nextstep.edu.missionutils.Console;
 import christmas.controller.dto.request.ReservationDateCreateRequest;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -21,7 +20,7 @@ class ReservationDateCreateRequestTest {
         // when
         // then
         assertThatCode(() -> {
-            new ReservationDateCreateRequest("2023", "12", Console.readLine());
+            new ReservationDateCreateRequest("2023", "12", dayOfMonth);
         }).doesNotThrowAnyException();
     }
 
@@ -33,7 +32,19 @@ class ReservationDateCreateRequestTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            new ReservationDateCreateRequest("2023", "12", Console.readLine());
+            new ReservationDateCreateRequest("2023", "12", dayOfMonth);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void 존재하지_않는_날짜로_ReservationDateCreateRequest_클래스를_생성시_예외가_발생한다() throws Exception {
+        // given
+        String dayOfMonth = "100";
+
+        // when
+        // then
+        assertThatThrownBy(() -> {
+            new ReservationDateCreateRequest("2023", "12", dayOfMonth);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
