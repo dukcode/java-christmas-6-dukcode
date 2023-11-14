@@ -16,7 +16,7 @@ import christmas.service.ReservationService;
 import christmas.service.event.Event;
 import christmas.service.event.EventCondition;
 import christmas.service.event.condition.CompositeEventCondition;
-import christmas.service.event.condition.MinimumOrderAmountCondition;
+import christmas.service.event.condition.MinimumOrderAmountEventCondition;
 import christmas.service.event.condition.PeriodEventCondition;
 import christmas.service.event.policy.DDayEventPolicy;
 import christmas.service.event.policy.GiftEventPolicy;
@@ -81,12 +81,12 @@ public class Application {
 
     private static EventCondition eventCondition() {
         PeriodEventCondition periodEventCondition = periodEventCondition();
-        MinimumOrderAmountCondition minimumOrderAmountCondition = minimumOrderAmountCondition();
-        return new CompositeEventCondition(periodEventCondition, minimumOrderAmountCondition);
+        MinimumOrderAmountEventCondition minimumOrderAmountEventCondition = minimumOrderAmountCondition();
+        return new CompositeEventCondition(periodEventCondition, minimumOrderAmountEventCondition);
     }
 
-    private static MinimumOrderAmountCondition minimumOrderAmountCondition() {
-        return new MinimumOrderAmountCondition(Money.of(10_000L));
+    private static MinimumOrderAmountEventCondition minimumOrderAmountCondition() {
+        return new MinimumOrderAmountEventCondition(Money.of(10_000L));
     }
 
     private static PeriodEventCondition periodEventCondition() {

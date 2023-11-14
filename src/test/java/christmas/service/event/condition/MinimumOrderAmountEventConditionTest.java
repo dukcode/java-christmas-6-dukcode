@@ -16,7 +16,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class MinimumOrderAmountConditionTest {
+class MinimumOrderAmountEventConditionTest {
 
     @Test
     public void 총_주문금액이_최소_주문금액을_넘는지_판단할_수_있다() throws Exception {
@@ -31,9 +31,9 @@ class MinimumOrderAmountConditionTest {
 
         Reservation reservation = new Reservation(order, reservationDate);
 
-        MinimumOrderAmountCondition condition1 = new MinimumOrderAmountCondition(Money.of(49_999L));
-        MinimumOrderAmountCondition condition2 = new MinimumOrderAmountCondition(Money.of(50_000L));
-        MinimumOrderAmountCondition condition3 = new MinimumOrderAmountCondition(Money.of(50_001L));
+        MinimumOrderAmountEventCondition condition1 = new MinimumOrderAmountEventCondition(Money.of(49_999L));
+        MinimumOrderAmountEventCondition condition2 = new MinimumOrderAmountEventCondition(Money.of(50_000L));
+        MinimumOrderAmountEventCondition condition3 = new MinimumOrderAmountEventCondition(Money.of(50_001L));
 
         // when
         // then
