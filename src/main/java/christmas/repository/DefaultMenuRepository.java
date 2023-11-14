@@ -40,7 +40,7 @@ public class DefaultMenuRepository implements MenuRepository {
     @Override
     public Optional<Menu> findByName(String name) {
         for (Menu menu : menus) {
-            if (menu.isNameEquals(name)) {
+            if (menu.isSameName(name)) {
                 return Optional.of(menu);
             }
         }
@@ -51,7 +51,7 @@ public class DefaultMenuRepository implements MenuRepository {
     @Override
     public boolean existByName(String name) {
         for (Menu menu : menus) {
-            if (menu.isNameEquals(name)) {
+            if (menu.isSameName(name)) {
                 return true;
             }
         }

@@ -20,11 +20,11 @@ public class Menu {
         return cost;
     }
 
-    public boolean isMenuTypeEquals(MenuType menuType) {
+    public boolean isSameMenuType(MenuType menuType) {
         return type.equals(menuType);
     }
 
-    public boolean isNameEquals(String name) {
+    public boolean isSameName(String name) {
         return this.name.equals(name);
     }
 }

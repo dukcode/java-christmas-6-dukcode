@@ -33,6 +33,6 @@ public class MenuQuantity {
     }
 
     public boolean isSameType(MenuType menuType) {
-        return menu.isMenuTypeEquals(menuType);
+        return menu.isSameMenuType(menuType);
     }
 }
