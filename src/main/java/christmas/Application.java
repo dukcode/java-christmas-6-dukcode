@@ -1,9 +1,9 @@
 package christmas;
 
 import christmas.controller.PromotionController;
+import christmas.controller.handler.InfiniteRetryExceptionHandler;
 import christmas.domain.MenuType;
 import christmas.domain.Money;
-import christmas.handler.InfiniteRetryExceptionHandler;
 import christmas.repository.DefaultMenuRepository;
 import christmas.repository.MenuRepository;
 import christmas.service.PromotionService;

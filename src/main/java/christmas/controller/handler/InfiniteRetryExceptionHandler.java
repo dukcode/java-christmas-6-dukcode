@@ -1,4 +1,4 @@
-package christmas.handler;
+package christmas.controller.handler;
 
 import christmas.controller.ExceptionHandler;
 import christmas.controller.InputView;
