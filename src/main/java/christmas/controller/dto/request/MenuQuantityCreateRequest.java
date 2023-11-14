@@ -2,7 +2,7 @@ package christmas.controller.dto.request;
 
 import christmas.controller.dto.exception.ExceptionMessage;
 import christmas.controller.dto.validator.NumberFormatValidator;
-import christmas.domain.MenuQuantityCreate;
+import christmas.application.domain.MenuQuantityCreate;
 
 public class MenuQuantityCreateRequest {
 

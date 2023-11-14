@@ -1,6 +1,6 @@
 package christmas.controller.dto.response;
 
-import christmas.domain.Badge;
+import christmas.application.domain.Badge;
 
 public class BadgeResponse {
 

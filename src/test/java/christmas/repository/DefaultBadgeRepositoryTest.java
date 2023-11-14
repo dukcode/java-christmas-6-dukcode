@@ -2,8 +2,8 @@ package christmas.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import christmas.domain.Badge;
-import christmas.domain.Money;
+import christmas.application.domain.Badge;
+import christmas.application.domain.Money;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

@@ -1,7 +1,7 @@
 package christmas.controller.dto.response;
 
-import christmas.domain.Badge;
-import christmas.domain.Money;
+import christmas.application.domain.Badge;
+import christmas.application.domain.Money;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

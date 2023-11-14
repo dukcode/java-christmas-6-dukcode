@@ -3,7 +3,7 @@ package christmas.controller.dto.response;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import christmas.domain.Money;
+import christmas.application.domain.Money;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;

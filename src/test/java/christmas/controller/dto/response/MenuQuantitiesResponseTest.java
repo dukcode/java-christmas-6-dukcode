@@ -1,9 +1,9 @@
 package christmas.controller.dto.response;
 
-import christmas.domain.Menu;
-import christmas.domain.MenuQuantity;
-import christmas.domain.MenuType;
-import christmas.domain.Money;
+import christmas.application.domain.Menu;
+import christmas.application.domain.MenuQuantity;
+import christmas.application.domain.MenuType;
+import christmas.application.domain.Money;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;

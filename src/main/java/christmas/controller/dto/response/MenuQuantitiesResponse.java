@@ -1,6 +1,6 @@
 package christmas.controller.dto.response;
 
-import christmas.domain.MenuQuantity;
+import christmas.application.domain.MenuQuantity;
 import java.util.List;
 import java.util.StringJoiner;
 

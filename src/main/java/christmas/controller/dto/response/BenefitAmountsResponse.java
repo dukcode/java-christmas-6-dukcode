@@ -1,6 +1,6 @@
 package christmas.controller.dto.response;
 
-import christmas.domain.Money;
+import christmas.application.domain.Money;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;

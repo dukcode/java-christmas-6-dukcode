@@ -1,6 +1,6 @@
 package christmas.controller.dto.request;
 
-import christmas.domain.OrderCreate;
+import christmas.application.domain.OrderCreate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

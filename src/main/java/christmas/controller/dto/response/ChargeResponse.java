@@ -1,6 +1,6 @@
 package christmas.controller.dto.response;
 
-import christmas.domain.Money;
+import christmas.application.domain.Money;
 
 public class ChargeResponse {
     private final Money charge;

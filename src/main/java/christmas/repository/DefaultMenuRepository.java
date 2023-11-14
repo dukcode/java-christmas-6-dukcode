@@ -1,8 +1,9 @@
 package christmas.repository;
 
-import christmas.domain.Menu;
-import christmas.domain.MenuType;
-import christmas.domain.Money;
+import christmas.application.domain.Menu;
+import christmas.application.domain.MenuType;
+import christmas.application.domain.Money;
+import christmas.application.service.MenuRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

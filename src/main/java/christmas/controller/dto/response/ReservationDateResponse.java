@@ -1,6 +1,6 @@
 package christmas.controller.dto.response;
 
-import christmas.domain.Reservation;
+import christmas.application.domain.Reservation;
 import java.time.LocalDate;
 
 public class ReservationDateResponse {

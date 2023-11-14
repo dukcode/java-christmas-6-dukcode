@@ -3,10 +3,10 @@ package christmas.controller.dto.response;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import christmas.domain.Menu;
-import christmas.domain.MenuQuantity;
-import christmas.domain.MenuType;
-import christmas.domain.Money;
+import christmas.application.domain.Menu;
+import christmas.application.domain.MenuQuantity;
+import christmas.application.domain.MenuType;
+import christmas.application.domain.Money;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

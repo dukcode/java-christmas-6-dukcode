@@ -1,7 +1,8 @@
 package christmas.repository;
 
-import christmas.domain.Badge;
-import christmas.domain.Money;
+import christmas.application.domain.Badge;
+import christmas.application.domain.Money;
+import christmas.application.service.BadgeRepository;
 import java.util.List;
 import java.util.Optional;
 

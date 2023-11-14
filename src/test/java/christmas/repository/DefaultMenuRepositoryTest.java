@@ -2,7 +2,7 @@ package christmas.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import christmas.domain.Menu;
+import christmas.application.domain.Menu;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

@@ -1,10 +1,10 @@
 package christmas.mock;
 
-import christmas.domain.Menu;
-import christmas.domain.MenuQuantity;
-import christmas.domain.Money;
-import christmas.domain.Reservation;
-import christmas.service.event.EventPolicy;
+import christmas.application.domain.Menu;
+import christmas.application.domain.MenuQuantity;
+import christmas.application.domain.Money;
+import christmas.application.domain.Reservation;
+import christmas.application.service.EventPolicy;
 import java.util.Optional;
 
 public class TestEventPolicy implements EventPolicy {
