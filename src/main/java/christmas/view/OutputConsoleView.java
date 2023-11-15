@@ -89,13 +89,13 @@ public class OutputConsoleView implements OutputView {
         System.out.println();
     }
 
-    private <T> String convertWhenNull(T optional) {
+    private <T> String convertWhenNull(T object) {
 
-        if (Objects.isNull(optional)) {
+        if (Objects.isNull(object)) {
             return EMPTY_MESSAGE;
         }
 
-        return optional.toString();
+        return object.toString();
     }
 
     @Override
