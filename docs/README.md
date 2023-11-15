@@ -1,5 +1,316 @@
 # 구현 내용 정리
 
+## 구현 시 중점을 둔 부분
+
+구현 시 중점을 둔 부분은 다음과 같다.
+
+- 입력 예외 처리를 어떻게 추상화 할 수 있을지 고민했다.
+    - 공통된 예외 처리 전략을 통해 중복 코드를 줄이고 일관된 예외 처리 전략을 사용할 수 있게 되었다.
+- 검증의 책임이 어디에 존재해야 하는지 고민했다.
+    - 검증의 종류를 두가지로 분리하고 각자의 위치로 책임을 분리했다.
+- 이벤트를 일관되게 적용할 수 있도록 추상화했다.
+    - 이벤트 적용 조건과 이벤트 적용 규칙을 분리해 다양한 이벤트를 생성할 수 있는 유연성을 확보했다.
+    - 이벤트 적용 규칙을 인터페이스로 분리해 새로운 이벤트 적용 규칙를 쉽게 추가할 수 있게 했다.
+- 패키지간의 의존성을 생각하며 패키지 구조를 짰다.
+    - 어플리케이션 레이어가 다른 레이어에 의존하지 않도록 해 도메인 레이어를 재사용할 수 있도록 했다.
+    - 패키지 구조 변경을 통해 프로젝트 전체의 의존성을 줄이는 방향으로 설계했다.
+
+### 예외 처리
+
+해당 프로젝트의 요구사항에서는 사용자가 잘못된 값을 입력할 경우 에러 메세지를 출력하고 입력이 정상일 때 까지 다시 입력을 받는다. 첫 프로젝트에서는 입력으로 인한 예외가 발생했을 때 프로그램을 종료했다.
+
+이처럼 예외의 처리 방식은 요구사항마다 다르다. 따라서 이 예외 처리 전략을 다음과 같이 인터페이스로 추상화했다.
+
+```java
+public interface ExceptionHandler {
+
+    Object handle(InputView inputView, OutputView outputView, Function<InputView, Object> function);
+
+}
+```
+
+`Function` 함수형 인터페이스를 사용해 동작을 정의하고 파라미터로 `LottoGameView`를 받고 있다. 이번 프로젝트는 예외가 발생하지 않을때까지 입력을 무한정으로 다시 받는다.
+따라서 `InfiniteRetryExceptionHandler`를 다음과 같이 구현할 수 있다.
+
+```java
+public class InfiniteRetryExceptionHandler implements ExceptionHandler {
+
+    @Override
+    public Object handle(InputView inputView, OutputView outputView, Function<InputView, Object> function) {
+        while (true) {
+            try {
+                return function.apply(inputView);
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e);
+            }
+        }
+    }
+
+}
+```
+
+`while`문을 돌면서 `funtion.apply()`에서 예외가 발생하지 않으면 값을 반환하고 예외가 발생하면 예외 메세지를 출력하고 다시 `funtion.apply()`를 실행한다.
+
+이번 프로젝트에서는 입력을 2번 받는다. 2번 모두 예외가 발생할 수 있고 입력이 모두 정살일 때까지 다시 입력을 받는 예외 처리전략을 사용한다. 따라서 `PromotionContoller`에서
+생성자로 `ExceptionHandler`를 주입받고 다음과 같이 적용할 수 있다.
+
+```java
+public class PromotionController {
+
+    // 생성자를 통해 ExceptionHandler 주입
+    // 생략 ...
+
+    private Order inputOrder() {
+        return (Order) exceptionHandler.handle(inputView, outputView, (inputView) -> {
+            OrderCreateRequest orderCreateRequest = inputView.inputMenuOrderRequest();
+            return reservationService.createOrder(orderCreateRequest.toOrderCreate());
+        });
+    }
+
+    private ReservationDate inputReservationDate() {
+        return (ReservationDate) exceptionHandler.handle(inputView, outputView, (inputView) -> {
+            ReservationDateCreateRequest reservationDateCreateRequest = inputView.inputReservationDate();
+            return new ReservationDate(reservationDateCreateRequest.getReservationDate());
+        });
+    }
+
+    // 생략 ...
+
+}
+```
+
+만약 요구사항이 `입력을 최대 n번까지만 받는다`라고 변경된다면 `ExceptionHandler`를 다음과 같이 구현해서 `PromotionController`에 주입하면 일관된 입력 예외 처리가 가능하다.
+
+```java
+
+public class RetryExceptionHandler implements ExceptionHandler {
+
+    private final int retryCount;
+
+    public RetryExceptionHandler(int retryCount) {
+        this.retryCount = retryCount;
+    }
+
+    @Override
+    public Object handle(InputView inputView, OutputView outputView, Function<InputView, Object> function) {
+        for (int i = 0; i < retryCount; ++i) {
+            try {
+                return function.apply(inputView);
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e);
+            }
+        }
+    }
+}
+```
+
+위처럼 함수형 인터페이스와 의존성 주입 활용으로 코드 변경에는 닫혀있고 기능 확장에는 열려있는 클래스를 만들 수 있게 되었다.
+
+### 검증의 책임은 어디에 존재하는가?
+
+어떤 인스턴스가 존재한다면 우리는 그 인스턴스가 검증된 인스턴스라고 믿고 사용한다. 즉, 검증되지 않는 객체는 생성하면 안된다. 따라서 객체의 생성자에 검증의 책임을 부여하는 것이 맞다고 생각한다.
+
+그렇다면 검증의 책임을 DTO의 생성자에 몰아 넣는것이 맞을까? 나는 여기서 검증을 2가지로 분리할 수 있다고 생각했다.
+
+- 비즈니스 로직과 관련된 검증
+- 비즈니스 로직과 관련되지 않은 검증
+
+해당 프로젝트에서 비즈니스 로직과 관련된 검증이란 다음과 같은 것이 있을 것이다.
+
+- 주문은 음료로만 이루어지면 안된다.
+- 주문의 총 갯수는 20개를 넘으면 안된다.
+- 주문 메뉴는 중복될 수 없다.
+- 존재하는 메뉴로 주문을 해야한다.
+- 메뉴 주문 갯수는 양수여야 한다.
+
+비즈니스 로직과 관련되지 않는 검증
+
+- 날짜 입력은 숫자여야 한다.
+- 존재하지 않는 날짜를 입력할 수 없다.
+- 메뉴 주문 갯수는 숫자여야 한다.
+
+만약 콘솔 입력이 아니라 GUI를 통해 날짜나 메뉴 갯수를 클릭하는 방식이 요구사항 이었다면 어떨까? 그럴 땐 입력이 당연히 숫자일 것이므로 관련한 검증이 필요하지 않을 것이다. 즉, 비즈니스 로직과 관련되지 않은
+검증만 변화한다.
+변화의 이유가 다르다면 분리해야한다.
+
+따라서 DTO에는 비즈니스 로직과 관련되지 않는 검증을 진행하고, 도메인 클래스에서는 비즈니스와 관련된 검증 책임을 부여했다.
+
+### 이벤트 추상화
+
+이번 요구사항은 이전 프로젝트의 요구사항보다 복잡하다. 표를 그려보자.
+
+|              | 크리스마스 디데이 할인                                         | 평일 할인                                    | 주말할인                             | 특별할인                            | 증정이벤트                          |
+|--------------|------------------------------------------------------|------------------------------------------|----------------------------------|---------------------------------|--------------------------------|
+| 기간 적용 조건     | X(할인 계산 방법에 포함)                                      | 1일 ~ 31일                                 | 1일 ~ 31일                         | 1일 ~ 31일                        | 1일 ~ 31일                       |
+| 총 주문금액 적용 조건 | 10000원 이상                                            | 10000원 이상                                | 10000원 이상                        | 10000원 이상                       | X(증정 품목 계산 방법에 포함)             |
+| 할인 금액        | 예약일이 1일이면 1000원 할인 하루 지날때 마다 100원 추가 할인, 26일부터 0원 할인 | 예약일이 평일(일,월,화,수,목)이면 디저트 메뉴 1개당 2023원 할인 | 예약일이 주말(금, 토)면 메인메뉴 1개당 2023원 할인 | 예약일이 이벤트 달력에 별이 있는 날이면 1000원 할인 | X                              |
+| 증정 품목        | X                                                    | X                                        |                                  | X                               | 총 주문 금액이 120000이상힐 시 샴페인 1개 증정 |
+
+전체를 살펴보면 적용 조건과 이벤트 적용으로 이벤트를 분리할 수 있다. `EventCondition`과 `EventPolicy`로 나누어서 `Event`클래스를 구현해보면 다음과 같다.
+
+```java
+public class Event {
+
+    private final String eventName;
+    private final EventCondition eventCondition;
+    private final EventPolicy eventPolicy;
+
+    public Event(String eventName, EventCondition eventCondition, EventPolicy eventPolicy) {
+        this.eventName = eventName;
+        this.eventCondition = eventCondition;
+        this.eventPolicy = eventPolicy;
+    }
+
+    public Money calculateDiscountAmount(Reservation reservation) {
+        if (eventCondition.isSatisfiedBy(reservation)) {
+            return eventPolicy.calculateDiscountAmount(reservation);
+        }
+
+        return Money.ZERO;
+    }
+
+    public Money calculateBenefitAmount(Reservation reservation) {
+        if (eventCondition.isSatisfiedBy(reservation)) {
+            Money discountAmount = eventPolicy.calculateDiscountAmount(reservation);
+            Optional<MenuQuantity> giftOptional = eventPolicy.receiveGift(reservation);
+            if (giftOptional.isEmpty()) {
+                return discountAmount;
+            }
+
+            MenuQuantity gift = giftOptional.get();
+            return discountAmount.add(gift.calculateCost());
+        }
+
+        return Money.ZERO;
+    }
+
+    public Optional<MenuQuantity> receiveGift(Reservation reservation) {
+        if (eventCondition.isSatisfiedBy(reservation)) {
+            return eventPolicy.receiveGift(reservation);
+        }
+
+        return Optional.empty();
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+}
+```
+
+`Event`클래스는 이벤트 이름, 이벤트 조건, 이벤트 정책으로 나뉜다. 할인 금액 계산, 혜택 금액 계산, 증정품 수령 3가지 기능이 있으며, 혜택 금액은 할인 금액과 증정품의 가격을 더한 금액이다.
+
+조건을 검사하고 조건에 맞지 많으면 `Optional.empty()`나 `Money.ZERO`를 반환한다. `PromotionService`에서 `List<Event>`를 멤버 변수로 가지고 있으며 `List`에서
+이벤트들의 결과를 계산해 합산하는 역할을 한다.
+
+위 처럼 이벤트 조건과 이벤트 정책을 분리해 구현했기 때문에 이벤트 요구사항이 변경되어도 유연한 대처가 가능하다.
+
+이벤트 조건과 이벤트 정책을 구현해 조립하면 유연한 이벤트 설계가 가능하다.
+
+```java
+
+public class Sample {
+    private static Event giftEvent(EventCondition eventCondition, MenuRepository menuRepository) {
+        return new Event("증정 이벤트",
+                eventCondition,
+                new GiftEventPolicy(
+                        menuRepository,
+                        Money.of(120_000),
+                        "샴페인",
+                        1
+                )
+        );
+    }
+
+    private static Event specialDayDiscountEvent(EventCondition eventCondition) {
+        return new Event(
+                "특별 할인",
+                eventCondition,
+                new SpecialDayEventPolicy(
+                        Money.of(1_000L),
+                        Set.of(
+                                eventYearMonth.atDay(3),
+                                eventYearMonth.atDay(10),
+                                eventYearMonth.atDay(17),
+                                eventYearMonth.atDay(24),
+                                eventYearMonth.atDay(25),
+                                eventYearMonth.atDay(31)
+                        )
+                ));
+    }
+}
+```
+
+만약 증정품과 할인을 동시에 제공하는 이벤트를 설계하려면 `EventPolicy`를 구현해 적용할 수 있다. 이벤트를 추상화 한 덕에 요구사항이 변경되어도 유연하게 대처할 수 있다.
+
+```java
+public interface EventCondition {
+    boolean isSatisfiedBy(Reservation reservation);
+}
+```
+
+`EventCondition`은 위와 같은 메서드를 가지고 있다. 만약 여러 이벤트 조건을 중복 적용해야 한다면 어떨까? `CompositeEventCondition`의 구현으로 이를 해결할 수 있다.
+
+```java
+public class CompositeEventCondition implements EventCondition {
+
+    private final List<EventCondition> eventConditions;
+
+    public CompositeEventCondition(EventCondition... eventConditions) {
+        this.eventConditions = List.of(eventConditions);
+    }
+
+    @Override
+    public boolean isSatisfiedBy(Reservation reservation) {
+        for (EventCondition eventCondition : eventConditions) {
+            if (!eventCondition.isSatisfiedBy(reservation)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+```
+
+멤버로 `List<EventCondition>`을 가지고 있고 여러 이벤트 조건을 순회하면서 하나라도 조건이 맞지 않으면 이벤트 조건 불만족을 반환하고 모두 조건에 부합하면 이벤트 조건 만족을 반환한다.
+
+따라서 기간 조건과, 최소 주문 금액 조건 등의 중복 조건을 가지는 이벤트를 다음과 같이 생성할 수 있다. 이벤트 기간이 10월과 12월로 띄엄 띄엄 있게 요구사항이 바뀌었다고
+하면 `PeriodEventCondition`을 여러개
+조합하면 될 것이다.
+
+```java
+import java.time.YearMonth;
+
+public class Sample {
+    private static Event weekendDiscountEvent() {
+        return new Event(
+                "주말 할인",
+                new CompositeEventCondition(
+                        new PeriodEventCondition.wholeMonth(YearMonth.of(2023, 10)),
+                        new PeriodEventCondition.wholeMonth(YearMonth.of(2023, 12))
+                ),
+                new WeekendEventPolicy(MenuType.MAIN_DISH,
+                        Money.of(2_023L))
+        );
+    }
+}
+```
+
+이로써 유연한 이벤트를 만들 수 있게 되었다.
+
+### 도메인 서비스 격리 & 패키지간의 의존성 관리
+
+패키지간의 의존성이 낮아질 수 있도록 패키지 구조를 짰다. 특히, 도메인과 서비스가 다른 레이어에 의존하지 않도록 했다. 또한 주입받을 인터페이스를 같은 패키지에 둬서 의존성이 역전될 수 있도록 했다.
+
+실제 구현체들은 패키지 외부에 두고 의존하는 인터페이스를 같은 패키지에 둠으로써 컴파일 타임 의존성을 해결했다. 위의 방법을 `SEPERATED INTERFACE` 패턴을 지켰다.
+
+패키지간의 의존성으 간략하게 그려보면 다음과 같다. (생략된 패키지도 존재한다.)
+
+![](https://i.imgur.com/ysYKwWe.png)
+
+중요한 것은 도메인과 서비스에서 나가는 의존성이 없다는 것이다. 따라서 해당 패키지를 분리해서 서비스와 도메인을 재사용할 수 있다.
+
 ## 구현할 기능 목록 정리
 
 ### 공통 사항
