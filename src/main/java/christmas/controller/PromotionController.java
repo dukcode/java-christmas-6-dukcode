@@ -43,17 +43,11 @@ public class PromotionController {
     }
 
     public void run() {
-        printWelcomeMessage();
-
         ReservationDate reservationDate = inputReservationDate();
         Order order = inputOrder();
 
         Reservation reservation = createReservation(order, reservationDate);
         printResult(reservation);
-    }
-
-    private void printWelcomeMessage() {
-        outputView.printWelcomeMessage();
     }
 
     private Reservation createReservation(Order order, ReservationDate reservationDate) {
@@ -110,11 +104,11 @@ public class PromotionController {
     private void printBenefitAmounts(Reservation reservation) {
         List<EventBenefitAmount> eventBenefitAmounts = promotionService.calculateBenefitAmounts(reservation);
         if (eventBenefitAmounts.isEmpty()) {
-            outputView.printDiscountAmounts(null);
+            outputView.printBenefitAmounts(null);
             return;
         }
 
-        outputView.printDiscountAmounts(BenefitAmountsResponse.from(eventBenefitAmounts));
+        outputView.printBenefitAmounts(BenefitAmountsResponse.from(eventBenefitAmounts));
     }
 
     private void printGifts(Reservation reservation) {

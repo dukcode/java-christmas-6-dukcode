@@ -8,7 +8,6 @@ import christmas.controller.dto.response.ReservationDateResponse;
 import christmas.controller.dto.response.TotalBenefitAmountResponse;
 
 public interface OutputView {
-    void printWelcomeMessage();
 
     void printError(Exception e);
 
@@ -20,7 +19,7 @@ public interface OutputView {
 
     void printGifts(MenuQuantitiesResponse menuQuantities);
 
-    void printDiscountAmounts(BenefitAmountsResponse benefitAmounts);
+    void printBenefitAmounts(BenefitAmountsResponse benefitAmounts);
 
     void printTotalBenefitAmount(TotalBenefitAmountResponse totalBenefitAmount);
 
