@@ -1,8 +1,8 @@
 package christmas.controller.dto.request;
 
+import christmas.application.domain.MenuQuantityCreate;
 import christmas.controller.dto.exception.ExceptionMessage;
 import christmas.controller.dto.validator.NumberFormatValidator;
-import christmas.application.domain.MenuQuantityCreate;
 
 public class MenuQuantityCreateRequest {
 
@@ -39,14 +39,6 @@ public class MenuQuantityCreateRequest {
 
     private void validateOrderCount(String menuQuantity) {
         NumberFormatValidator.validate(menuQuantity, ExceptionMessage.INVALID_ORDER_FORMAT);
-    }
-
-    public String getMenuName() {
-        return menuName;
-    }
-
-    public int getOrderCount() {
-        return orderCount;
     }
 
     public MenuQuantityCreate toMenuQuantityCreate() {

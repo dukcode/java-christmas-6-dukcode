@@ -24,10 +24,6 @@ public class OrderCreateRequest {
                 .toList();
     }
 
-    public List<MenuQuantityCreateRequest> getMenuOrderRequests() {
-        return menuQuantityCreateRequests;
-    }
-
     public OrderCreate toOrderCreate() {
         return new OrderCreate(menuQuantityCreateRequests.stream()
                 .map(MenuQuantityCreateRequest::toMenuQuantityCreate)
