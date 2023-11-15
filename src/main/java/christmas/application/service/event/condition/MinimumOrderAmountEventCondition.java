@@ -17,4 +17,5 @@ public class MinimumOrderAmountEventCondition implements EventCondition {
         Money orderAmount = reservation.calculateTotalOrderAmount();
         return orderAmount.isGreaterThanOrEqual(minimumOrderAmount);
     }
+
 }

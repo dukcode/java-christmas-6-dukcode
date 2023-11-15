@@ -38,7 +38,6 @@ public class Order {
         }
     }
 
-
     private void validateMenuDuplicated(List<MenuQuantity> menuQuantities) {
         List<Menu> distinctMenu = menuQuantities.stream()
                 .map(MenuQuantity::getMenu)
@@ -73,4 +72,5 @@ public class Order {
 
         return count;
     }
+
 }

@@ -3,6 +3,7 @@ package christmas.controller.dto.response;
 import christmas.application.domain.MenuQuantity;
 
 public class MenuQuantityResponse {
+    private static final String MENU_QUANTITY_STRING_FORMAT = "%s %d개";
 
     private final String menuName;
     private final int quantity;
@@ -18,6 +19,7 @@ public class MenuQuantityResponse {
 
     @Override
     public String toString() {
-        return String.format("%s %d개", menuName, quantity);
+        return String.format(MENU_QUANTITY_STRING_FORMAT, menuName, quantity);
     }
+
 }

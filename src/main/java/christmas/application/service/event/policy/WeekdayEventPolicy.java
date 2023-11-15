@@ -31,4 +31,5 @@ public class WeekdayEventPolicy implements EventPolicy {
     public Optional<MenuQuantity> receiveGift(Reservation reservation) {
         return Optional.empty();
     }
+
 }

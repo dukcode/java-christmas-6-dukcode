@@ -4,6 +4,7 @@ import christmas.application.domain.Money;
 
 public class TotalBenefitAmountResponse {
 
+    private static final String ZERO_STRING_FOTMAT = "없음";
     private static final String TOTAL_DISCOUNT_AMOUNT_STRING_FORMAT = "-%s";
 
     private final Money totalDiscountAmount;
@@ -19,9 +20,9 @@ public class TotalBenefitAmountResponse {
     @Override
     public String toString() {
         if (totalDiscountAmount.equals(Money.ZERO)) {
-            return "없음";
+            return ZERO_STRING_FOTMAT;
         }
 
-        return String.format(TOTAL_DISCOUNT_AMOUNT_STRING_FORMAT, totalDiscountAmount.toString());
+        return String.format(TOTAL_DISCOUNT_AMOUNT_STRING_FORMAT, totalDiscountAmount);
     }
 }

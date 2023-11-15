@@ -11,7 +11,6 @@ public class DDayEventPolicy implements EventPolicy {
 
     private final LocalDate startDate;
     private final LocalDate dDay;
-
     private final Money baseDiscountAmount;
     private final Money perDayDiscountAmount;
 

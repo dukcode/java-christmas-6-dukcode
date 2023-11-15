@@ -35,4 +35,5 @@ public class MenuQuantity {
     public boolean isSameMenuType(MenuType menuType) {
         return menu.isSameMenuType(menuType);
     }
+
 }

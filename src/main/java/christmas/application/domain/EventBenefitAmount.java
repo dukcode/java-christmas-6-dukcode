@@ -18,4 +18,5 @@ public class EventBenefitAmount {
     public Money getBenefitAmount() {
         return benefitAmount;
     }
+
 }

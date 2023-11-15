@@ -22,4 +22,5 @@ public class CompositeEventCondition implements EventCondition {
 
         return true;
     }
+
 }

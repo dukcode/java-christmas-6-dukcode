@@ -18,4 +18,5 @@ public class BadgeResponse {
     public String toString() {
         return badgeName;
     }
+
 }

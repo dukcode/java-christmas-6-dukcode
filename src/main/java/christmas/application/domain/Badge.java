@@ -17,4 +17,5 @@ public class Badge {
     public boolean canBeAward(Money totalBenefitAmount) {
         return totalBenefitAmount.isGreaterThanOrEqual(minBadgeAwardAmount);
     }
+
 }

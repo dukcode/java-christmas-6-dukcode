@@ -83,4 +83,5 @@ public class PromotionService {
         Money totalDiscountAmount = calculateTotalDiscountAmount(reservation);
         return preDiscountCharge.minus(totalDiscountAmount);
     }
+
 }

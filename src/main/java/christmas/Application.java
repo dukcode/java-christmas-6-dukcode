@@ -1,20 +1,13 @@
 package christmas;
 
-import christmas.controller.ExceptionHandler;
-import christmas.controller.InputView;
-import christmas.controller.OutputView;
-import christmas.controller.PromotionController;
 import christmas.application.domain.MenuType;
 import christmas.application.domain.Money;
-import christmas.handler.InfiniteRetryExceptionHandler;
 import christmas.application.service.BadgeRepository;
-import christmas.repository.DefaultBadgeRepository;
-import christmas.repository.DefaultMenuRepository;
+import christmas.application.service.Event;
+import christmas.application.service.EventCondition;
 import christmas.application.service.MenuRepository;
 import christmas.application.service.PromotionService;
 import christmas.application.service.ReservationService;
-import christmas.application.service.Event;
-import christmas.application.service.EventCondition;
 import christmas.application.service.event.condition.CompositeEventCondition;
 import christmas.application.service.event.condition.MinimumOrderAmountEventCondition;
 import christmas.application.service.event.condition.PeriodEventCondition;
@@ -23,6 +16,13 @@ import christmas.application.service.event.policy.GiftEventPolicy;
 import christmas.application.service.event.policy.SpecialDayEventPolicy;
 import christmas.application.service.event.policy.WeekdayEventPolicy;
 import christmas.application.service.event.policy.WeekendEventPolicy;
+import christmas.controller.ExceptionHandler;
+import christmas.controller.InputView;
+import christmas.controller.OutputView;
+import christmas.controller.PromotionController;
+import christmas.handler.InfiniteRetryExceptionHandler;
+import christmas.repository.DefaultBadgeRepository;
+import christmas.repository.DefaultMenuRepository;
 import christmas.view.InputConsoleView;
 import christmas.view.OutputConsoleView;
 import java.time.YearMonth;
@@ -63,13 +63,17 @@ public class Application {
 
     private static PromotionService createPromotionService(MenuRepository menuRepository,
                                                            BadgeRepository badgeRepository) {
-        EventCondition eventCondition = eventCondition();
 
-        Event christmasDDayDiscountEvent = christmasDDayDiscountEvent(eventCondition);
-        Event weekdayDiscountEvent = weekdayDiscountEvent(eventCondition);
-        Event weekendDiscountEvent = weekendDiscountEvent(eventCondition);
-        Event giftEvent = giftEvent(eventCondition, menuRepository);
-        Event specialDayDiscountEvent = specialDayDiscountEvent(eventCondition);
+        EventCondition periodEventCondition = periodEventCondition();
+        EventCondition minimumOrderAmountEventCondition = minimumOrderAmountCondition();
+        EventCondition compositeEventCondition =
+                compositEventCondition(periodEventCondition, minimumOrderAmountEventCondition);
+
+        Event christmasDDayDiscountEvent = christmasDDayDiscountEvent(periodEventCondition);
+        Event weekdayDiscountEvent = weekdayDiscountEvent(compositeEventCondition);
+        Event weekendDiscountEvent = weekendDiscountEvent(compositeEventCondition);
+        Event giftEvent = giftEvent(periodEventCondition, menuRepository);
+        Event specialDayDiscountEvent = specialDayDiscountEvent(compositeEventCondition);
 
         return promotionService(badgeRepository,
                 christmasDDayDiscountEvent,
@@ -79,17 +83,15 @@ public class Application {
                 specialDayDiscountEvent);
     }
 
-    private static EventCondition eventCondition() {
-        PeriodEventCondition periodEventCondition = periodEventCondition();
-        MinimumOrderAmountEventCondition minimumOrderAmountEventCondition = minimumOrderAmountCondition();
-        return new CompositeEventCondition(periodEventCondition, minimumOrderAmountEventCondition);
+    private static EventCondition compositEventCondition(EventCondition... eventConditions) {
+        return new CompositeEventCondition(eventConditions);
     }
 
     private static MinimumOrderAmountEventCondition minimumOrderAmountCondition() {
         return new MinimumOrderAmountEventCondition(Money.of(10_000L));
     }
 
-    private static PeriodEventCondition periodEventCondition() {
+    private static EventCondition periodEventCondition() {
         return PeriodEventCondition.wholeMonth(eventYearMonth);
     }
 

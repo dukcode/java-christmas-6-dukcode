@@ -29,4 +29,5 @@ public class PeriodEventCondition implements EventCondition {
     public boolean isSatisfiedBy(Reservation reservation) {
         return reservation.isInRange(startDate, endDate);
     }
+
 }

@@ -29,4 +29,5 @@ public class OrderCreateRequest {
                 .map(MenuQuantityCreateRequest::toMenuQuantityCreate)
                 .toList());
     }
+
 }

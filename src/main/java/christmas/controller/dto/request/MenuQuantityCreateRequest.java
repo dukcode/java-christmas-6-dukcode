@@ -44,4 +44,5 @@ public class MenuQuantityCreateRequest {
     public MenuQuantityCreate toMenuQuantityCreate() {
         return new MenuQuantityCreate(menuName, orderCount);
     }
+
 }

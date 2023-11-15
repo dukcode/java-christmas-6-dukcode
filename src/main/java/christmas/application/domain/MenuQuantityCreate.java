@@ -17,4 +17,5 @@ public class MenuQuantityCreate {
     public int getOrderCount() {
         return orderCount;
     }
+
 }

@@ -128,4 +128,5 @@ public class PromotionController {
             return new ReservationDate(reservationDateCreateRequest.getReservationDate());
         });
     }
+
 }

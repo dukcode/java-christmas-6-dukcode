@@ -5,8 +5,8 @@ import christmas.application.domain.MenuQuantity;
 import christmas.application.domain.Money;
 import christmas.application.domain.Reservation;
 import christmas.application.exception.NotFoundException;
-import christmas.application.service.MenuRepository;
 import christmas.application.service.EventPolicy;
+import christmas.application.service.MenuRepository;
 import java.util.Optional;
 
 public class GiftEventPolicy implements EventPolicy {
@@ -44,4 +44,5 @@ public class GiftEventPolicy implements EventPolicy {
 
         return Optional.empty();
     }
+
 }

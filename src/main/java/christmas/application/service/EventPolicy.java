@@ -10,4 +10,5 @@ public interface EventPolicy {
     Money calculateDiscountAmount(Reservation reservation);
 
     Optional<MenuQuantity> receiveGift(Reservation reservation);
+
 }

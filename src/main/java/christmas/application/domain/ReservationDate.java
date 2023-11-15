@@ -37,4 +37,5 @@ public class ReservationDate {
     public boolean isInDates(Set<LocalDate> dates) {
         return dates.contains(reservationDate);
     }
+
 }

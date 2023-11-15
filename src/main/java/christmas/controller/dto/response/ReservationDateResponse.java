@@ -5,7 +5,6 @@ import java.time.LocalDate;
 
 public class ReservationDateResponse {
 
-
     private final LocalDate reservationDate;
 
     private ReservationDateResponse(LocalDate reservationDate) {
@@ -19,4 +18,5 @@ public class ReservationDateResponse {
     public int getDayOfMonth() {
         return reservationDate.getDayOfMonth();
     }
+
 }

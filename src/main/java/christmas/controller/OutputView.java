@@ -26,4 +26,5 @@ public interface OutputView {
     void printChargeAfterDiscount(ChargeResponse chargeAfterDiscount);
 
     void printBadge(BadgeResponse badgeResponse);
+
 }

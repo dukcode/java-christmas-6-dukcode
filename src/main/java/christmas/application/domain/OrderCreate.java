@@ -13,4 +13,5 @@ public class OrderCreate {
     public List<MenuQuantityCreate> getMenuQuantityCreates() {
         return menuQuantityCreates;
     }
+
 }

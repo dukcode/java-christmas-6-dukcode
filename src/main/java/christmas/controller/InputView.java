@@ -8,4 +8,5 @@ public interface InputView {
     ReservationDateCreateRequest inputReservationDate();
 
     OrderCreateRequest inputMenuOrderRequest();
+
 }
