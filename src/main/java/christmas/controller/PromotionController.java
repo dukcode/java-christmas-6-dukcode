@@ -113,6 +113,10 @@ public class PromotionController {
 
     private void printGifts(Reservation reservation) {
         List<MenuQuantity> gifts = promotionService.receiveGifts(reservation);
+        if (gifts.isEmpty()) {
+            outputView.printGifts(null);
+            return;
+        }
 
         outputView.printGifts(MenuQuantitiesResponse.from(gifts));
     }
