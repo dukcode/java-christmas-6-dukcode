@@ -84,7 +84,7 @@ public class OutputConsoleView implements OutputView {
 
     @Override
     public void printBadge(BadgeResponse badge) {
-        System.out.printf(EVENT_BADGE_RESPONSE_TITLE_FORMAT, eventYear);
+        System.out.printf(EVENT_BADGE_RESPONSE_TITLE_FORMAT, eventMonth);
         System.out.println(convertWhenNull(badge));
         System.out.println();
     }
